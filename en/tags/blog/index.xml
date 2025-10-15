@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Asanilo&#39;s Blog</title>
+    <link>https://www.asanilo.top/en/tags/blog/</link>
+    <description>Recent content in Blog on Asanilo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© 2025 Asanilo</copyright>
+    <lastBuildDate>Tue, 14 Oct 2025 20:31:24 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/en/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Obsidian Integration with Hugo Leaf Bundle Export Implementation Record</title>
+      <link>https://www.asanilo.top/en/posts/hugo-leaf-bundle-export/</link>
+      <pubDate>Tue, 14 Oct 2025 20:31:24 +0800</pubDate>
+      
+      <guid>https://www.asanilo.top/en/posts/hugo-leaf-bundle-export/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/hugo-leaf-bundle-export/feature.png" />
+    </item>
+    
+    <item>
+      <title>Obsidian Enhancing-Export Compatibility Record with Custom Attachment Location</title>
+      <link>https://www.asanilo.top/en/posts/obsidian-enhancing-export-custom-attachment-location/</link>
+      <pubDate>Tue, 14 Oct 2025 20:18:24 +0800</pubDate>
+      
+      <guid>https://www.asanilo.top/en/posts/obsidian-enhancing-export-custom-attachment-location/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/obsidian-enhancing-export-custom-attachment-location/feature.png" />
+    </item>
+    
+  </channel>
+</rss>
