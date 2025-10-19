@@ -10,11 +10,71 @@
     <atom:link href="https://www.asanilo.top/ja/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>高度なタグ</title>
-      <link>https://www.asanilo.top/ja/tags/advanced/</link>
+      <title>アニメ</title>
+      <link>https://www.asanilo.top/ja/tags/anime/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://www.asanilo.top/ja/tags/advanced/</guid>
+      <guid>https://www.asanilo.top/ja/tags/anime/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>ゲーム</title>
+      <link>https://www.asanilo.top/ja/tags/gaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/gaming/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>デザイン</title>
+      <link>https://www.asanilo.top/ja/tags/designs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/designs/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>プロジェクト</title>
+      <link>https://www.asanilo.top/ja/tags/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/projects/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>音楽</title>
+      <link>https://www.asanilo.top/ja/tags/music/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/music/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>学習</title>
+      <link>https://www.asanilo.top/ja/tags/learning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/learning/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>随筆</title>
+      <link>https://www.asanilo.top/ja/tags/essays/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/ja/tags/essays/</guid>
       <description></description>
       
     </item>

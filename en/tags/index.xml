@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© 2025 Asanilo</copyright>
-    <lastBuildDate>Tue, 14 Oct 2025 20:31:24 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Oct 2025 20:18:24 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/en/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Blog</title>
       <link>https://www.asanilo.top/en/tags/blog/</link>
-      <pubDate>Tue, 14 Oct 2025 20:31:24 +0800</pubDate>
+      <pubDate>Tue, 14 Oct 2025 20:18:24 +0800</pubDate>
       
       <guid>https://www.asanilo.top/en/tags/blog/</guid>
       <description></description>
@@ -22,7 +22,7 @@
     <item>
       <title>Hugo-Notes</title>
       <link>https://www.asanilo.top/en/tags/hugo-notes/</link>
-      <pubDate>Tue, 14 Oct 2025 20:31:24 +0800</pubDate>
+      <pubDate>Tue, 14 Oct 2025 20:18:24 +0800</pubDate>
       
       <guid>https://www.asanilo.top/en/tags/hugo-notes/</guid>
       <description></description>
@@ -32,9 +32,79 @@
     <item>
       <title>Obsidian-Notes</title>
       <link>https://www.asanilo.top/en/tags/obsidian-notes/</link>
-      <pubDate>Tue, 14 Oct 2025 20:31:24 +0800</pubDate>
+      <pubDate>Tue, 14 Oct 2025 20:18:24 +0800</pubDate>
       
       <guid>https://www.asanilo.top/en/tags/obsidian-notes/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Anime</title>
+      <link>https://www.asanilo.top/en/tags/anime/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/anime/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Designs</title>
+      <link>https://www.asanilo.top/en/tags/designs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/designs/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Essays</title>
+      <link>https://www.asanilo.top/en/tags/essays/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/essays/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Gaming</title>
+      <link>https://www.asanilo.top/en/tags/gaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/gaming/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Learning-Notes</title>
+      <link>https://www.asanilo.top/en/tags/learning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/learning/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Music</title>
+      <link>https://www.asanilo.top/en/tags/music/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/music/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://www.asanilo.top/en/tags/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/en/tags/projects/</guid>
       <description></description>
       
     </item>

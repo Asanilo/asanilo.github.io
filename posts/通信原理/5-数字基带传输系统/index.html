@@ -1,0 +1,3383 @@
+<!doctype html>
+<html
+  lang="zh-cn"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="zh-cn">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  <title>通信原理5 数字基带传输系统 &middot; Asanilo&#39;s Blog</title>
+    <meta name="title" content="通信原理5 数字基带传输系统 &middot; Asanilo&#39;s Blog">
+
+  
+  <meta name="description" content="本讲将开启数字通信的&#34;地面行动&#34;------数字基带传输。我们将探索信息在不经过&#34;上天&#34;（调制到高频）的情况下，如何以最原始的脉冲形式在信道中进行有效、可靠的传输。核心目标是理解基带传输系统的构成，并掌握为了适应信道而进行的&#34;化妆术&#34;------波形设计与线路编码。">
+  <meta name="keywords" content="通信原理,learning,">
+  
+  
+  <link rel="canonical" href="https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/">
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.214d1a24df40cc92a37f2b245b81d4da8f2098994c81c97971ab5150f666b99d2de7e85abca6451519550421aed92d86b8106249017d040dc6c39419fb756964.css"
+    integrity="sha512-IU0aJN9AzJKjfyskW4HU2o8gmJlMgcl5catRUPZmuZ0t5&#43;havKZFFRlVBCGu2S2GuBBiSQF9BA3Gw5QZ&#43;3VpZA==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.516a16745bea5a9bd011138d254cc0fd3973cd55ce6e15f3dec763e7c7c2c7448f8fe7b54cca811cb821b0c7e12cd161caace1dd794ac3d34d40937cbcc9ee12.js"
+    integrity="sha512-UWoWdFvqWpvQERONJUzA/TlzzVXObhXz3sdj58fCx0SPj&#43;e1TMqBHLghsMfhLNFhyqzh3XlKw9NNQJN8vMnuEg=="></script>
+  
+  
+  
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/zen-mode.min.9814dee9614d32aeb56239d118edfe20acd6231424f9b19c2dd48835038414130a5e946c0d1c9087d60e60e31840c9babfd217e3d4b95643dc8d651a71ccdf4a.js"
+      integrity="sha512-mBTe6WFNMq61YjnRGO3&#43;IKzWIxQk&#43;bGcLdSINQOEFBMKXpRsDRyQh9YOYOMYQMm6v9IX49S5VkPcjWUacczfSg=="></script>
+  
+  
+    
+    
+    
+  
+  
+    
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.f99aa39bcfb5d16a28ec2236bd358df5e465058a67f58b42534a3b15882a6a3513791fd27248c6b5b5cef06337f714070d4784fb776f44d930309b64cce1a2e0.js"
+      integrity="sha512-&#43;Zqjm8&#43;10Woo7CI2vTWN9eRlBYpn9YtCU0o7FYgqajUTeR/SckjGtbXO8GM39xQHDUeE&#43;3dvRNkwMJtkzOGi4A=="
+      data-copy="复制"
+      data-copied="已复制"></script>
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  <meta property="og:url" content="https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/">
+  <meta property="og:site_name" content="Asanilo&#39;s Blog">
+  <meta property="og:title" content="通信原理5 数字基带传输系统">
+  <meta property="og:description" content="本讲将开启数字通信的&#34;地面行动&#34;------数字基带传输。我们将探索信息在不经过&#34;上天&#34;（调制到高频）的情况下，如何以最原始的脉冲形式在信道中进行有效、可靠的传输。核心目标是理解基带传输系统的构成，并掌握为了适应信道而进行的&#34;化妆术&#34;------波形设计与线路编码。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-18T23:10:53+08:00">
+    <meta property="article:modified_time" content="2025-10-18T23:10:53+08:00">
+    <meta property="article:tag" content="通信原理">
+    <meta property="article:tag" content="学习笔记">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/3-%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/1%E7%BB%AA%E8%AE%BA/">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="通信原理5 数字基带传输系统">
+  <meta name="twitter:description" content="本讲将开启数字通信的&#34;地面行动&#34;------数字基带传输。我们将探索信息在不经过&#34;上天&#34;（调制到高频）的情况下，如何以最原始的脉冲形式在信道中进行有效、可靠的传输。核心目标是理解基带传输系统的构成，并掌握为了适应信道而进行的&#34;化妆术&#34;------波形设计与线路编码。">
+
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "文章",
+    "name": "通信原理5 数字基带传输系统",
+    "headline": "通信原理5 数字基带传输系统",
+    "description": "本讲将开启数字通信的\u0022地面行动\u0022------数字基带传输。我们将探索信息在不经过\u0022上天\u0022（调制到高频）的情况下，如何以最原始的脉冲形式在信道中进行有效、可靠的传输。核心目标是理解基带传输系统的构成，并掌握为了适应信道而进行的\u0022化妆术\u0022------波形设计与线路编码。",
+    
+    "inLanguage": "zh-cn",
+    "url" : "https:\/\/www.asanilo.top\/posts\/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86\/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Asanilo"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-10-18T23:10:53\u002b08:00",
+    "datePublished": "2025-10-18T23:10:53\u002b08:00",
+    
+    "dateModified": "2025-10-18T23:10:53\u002b08:00",
+    
+    "keywords": ["通信原理","learning"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1145"
+  }]
+  </script>
+
+
+
+  
+  
+    <meta name="author" content="Asanilo">
+  
+  
+    
+      
+        
+          <link href="https://github.com/asanilo" rel="me">
+        
+      
+    
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+<body
+    class="flex flex-col h-screen px-6 m-auto text-lg leading-7 max-w-7xl bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32 scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        跳过正文
+      </a>
+    </div>
+    
+    
+      <div class="min-h-[148px]"></div>
+<div
+  class="fixed inset-x-0 min-h-[130px] opacity-65 pl-[24px] pr-[24px] bg-gradient-to-b from-neutral from-60% dark:from-neutral-800 to-transparent mix-blend-normal z-80"></div>
+<div class="fixed inset-x-0 pl-[24px] pr-[24px] z-100">
+  <div
+    id="menu-blur"
+    class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl"></div>
+  <div class="relative max-w-[64rem] ml-auto mr-auto">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  class="main-menu flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start gap-x-3 pt-[2px] pr-0 pb-[3px] pl-0">
+  
+  
+    
+    
+      <div>
+        <a href="/" class="flex">
+          <span class="sr-only">Asanilo&rsquo;s Blog</span>
+          
+            <img
+              src="/img/l2s.png"
+              width="221"
+              height="221"
+              class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom"
+              alt="Asanilo&#39;s Blog">
+          
+        </a>
+      </div>
+    
+
+  <div class="flex flex-1 items-center justify-between">
+    <nav class="flex space-x-3">
+      
+        <a href="/" class="text-base font-medium">
+          Asanilo&rsquo;s Blog
+        </a>
+      
+    </nav>
+    
+  <nav class="hidden md:flex items-center gap-x-5 md:ml-12 h-12">
+    
+      
+        
+  <a
+  href="/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+  
+  <p class="text-base font-medium" title="欢迎来到 Asanilo的博客!">
+    主页
+  </p>
+</a>
+
+
+
+      
+        
+  <a
+  href="/posts/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+  
+  <p class="text-base font-medium" title="文章">
+    文章
+  </p>
+</a>
+
+
+
+      
+        
+  <a
+  href="/tags/learning/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+  
+  <p class="text-base font-medium" title="学习笔记">
+    学习
+  </p>
+</a>
+
+
+
+      
+        
+  <div>
+  <div class="cursor-pointer flex items-center nested-menu">
+    
+    <a
+      
+      class="text-base font-medium hover:text-primary-600 dark:hover:text-primary-400"
+      title="">
+      <p>
+        休闲
+      </p>
+    </a>
+    <span>
+      <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+    </span>
+  </div>
+  <div class="absolute menuhide">
+    <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+      <div class="flex flex-col space-y-3">
+        
+          <a
+            href="/tags/anime/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="动漫">
+              动漫
+            </p>
+          </a>
+        
+          <a
+            href="/tags/gaming/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="游戏">
+              游戏
+            </p>
+          </a>
+        
+          <a
+            href="/tags/music/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="音乐">
+              音乐
+            </p>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      
+        
+  <div>
+  <div class="cursor-pointer flex items-center nested-menu">
+    
+    <a
+      
+      class="text-base font-medium hover:text-primary-600 dark:hover:text-primary-400"
+      title="">
+      <p>
+        创作
+      </p>
+    </a>
+    <span>
+      <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+    </span>
+  </div>
+  <div class="absolute menuhide">
+    <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl">
+      <div class="flex flex-col space-y-3">
+        
+          <a
+            href="/tags/projects/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="项目">
+              项目
+            </p>
+          </a>
+        
+          <a
+            href="/tags/essays/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="随笔">
+              随笔
+            </p>
+          </a>
+        
+          <a
+            href="/tags/designs/"
+            
+            class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+            
+            <p class="text-sm font-sm" title="设计">
+              设计
+            </p>
+          </a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      
+        
+  <a
+  href="/about/"
+  
+  class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+  
+  <p class="text-base font-medium" title="关于">
+    关于
+  </p>
+</a>
+
+
+
+      
+    
+
+    
+
+    
+
+    
+      <button
+        id="search-button"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="搜索 (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <div class=" flex items-center">
+        <button
+          id="appearance-switcher"
+          aria-label="Dark mode switcher"
+          type="button"
+          class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+          <div class="flex items-center justify-center dark:hidden">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+          </div>
+          <div class="items-center justify-center hidden dark:flex">
+            <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+          </div>
+        </button>
+      </div>
+    
+  </nav>
+
+    
+  <div class="flex md:hidden items-center gap-x-5 md:ml-12 h-12">
+    <span></span>
+
+    
+
+    
+
+    
+      <button
+        id="search-button-mobile"
+        aria-label="Search"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+        title="搜索 (/)">
+        <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+      </button>
+    
+
+    
+      <button
+        id="appearance-switcher-mobile"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base hover:text-primary-600 dark:hover:text-primary-400 me-1">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    
+  </div>
+
+  </div>
+  
+  <div class="-my-2 md:hidden">
+    <div id="menu-button" class="block">
+      
+        <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50 pt-[5px]">
+          <ul
+            class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none text-end max-w-7xl">
+            <li id="menu-close-button">
+              <span
+                class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+                <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+              </span>
+            </li>
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="欢迎来到 Asanilo的博客!">
+      主页
+    </p>
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/posts/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="文章">
+      文章
+    </p>
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/tags/learning/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="学习笔记">
+      学习
+    </p>
+  </a>
+</li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href=""
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="">
+      休闲
+    </p>
+    <span>
+      <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+    </span>
+  </a>
+</li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/anime/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="动漫">
+        动漫
+      </p>
+    </a>
+  </li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/gaming/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="游戏">
+        游戏
+      </p>
+    </a>
+  </li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/music/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="音乐">
+        音乐
+      </p>
+    </a>
+  </li>
+
+<li class="mb-2"></li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href=""
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="">
+      创作
+    </p>
+    <span>
+      <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+    </span>
+  </a>
+</li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/projects/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="项目">
+        项目
+      </p>
+    </a>
+  </li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/essays/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="随笔">
+        随笔
+      </p>
+    </a>
+  </li>
+
+  <li class="mt-1">
+    <a
+      href="/tags/designs/"
+      
+      class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+      
+      <p class="text-sm font-small" title="设计">
+        设计
+      </p>
+    </a>
+  </li>
+
+<li class="mb-2"></li>
+
+
+
+            
+              
+  <li class="mt-1">
+  <a
+    href="/about/"
+    
+    class="flex items-center hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-bg font-bg" title="关于">
+      关于
+    </p>
+  </a>
+</li>
+
+
+
+            
+
+          </ul>
+          
+        </div>
+      
+    </div>
+  </div>
+
+</div>
+
+
+
+
+  <script>
+    (function () {
+      var $mainmenu = $(".main-menu");
+      var path = window.location.pathname;
+      $mainmenu.find('a[href="' + path + '"]').each(function (i, e) {
+        $(e).children("p").addClass("active");
+      });
+    })();
+  </script>
+
+
+  </div>
+</div>
+
+
+<script
+  type="text/javascript"
+  src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+  integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+  data-blur-id="menu-blur"></script>
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+      
+      
+      
+      
+        
+  
+    
+      
+    
+  
+
+
+
+    <div id="hero" class="h-[150px] md:h-[200px]"></div>
+  
+  <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom">
+    
+    
+      
+    
+    <img
+      id="background-image"
+      src="/img/background_hu_aa4dc059b276b1c5.png"
+      alt="Background Image"
+      class="absolute inset-0 w-full h-full object-cover">
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-neutral dark:from-neutral-800 to-transparent mix-blend-normal"></div>
+    <div
+      class="absolute inset-0 opacity-60 bg-gradient-to-t from-neutral dark:from-neutral-800 to-neutral-100 dark:to-neutral-800 mix-blend-normal"></div>
+  </div>
+
+  
+    <div
+      id="background-blur"
+      class="fixed opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl"></div>
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+      integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+      data-blur-id="background-blur"
+      data-image-id="background-image"
+      data-image-url="/img/background.png"></script>
+  
+      
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/"
+      >欢迎来到 Asanilo的博客!</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/"
+      >文章</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/"
+      >通信原理5 数字基带传输系统</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        通信原理5 数字基带传输系统
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+
+  
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-18T23:10:53&#43;08:00">2025-10-18</time><span class="px-2 text-primary-500">&middot;</span><span>1145 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">6 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
+  <span
+    id="zen-mode-button"
+    class="text-lg hover:text-primary-500"
+    title="啟用阅读模式"
+    data-title-i18n-disable="啟用阅读模式"
+    data-title-i18n-enable="停用阅读模式">
+    <span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px">
+    <path fill="currentColor" d="M 12.980469 4 C 9.1204688 4 5.9804688 7.14 5.9804688 11 L 6 26 L 9.9804688 26 L 9.9804688 11 C 9.9804688 9.35 11.320469 8 12.980469 8 L 40.019531 8 C 41.679531 8 43.019531 9.35 43.019531 11 L 43.019531 39 C 43.019531 40.65 41.679531 42 40.019531 42 L 29 42 C 29 43.54 28.420938 44.94 27.460938 46 L 40.019531 46 C 43.879531 46 47.019531 42.86 47.019531 39 L 47.019531 11 C 47.019531 7.14 43.879531 4 40.019531 4 L 12.980469 4 z M 7 28 C 4.794 28 3 29.794 3 32 L 3 42 C 3 44.206 4.794 46 7 46 L 23 46 C 25.206 46 27 44.206 27 42 L 27 32 C 27 29.794 25.206 28 23 28 L 7 28 z M 7 32 L 23 32 L 23.001953 42 L 7 42 L 7 32 z"/>
+</svg></span></span>
+  </span>
+</span>
+
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    通信原理
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    
+    
+<div class="flex author">
+  
+    
+    
+      
+    
+    
+      
+        
+      
+      <img
+        class="!mt-0 !mb-0 h-24 w-24 rounded-full me-4"
+        width="96"
+        height="96"
+        alt="Asanilo"
+        src="/img/asanilo_hu_65644e7e49e6f326.png">
+    
+  
+  <div class="place-self-center">
+    
+      <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+        作者
+      </div>
+      <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+        Asanilo
+      </div>
+    
+    
+      <div class="text-sm text-neutral-700 dark:text-neutral-400">如果不能优美地活著，那和死去没有分别</div>
+    
+    <div class="text-2xl sm:text-lg">
+  <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://github.com/asanilo"
+          target="_blank"
+          aria-label="Github"
+          title="Github"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+</span></span></a
+        >
+      
+    
+  </div>
+
+</div>
+  </div>
+</div>
+
+  
+
+  
+
+  
+    <div class="mb-5"></div>
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+      
+        <div class="order-first lg:ml-auto px-0 lg:order-last lg:ps-8">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-[140px]">
+            
+              <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    目录
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-第5讲数字基带传输系统">🌟 第5讲：数字基带传输系统</a></li>
+    <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
+      <ul>
+        <li><a href="#1-引言-section-51">1. 引言 (Section 5.1)</a>
+          <ul>
+            <li><a href="#11--核心概念">1.1 ✨ 核心概念</a></li>
+            <li><a href="#12--应用场景">1.2 🔧 应用场景</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-基带传输系统的基本模型-section-52">2. 基带传输系统的基本模型 (Section 5.2)</a>
+          <ul>
+            <li><a href="#21--各模块功能解析">2.1 🔧 各模块功能解析</a></li>
+            <li><a href="#22--数学模型">2.2 📈 数学模型</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-基带信号的波形设计与编码-section-53">3. 基带信号的波形设计与编码 (Section 5.3)</a>
+          <ul>
+            <li><a href="#31--设计动机为什么要设计波形">3.1 🎯 设计动机：为什么要设计波形？</a></li>
+            <li><a href="#32--波形设计的主要原则">3.2 📜 波形设计的主要原则</a></li>
+            <li><a href="#33--同步技术-synchronization">3.3 ⏱️ 同步技术 (Synchronization)</a></li>
+            <li><a href="#34--基带信号基本类型">3.4 📊 基带信号基本类型</a></li>
+            <li><a href="#35--常用线路编码-line-coding">3.5 ✍️ 常用线路编码 (Line Coding)</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-基带信号的功率谱-section-54">4. 基带信号的功率谱 (Section 5.4)</a>
+          <ul>
+            <li><a href="#41--研究动机我们为什么关心频谱">4.1 🎯 研究动机：我们为什么关心频谱？</a></li>
+            <li><a href="#42--功率谱密度-psd-的构成">4.2 📈 功率谱密度 (PSD) 的构成</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-码间串扰与无失真传输条件-section-55">5. 码间串扰与无失真传输条件 (Section 5.5)</a>
+          <ul>
+            <li><a href="#51--核心概念码间串扰-isi">5.1 ✨ 核心概念：码间串扰 (ISI)</a></li>
+            <li><a href="#52--奈奎斯特第一准则-nyquists-first-criterion">5.2 📜 奈奎斯特第一准则 (Nyquist&rsquo;s First Criterion)</a></li>
+            <li><a href="#53--无-isi-的系统实现">5.3 🔧 无 ISI 的系统实现</a></li>
+            <li><a href="#54--奈奎斯特第二准则-nyquists-second-criterion">5.4 📜 奈奎斯特第二准则 (Nyquist&rsquo;s Second Criterion)</a></li>
+            <li><a href="#55--奈奎斯特第三准则-nyquists-third-criterion">5.5 📜 奈奎斯特第三准则 (Nyquist&rsquo;s Third Criterion)</a></li>
+          </ul>
+        </li>
+        <li><a href="#6-部分响应基带传输系统-section-56">6. 部分响应基带传输系统 (Section 5.6)</a>
+          <ul>
+            <li><a href="#61--设计动机">6.1 🎯 设计动机</a></li>
+            <li><a href="#62--核心思想">6.2 ✨ 核心思想</a></li>
+            <li><a href="#63--实现原理-以第一类部分响应为例">6.3 🔧 实现原理 (以第一类部分响应为例)</a></li>
+          </ul>
+        </li>
+        <li><a href="#7-基带信号检测与最佳接收-section-57">7. 基带信号检测与最佳接收 (Section 5.7)</a>
+          <ul>
+            <li><a href="#71--核心概念最佳接收">7.1 ✨ 核心概念：最佳接收</a></li>
+            <li><a href="#72--最佳接收机匹配滤波器">7.2 🔧 最佳接收机：匹配滤波器</a></li>
+            <li><a href="#73--性能分析">7.3 📈 性能分析</a></li>
+            <li><a href="#74--眼图-eye-diagram">7.4 👁️ 眼图 (Eye Diagram)</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
+    <li><a href="#-引导式提问">🤔 引导式提问</a></li>
+    <li><a href="#-本讲总结">💡 本讲总结</a></li>
+    <li><a href="#-相关缩写">🔍 相关缩写</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    目录
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-第5讲数字基带传输系统">🌟 第5讲：数字基带传输系统</a></li>
+    <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
+      <ul>
+        <li><a href="#1-引言-section-51">1. 引言 (Section 5.1)</a>
+          <ul>
+            <li><a href="#11--核心概念">1.1 ✨ 核心概念</a></li>
+            <li><a href="#12--应用场景">1.2 🔧 应用场景</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-基带传输系统的基本模型-section-52">2. 基带传输系统的基本模型 (Section 5.2)</a>
+          <ul>
+            <li><a href="#21--各模块功能解析">2.1 🔧 各模块功能解析</a></li>
+            <li><a href="#22--数学模型">2.2 📈 数学模型</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-基带信号的波形设计与编码-section-53">3. 基带信号的波形设计与编码 (Section 5.3)</a>
+          <ul>
+            <li><a href="#31--设计动机为什么要设计波形">3.1 🎯 设计动机：为什么要设计波形？</a></li>
+            <li><a href="#32--波形设计的主要原则">3.2 📜 波形设计的主要原则</a></li>
+            <li><a href="#33--同步技术-synchronization">3.3 ⏱️ 同步技术 (Synchronization)</a></li>
+            <li><a href="#34--基带信号基本类型">3.4 📊 基带信号基本类型</a></li>
+            <li><a href="#35--常用线路编码-line-coding">3.5 ✍️ 常用线路编码 (Line Coding)</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-基带信号的功率谱-section-54">4. 基带信号的功率谱 (Section 5.4)</a>
+          <ul>
+            <li><a href="#41--研究动机我们为什么关心频谱">4.1 🎯 研究动机：我们为什么关心频谱？</a></li>
+            <li><a href="#42--功率谱密度-psd-的构成">4.2 📈 功率谱密度 (PSD) 的构成</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-码间串扰与无失真传输条件-section-55">5. 码间串扰与无失真传输条件 (Section 5.5)</a>
+          <ul>
+            <li><a href="#51--核心概念码间串扰-isi">5.1 ✨ 核心概念：码间串扰 (ISI)</a></li>
+            <li><a href="#52--奈奎斯特第一准则-nyquists-first-criterion">5.2 📜 奈奎斯特第一准则 (Nyquist&rsquo;s First Criterion)</a></li>
+            <li><a href="#53--无-isi-的系统实现">5.3 🔧 无 ISI 的系统实现</a></li>
+            <li><a href="#54--奈奎斯特第二准则-nyquists-second-criterion">5.4 📜 奈奎斯特第二准则 (Nyquist&rsquo;s Second Criterion)</a></li>
+            <li><a href="#55--奈奎斯特第三准则-nyquists-third-criterion">5.5 📜 奈奎斯特第三准则 (Nyquist&rsquo;s Third Criterion)</a></li>
+          </ul>
+        </li>
+        <li><a href="#6-部分响应基带传输系统-section-56">6. 部分响应基带传输系统 (Section 5.6)</a>
+          <ul>
+            <li><a href="#61--设计动机">6.1 🎯 设计动机</a></li>
+            <li><a href="#62--核心思想">6.2 ✨ 核心思想</a></li>
+            <li><a href="#63--实现原理-以第一类部分响应为例">6.3 🔧 实现原理 (以第一类部分响应为例)</a></li>
+          </ul>
+        </li>
+        <li><a href="#7-基带信号检测与最佳接收-section-57">7. 基带信号检测与最佳接收 (Section 5.7)</a>
+          <ul>
+            <li><a href="#71--核心概念最佳接收">7.1 ✨ 核心概念：最佳接收</a></li>
+            <li><a href="#72--最佳接收机匹配滤波器">7.2 🔧 最佳接收机：匹配滤波器</a></li>
+            <li><a href="#73--性能分析">7.3 📈 性能分析</a></li>
+            <li><a href="#74--眼图-eye-diagram">7.4 👁️ 眼图 (Eye Diagram)</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
+    <li><a href="#-引导式提问">🤔 引导式提问</a></li>
+    <li><a href="#-本讲总结">💡 本讲总结</a></li>
+    <li><a href="#-相关缩写">🔍 相关缩写</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+<script>
+  (function () {
+    'use strict'
+
+    const SCROLL_OFFSET_RATIO = 0.33
+    const TOC_SELECTOR = '#TableOfContents'
+    const ANCHOR_SELECTOR = '.anchor'
+    const TOC_LINK_SELECTOR = 'a[href^="#"]'
+    const NESTED_LIST_SELECTOR = 'li ul'
+    const ACTIVE_CLASS = 'active'
+
+    function getActiveAnchorId(anchors, offsetRatio) {
+      const threshold = window.scrollY + window.innerHeight * offsetRatio
+      const tocLinks = [...document.querySelectorAll('#TableOfContents a[href^="#"]')]
+      const tocIds = new Set(tocLinks.map(link => link.getAttribute('href').substring(1)))
+
+      for (let i = anchors.length - 1; i >= 0; i--) {
+        const top = anchors[i].getBoundingClientRect().top + window.scrollY
+        if (top <= threshold && tocIds.has(anchors[i].id)) {
+          return anchors[i].id
+        }
+      }
+      return anchors.find(anchor => tocIds.has(anchor.id))?.id || ''
+    }
+
+    function updateTOC({ toc, anchors, links, scrollOffset, collapseInactive }) {
+      const activeId = getActiveAnchorId(anchors, scrollOffset)
+      if (!activeId) return
+
+      links.forEach(link => {
+        const isActive = link.getAttribute('href') === `#${activeId}`
+        link.classList.toggle(ACTIVE_CLASS, isActive)
+
+        if (collapseInactive) {
+          const ul = link.closest('li')?.querySelector('ul')
+          if (ul) ul.style.display = isActive ? '' : 'none'
+        }
+      })
+
+      if (collapseInactive) {
+        const activeLink = toc.querySelector(`a[href="#${CSS.escape(activeId)}"]`)
+        let el = activeLink
+        while (el && el !== toc) {
+          if (el.tagName === 'UL') el.style.display = ''
+          if (el.tagName === 'LI') el.querySelector('ul')?.style.setProperty('display', '')
+          el = el.parentElement
+        }
+      }
+    }
+
+    function initTOC() {
+      const toc = document.querySelector(TOC_SELECTOR)
+      if (!toc) return
+
+      const collapseInactive = false
+      const anchors = [...document.querySelectorAll(ANCHOR_SELECTOR)]
+      const links = [...toc.querySelectorAll(TOC_LINK_SELECTOR)]
+
+      if (collapseInactive) {
+        toc.querySelectorAll(NESTED_LIST_SELECTOR).forEach(ul => ul.style.display = 'none')
+      }
+
+      const config = {
+        toc,
+        anchors,
+        links,
+        scrollOffset: SCROLL_OFFSET_RATIO,
+        collapseInactive
+      }
+
+      window.addEventListener('scroll', () => updateTOC(config), { passive: true })
+      window.addEventListener('hashchange', () => updateTOC(config), { passive: true })
+
+      updateTOC(config)
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', initTOC)
+      : initTOC()
+  })()
+</script>
+
+
+            
+            
+          </div>
+        </div>
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+  <details
+    class="mt-2 mb-5 overflow-hidden rounded-lg ms-0 ps-5"
+    >
+    
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 -ms-5 ps-5 dark:bg-primary-800 dark:text-neutral-100">
+    通信原理 -
+    这篇文章属于一个选集。
+  </summary>
+  
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/1%E7%BB%AA%E8%AE%BA/">
+          § 1:
+          通信原理1 绪论
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/3-%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/">
+          § 2:
+          通信原理3 模拟信号的数字编码
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        § 3:
+        本文
+      </div>
+    
+  
+
+
+  </details>
+
+
+        <div class="article-content max-w-prose mb-20">
+          <hr>
+
+<h2 class="relative group">🌟 第5讲：数字基带传输系统 
+    <div id="-第5讲数字基带传输系统" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e7%ac%ac5%e8%ae%b2%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<p>(对应 PPT 页码：P1 - P51)</p>
+<p>本讲将开启数字通信的&quot;地面行动&quot;&mdash;&mdash;数字基带传输。我们将探索信息在不经过&quot;上天&quot;（调制到高频）的情况下，如何以最原始的脉冲形式在信道中进行有效、可靠的传输。核心目标是理解基带传输系统的构成，并掌握为了适应信道而进行的&quot;化妆术&quot;&mdash;&mdash;波形设计与线路编码。</p>
+
+<h2 class="relative group">📚 本讲知识地图 
+    <div id="-本讲知识地图" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e6%9c%ac%e8%ae%b2%e7%9f%a5%e8%af%86%e5%9c%b0%e5%9b%be" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<figure>
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2016.png"
+class="wikilink" alt="file-5数字基带传输系统16.png" />
+<figcaption aria-hidden="true">file-5数字基带传输系统16.png</figcaption>
+</figure>
+
+<h2 class="relative group">📝 本讲主要内容 
+    <div id="-本讲主要内容" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e6%9c%ac%e8%ae%b2%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+
+<h3 class="relative group">1. 引言 (Section 5.1) 
+    <div id="1-引言-section-51" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#1-%e5%bc%95%e8%a8%80-section-51" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">1.1 ✨ 核心概念 
+    <div id="11--核心概念" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#11--%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>数字基带信号 (Digital Baseband Signal)</strong>
+<ul>
+<li><strong>定义</strong>：未经频谱搬移（调制），直接由 &ldquo;0&rdquo; 和 &ldquo;1&rdquo; 序列形成的、频谱集中在零频附近的低通型数字电脉冲序列。</li>
+<li><strong>生动比喻</strong>：想象一下，基带信号就是我们说话的声音本身（声波），它就在空气中直接传播。而带通信号（后续章节内容）则像是把我们的声音录下来，通过调频广播发射出去，需要收音机解调才能听到。基带信号就是这种&quot;原汁原味&quot;的电信号。</li>
+<li><strong>关键要素</strong>：
+<ul>
+<li><strong>数字</strong>：信号取值离散。</li>
+<li><strong>基带</strong>：频谱从零频开始，未经调制。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>数字基带传输系统 (Digital Baseband Transmission System)</strong>
+<ul>
+<li><strong>定义</strong>：直接利用数字基带信号在信道中传输信息的系统。</li>
+<li><strong>生动比喻</strong>：这就像是两个人用一根绷紧的棉线和两个纸杯做的&quot;土电话&quot;。声音（信息）直接通过棉线（信道）的振动（基带信号）来传递，没有经过任何无线电转换。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">1.2 🔧 应用场景 
+    <div id="12--应用场景" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#12--%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ol>
+<li>
+<p><strong>有线传输</strong>：</p>
+<ul>
+<li><strong>中短距离</strong>：设备内部总线、局域网（如以太网）、HDMI 接口等。信道稳定可靠，实现简单。</li>
+<li><strong>历史上的长距离</strong>：PDH/SDH 等早期光网络，通过时分复用和中继实现。</li>
+</ul>
+</li>
+<li>
+<p><strong>作为子系统</strong>：任何<strong>数字带通传输系统</strong>（如 Wi-Fi, 5G）都必然包含一个基带处理子系统。在逻辑上，我们可以将调制/解调部分看作一个&quot;广义信道&quot;，从而将复杂的带通系统简化为等效的基带传输系统进行分析。</p>
+<p>【图片：数字带通传输系统简化为数字基带传输系统的逻辑框图】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F.png"
+class="wikilink" alt="file-5数字基带传输系统.png" /></p>
+</li>
+</ol>
+
+<h3 class="relative group">2. 基带传输系统的基本模型 (Section 5.2) 
+    <div id="2-基带传输系统的基本模型-section-52" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#2-%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%a8%a1%e5%9e%8b-section-52" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+<p>一个典型的数字基带传输系统由以下几个核心部分组成。</p>
+<p>【图片：数字基带传输系统通用模型框图，包含波形变换、信道、接收滤波器、抽样判决器、同步等模块】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%201.png"
+class="wikilink" alt="file-5数字基带传输系统1.png" /></p>
+
+<h4 class="relative group">2.1 🔧 各模块功能解析 
+    <div id="21--各模块功能解析" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#21--%e5%90%84%e6%a8%a1%e5%9d%97%e5%8a%9f%e8%83%bd%e8%a7%a3%e6%9e%90" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ol>
+<li><strong>码型编码/发送滤波器 (Waveform Transformation / Transmit Filter)</strong>
+<ul>
+<li><strong>功能</strong>：将原始的二进制序列 <code>{b_n}</code> 变换为适合在信道中传输的特定脉冲波形 <code>s(t)</code>。</li>
+<li><strong>生动比喻</strong>：这就像是出国前，把中文（原始数据）翻译成目标国家的官方语言（特定码型），并按照当地的语法习惯组织成句子（脉冲成形），以便对方能听懂并减少误解。</li>
+<li><strong>核心任务</strong>：
+<ul>
+<li><strong>码型编码 (Line Coding)</strong>：将 &ldquo;0&rdquo;, &ldquo;1&rdquo; 映射为特定的电平或脉冲组合（如 AMI, HDB3 码），以解决直流、同步等问题。</li>
+<li><strong>脉冲成形</strong>：通过发送滤波器（如升余弦滚降滤波器）来压缩信号频谱，减小码间串扰 (ISI)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>信道 (Channel)</strong>
+<ul>
+<li><strong>功能</strong>：传输信号的物理媒介。</li>
+<li><strong>关键特征</strong>：
+<ul>
+<li>会引入<strong>衰减</strong>和<strong>失真</strong>（频率响应不理想）。</li>
+<li>会叠加<strong>噪声</strong>，主要是加性高斯白噪声 (AWGN)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>接收滤波器 (Receive Filter)</strong>
+<ul>
+<li><strong>功能</strong>：尽可能滤除带外噪声，并对信道造成的失真进行补偿。</li>
+<li><strong>生动比喻</strong>：像一个专业的降噪耳机，在你听别人说话时，过滤掉周围嘈杂的背景音（噪声），同时如果对方口齿不清（信道失真），它还能通过内置算法&quot;脑补&quot;出清晰的话语（均衡）。</li>
+<li><strong>核心组成</strong>：
+<ul>
+<li><strong>匹配滤波器</strong>：在抽样时刻，最大化输出信号的信噪比，是抵抗噪声的最优选择。</li>
+<li><strong>均衡器</strong>：补偿信道引起的幅频和相频失真，专门用来对抗码间串扰 (ISI)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>抽样判决器 (Sampler &amp; Decision Device)</strong>
+<ul>
+<li><strong>功能</strong>：在同步信号的指引下，于每个码元的&quot;最佳时刻&quot;对接收波形进行采样，并根据判决门限恢复出原始的 &ldquo;0&rdquo; 或 &ldquo;1&rdquo;。</li>
+<li><strong>生动比喻</strong>：这是一个&quot;阅卷老师&quot;。他只在考试结束铃响的瞬间（最佳时刻）收卷（抽样），然后对照标准答案（判决门限），给每道题打上对（1）或错（0）的分数（判决）。</li>
+</ul>
+</li>
+<li><strong>定时同步系统 (Timing Synchronization System)</strong>
+<ul>
+<li><strong>功能</strong>：为抽样判决器提供精确的&quot;节拍&quot;（时钟信号），确保在最佳时刻进行抽样。</li>
+<li><strong>生动比喻</strong>：乐队的指挥家。他确保所有乐手（抽样判决器）都按照同一个节拍演奏，否则音乐就会乱成一锅粥（误码率急剧上升）。定时误差是导致系统性能恶化的关键原因之一。</li>
+</ul>
+</li>
+</ol>
+
+<h4 class="relative group">2.2 📈 数学模型 
+    <div id="22--数学模型" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#22--%e6%95%b0%e5%ad%a6%e6%a8%a1%e5%9e%8b" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>发送信号 <code>s(t)</code> 通常可以表示为一系列脉冲的叠加，即<strong>脉冲幅度调制 (PAM)</strong> 的形式：
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'none'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+$$
+s(t) = \sum_{n=-\infty}^{\infty} a_n g_T(t - nT_s)
+$$
+</p>
+<ul>
+<li>$s(t)$：最终在信道中传输的基带信号。</li>
+<li>$\\{a\_n\\}$：经过码型编码后的符号序列（传输码），它是一个随机序列。</li>
+<li>$g\_T(t)$：单个发送脉冲波形（如矩形、升余弦脉冲）。</li>
+<li>$T\_s$：码元周期（符号间隔）。</li>
+<li><strong>物理意义</strong>：整个基带信号就是用一个基本波形 $g\_T(t)$，在每个码元时隙 $nT\_s$ 处，根据当前的符号值 $a\_n$ 去&quot;盖章&quot;，只不过这个&quot;章&quot;的墨水深浅（幅度）由 $a\_n$ 决定。</li>
+</ul>
+
+<h3 class="relative group">3. 基带信号的波形设计与编码 (Section 5.3) 
+    <div id="3-基带信号的波形设计与编码-section-53" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#3-%e5%9f%ba%e5%b8%a6%e4%bf%a1%e5%8f%b7%e7%9a%84%e6%b3%a2%e5%bd%a2%e8%ae%be%e8%ae%a1%e4%b8%8e%e7%bc%96%e7%a0%81-section-53" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">3.1 🎯 设计动机：为什么要设计波形？ 
+    <div id="31--设计动机为什么要设计波形" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#31--%e8%ae%be%e8%ae%a1%e5%8a%a8%e6%9c%ba%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e8%ae%be%e8%ae%a1%e6%b3%a2%e5%bd%a2" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>因为物理信道不是理想的。尤其是有线信道：</p>
+<ul>
+<li><strong>长距离有线信道</strong>：由于存在隔直电容、耦合变压器，它<strong>无法通过直流分量</strong>；同时，介质损耗导致<strong>高频衰减严重</strong>。</li>
+<li><strong>结论</strong>：信道就像一个&quot;挑食&quot;的通道，它既不喜欢&quot;零频&quot;（直流），也不喜欢&quot;太高频&quot;的成分。因此，我们必须对原始的数字脉冲进行&quot;改造&quot;，使其频谱特性与信道相匹配。</li>
+</ul>
+
+<h4 class="relative group">3.2 📜 波形设计的主要原则 
+    <div id="32--波形设计的主要原则" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#32--%e6%b3%a2%e5%bd%a2%e8%ae%be%e8%ae%a1%e7%9a%84%e4%b8%bb%e8%a6%81%e5%8e%9f%e5%88%99" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ol>
+<li><strong>去直流/直流平衡</strong>：编码后的波形应不含或少含直流分量，以适应交流耦合的信道。</li>
+<li><strong>限制带宽 (抑制高频)</strong>：通过脉冲成形，使信号频谱集中在主瓣，减少对相邻信道的干扰，并对抗信道的高频衰减。</li>
+<li><strong>便于同步</strong>：波形应包含丰富的电平跳变，以便接收端能从中提取可靠的定时信息。</li>
+<li><strong>信源透明性</strong>：编码方式不应依赖于信源的统计特性。无论输入是长串'1&rsquo;还是长串'0&rsquo;，上述特性（如直流平衡、定时信息）都应保持。</li>
+<li><strong>误码扩散小</strong>：单个传输错误在译码后不应引起大面积的译码错误。</li>
+<li><strong>检错能力</strong>：编码规则本身应具有一定的规律性，以便于检测传输中的错误。</li>
+<li><strong>编码效率与实现简易性</strong>：在满足性能要求的前提下，追求更高的频带利用率和更低的实现复杂度。</li>
+</ol>
+
+<h4 class="relative group">3.3 ⏱️ 同步技术 (Synchronization) 
+    <div id="33--同步技术-synchronization" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#33--%e5%90%8c%e6%ad%a5%e6%8a%80%e6%9c%af-synchronization" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>意义</strong>：使接收机与发送机&quot;步调一致&quot;，是正确接收的前提。</li>
+<li><strong>分类</strong>：
+<ul>
+<li><strong>外同步 (辅助信号同步)</strong>：发送端额外发送一个专门的同步时钟信号。简单，但需要额外的信道，造成资源浪费。</li>
+<li><strong>自同步 (盲同步)</strong>：发送端将同步信息巧妙地&quot;隐藏&quot;在数据波形中，接收端通过分析波形自身来提取同步。</li>
+<li><strong>混合同步</strong>：现代通信系统（如 4G/5G）普遍采用的方式。开始时用导频等辅助信号进行快速的粗同步，进入稳定通信后切换到自同步进行精确跟踪。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">3.4 📊 基带信号基本类型 
+    <div id="34--基带信号基本类型" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#34--%e5%9f%ba%e5%b8%a6%e4%bf%a1%e5%8f%b7%e5%9f%ba%e6%9c%ac%e7%b1%bb%e5%9e%8b" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>在一个码元周期内，可以用脉冲的不同特征来表示信息：</p>
+<ul>
+<li><strong>脉幅调制 (PAM - Pulse Amplitude Modulation)</strong>：用脉冲的<strong>幅度</strong>高低承载信息。</li>
+<li><strong>比喻</strong>：用不同力道敲鼓，声音大小代表不同信息。</li>
+<li><strong>应用</strong>：高速有线通信（网线、光纤）、Wi-Fi、5G 等，核心优势是<strong>频谱效率高</strong>。</li>
+<li><strong>脉宽调制 (PWM - Pulse Width Modulation)</strong>：用脉冲的<strong>宽度</strong>（占空比）承载信息。</li>
+<li><strong>比喻</strong>：按住手电筒开关的时间长短代表不同信息。</li>
+<li><strong>应用</strong>：电机调速、LED 调光等控制领域，核心优势是<strong>功率效率高</strong>。</li>
+<li><strong>脉位调制 (PPM - Pulse Position Modulation)</strong>：用脉冲在时间轴上的<strong>位置</strong>承载信息。</li>
+<li><strong>比喻</strong>：在约定的一分钟内，第10秒拍手和第30秒拍手代表不同信息。</li>
+<li><strong>应用</strong>：深空通信、激光雷达、红外遥控等，核心优势是<strong>抗干扰能力强</strong>。</li>
+</ul>
+<p>【图片：PAM, PWM, PPM 信号波形示意图】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%202.png"
+class="wikilink" alt="400" /></p>
+
+<h4 class="relative group">3.5 ✍️ 常用线路编码 (Line Coding) 
+    <div id="35--常用线路编码-line-coding" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#35--%e5%b8%b8%e7%94%a8%e7%ba%bf%e8%b7%af%e7%bc%96%e7%a0%81-line-coding" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>线路编码是波形设计中最核心的环节，它通过引入相关性来改变信号的频谱特性。</p>
+
+<h5 class="relative group">3.5.1 特性维度 
+    <div id="351-特性维度" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#351-%e7%89%b9%e6%80%a7%e7%bb%b4%e5%ba%a6" aria-label="锚点">#</a>
+    </span>        
+    
+</h5>
+<ul>
+<li><strong>单极性 vs. 双极性</strong>
+<ul>
+<li><strong>单极性 (Unipolar)</strong>：用正电平（或零电平）和零电平表示 &lsquo;1&rsquo; 和 &lsquo;0&rsquo;。<strong>含有直流分量</strong>，抗噪性差。</li>
+<li><strong>双极性 (Bipolar)</strong>：用正、负电平对称地表示 &lsquo;1&rsquo; 和 &lsquo;0&rsquo;。<strong>无直流分量</strong>（当'0&rsquo;和'1&rsquo;等概时），抗噪性强。</li>
+</ul>
+</li>
+<li><strong>归零 (RZ) vs. 不归零 (NRZ)</strong>
+<ul>
+<li><strong>不归零 (NRZ)</strong>：一个码元时间内电平保持不变。<strong>带宽窄</strong>，但长连'0&rsquo;或'1&rsquo;时无电平跳变，<strong>同步困难</strong>。</li>
+<li><strong>归零 (RZ)</strong>：每个码元中间，电平会返回到零。<strong>含有丰富的定时信息</strong>，易于同步，但代价是<strong>带宽加倍</strong>。</li>
+</ul>
+</li>
+<li><strong>差分码 vs. 非差分码 (绝对码)</strong>
+<ul>
+<li><strong>绝对码</strong>：电平本身直接对应信息。如 +V 代表'1&rsquo;，-V 代表'0&rsquo;。</li>
+<li><strong>差分码 (相对码)</strong>：电平的<strong>变化</strong>对应信息。如电平跳变代表'1&rsquo;，不变代表'0&rsquo;。它的主要优点是能<strong>克服信道极性反转</strong>问题，因为即使所有电平都反转了，跳变与否的相对关系依然不变。</li>
+</ul>
+</li>
+</ul>
+
+<h5 class="relative group">3.5.2 常见码型详解 
+    <div id="352-常见码型详解" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#352-%e5%b8%b8%e8%a7%81%e7%a0%81%e5%9e%8b%e8%af%a6%e8%a7%a3" aria-label="锚点">#</a>
+    </span>        
+    
+</h5>
+<ul>
+<li><strong>AMI 码 (Alternate Mark Inversion - 传号交替反转码)</strong>
+<ul>
+<li><strong>规则</strong>：&lsquo;0&rsquo; 码 -&gt; 0 电平；&lsquo;1&rsquo; 码 -&gt; +V 和 -V 交替。</li>
+<li><strong>优点</strong>：
+<ul>
+<li>无直流分量，实现了直流平衡。</li>
+<li>编码规则简单，且具有一定的检错能力（若收到两个同极性的脉冲则必有错）。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<strong>不具备信源透明性</strong>。当出现长串连 &lsquo;0&rsquo; 时，信号长时间为 0 电平，无法提取同步信息。</li>
+<li><strong>应用</strong>：PCM 系统的 T1 接口。
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%203.png"
+class="wikilink" alt="600" /></li>
+</ul>
+</li>
+<li><strong>HDB3 码 (High-Density Bipolar 3-order Code - 3 阶高密度双极性码)</strong>
+<ul>
+<li>
+<p><strong>本质</strong>：AMI 码的改良版，专门为了解决连 &lsquo;0&rsquo; 同步问题。</p>
+</li>
+<li>
+<p><strong>规则</strong>：</p>
+<ol>
+<li>检查原始码流中连 &lsquo;0&rsquo; 的个数。</li>
+<li>如果连 &lsquo;0&rsquo; 个数 <code>≤ 3</code>，则按 AMI 规则编码。</li>
+<li>如果出现 4 个连 &lsquo;0&rsquo;，则用一个特殊的 4 位码组（称为<strong>取代节</strong>）替换 &ldquo;0000&rdquo;。取代节为 <code>B00V</code> 或 <code>000V</code>。</li>
+</ol>
+<ul>
+<li><code>B</code> (Balance) 脉冲：极性与前一个非零脉冲<strong>相同</strong>，遵循 AMI 规则。</li>
+<li><code>V</code> (Violation) 脉冲：极性与前一个非零脉冲<strong>相同</strong>，<strong>故意破坏</strong> AMI 规则。</li>
+</ul>
+</li>
+<li>
+<p><strong>选择 <code>B00V</code> 还是 <code>000V</code>？</strong></p>
+<ul>
+<li>核心原则是<strong>确保相邻的 V 脉冲之间极性交替</strong>，从而维持直流平衡。</li>
+<li>判断方法：统计上一个取代节到当前取代节之间 <code>B</code> 脉冲的个数。若为<strong>奇数</strong>，则当前 V 的极性应与上一个 V 相同，此时用 <code>000V</code>；若为<strong>偶数</strong>，则当前 V 极性应与上一个 V 相反，此时用 <code>B00V</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>优点</strong>：完美解决了 AMI 的同步问题，同时保留了无直流和检错能力，是<strong>信源透明</strong>的。</p>
+</li>
+<li>
+<p><strong>应用</strong>：PCM 系统的 E1 接口（欧洲、中国标准）。
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%204.png"
+class="wikilink" alt="550" /></p>
+</li>
+</ul>
+</li>
+<li><strong>曼彻斯特码 (Manchester Code)</strong>
+<ul>
+<li><strong>规则</strong>：将每个码元周期一分为二。&lsquo;1&rsquo; -&gt; &ldquo;高-低&rdquo; 电平跳变；&lsquo;0&rsquo; -&gt; &ldquo;低-高&rdquo; 电平跳变。（反之亦可，但需统一）</li>
+<li><strong>生动比喻</strong>：每个比特都自带一个&quot;心跳&quot;（电平跳变），接收端只要跟着心跳节奏走就不会失步。</li>
+<li><strong>优点</strong>：
+<ul>
+<li>每个码元中间必有跳变，<strong>同步性能极佳</strong>。</li>
+<li>正负电平各占一半，<strong>无直流分量</strong>。</li>
+<li>信源透明性好。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：带宽是原始NRZ码的<strong>两倍</strong>，频谱效率低。</li>
+<li><strong>应用</strong>：以太网（10BASE-T）。
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%205.png"
+class="wikilink" alt="file-5数字基带传输系统5.png" /></li>
+</ul>
+</li>
+<li><strong>差分曼彻斯特码</strong>
+<ul>
+<li><strong>规则</strong>：每个码元中间都有跳变（用于同步）。码元<strong>起始处</strong>是否跳变用来表示信息。&lsquo;0&rsquo; -&gt; 起始处跳变；&lsquo;1&rsquo; -&gt; 起始处不跳变。</li>
+<li><strong>优点</strong>：综合了曼彻斯特码（易同步）和差分码（抗极性反转）的优点。</li>
+<li><strong>应用</strong>：令牌环网。
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%206.png"
+class="wikilink" alt="file-5数字基带传输系统6.png" /></li>
+</ul>
+</li>
+</ul>
+
+<h5 class="relative group">3.5.3 加扰技术 (Scrambling) 
+    <div id="353-加扰技术-scrambling" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#353-%e5%8a%a0%e6%89%b0%e6%8a%80%e6%9c%af-scrambling" aria-label="锚点">#</a>
+    </span>        
+    
+</h5>
+<ul>
+<li><strong>目的</strong>：除了线路编码，还有一种更通用的方法来解决长连码问题，就是<strong>加扰</strong>。它通过数学运算将输入序列变得&quot;随机化&quot;，从而消除长连码和信源数据的相关性。</li>
+<li><strong>原理</strong>：在发送端，将原始数据序列 <code>{d_n}</code> 与一个伪随机序列 <code>{p_n}</code> 进行模2加（异或）运算，得到加扰序列 <code>{s_n}</code>。
+
+  $$
+  s_n = d_n \oplus p_n
+  $$
+  </li>
+<li><strong>解扰</strong>：在接收端，用<strong>完全相同</strong>的伪随机序列再进行一次异或运算，即可恢复原数据。
+
+  $$
+  d'_n = s_n \oplus p_n = (d_n \oplus p_n) \oplus p_n = d_n
+  $$
+  </li>
+<li><strong>优点</strong>：
+<ul>
+<li><strong>信源透明</strong>：任何输入序列都能被随机化。</li>
+<li><strong>便于时钟恢复</strong>：随机序列有足够的跳变。</li>
+<li><strong>平滑发射频谱</strong>：避免功率集中在某些离散频率上。</li>
+<li><strong>不扩散错误</strong>：信道中单个比特的错误，解扰后仍然是单个比特的错误。</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<h3 class="relative group">4. 基带信号的功率谱 (Section 5.4) 
+    <div id="4-基带信号的功率谱-section-54" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#4-%e5%9f%ba%e5%b8%a6%e4%bf%a1%e5%8f%b7%e7%9a%84%e5%8a%9f%e7%8e%87%e8%b0%b1-section-54" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">4.1 🎯 研究动机：我们为什么关心频谱？ 
+    <div id="41--研究动机我们为什么关心频谱" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#41--%e7%a0%94%e7%a9%b6%e5%8a%a8%e6%9c%ba%e6%88%91%e4%bb%ac%e4%b8%ba%e4%bb%80%e4%b9%88%e5%85%b3%e5%bf%83%e9%a2%91%e8%b0%b1" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>分析基带信号的功率谱，就像是给信号做一次&quot;成分分析&quot;。通过观察信号的功率在不同频率上的分布，我们可以：</p>
+<ol>
+<li><strong>从信号出发，选信道</strong>：根据信号的主要频谱范围，为其选择一个带宽合适的信道，好比为一辆车选择一条足够宽的路。</li>
+<li><strong>从信道出发，选编码</strong>：如果信道带宽有限（路很窄），我们就需要选择一种频谱更&quot;瘦&quot;的编码方式，让信号能顺利通过。</li>
+<li><strong>分析信号处理过程</strong>：功率谱中的特定频率成分（线谱）是提取同步信息的关键。通过分析功率谱，可以判断是否容易提取定时信号，并指导同步电路的设计。</li>
+</ol>
+
+<h4 class="relative group">4.2 📈 功率谱密度 (PSD) 的构成 
+    <div id="42--功率谱密度-psd-的构成" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#42--%e5%8a%9f%e7%8e%87%e8%b0%b1%e5%af%86%e5%ba%a6-psd-%e7%9a%84%e6%9e%84%e6%88%90" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>对于一个随机的数字基带信号，其功率谱通常由两部分组成：</p>
+<ul>
+<li><strong>连续谱部分</strong>：由信号的随机、变化部分产生。它决定了信号带宽等主要特性。</li>
+<li><strong>离散谱部分（线谱）</strong>：由信号的周期性、确定性部分（统计均值）产生。通常出现在码元频率的整数倍处，是提取码元定时信息的&quot;宝藏&quot;。</li>
+</ul>
+<p>对于一个由波形 $g(t)$ 构成的随机序列，其功率谱密度 $P\_s(f)$ 的一般形式为：
+
+$$
+P_s(f) = \frac{|G(f)|^2}{T_s} \left[ R(0) - m_a^2 + \frac{m_a^2}{T_s} \sum_{k=-\infty}^{\infty} \delta(f - \frac{k}{T_s}) \right] + \frac{|G(f)|^2}{T_s^2} \sum_{k \neq 0} R(k) \sum_{m=-\infty}^{\infty} \delta(f - \frac{m}{T_s})
+$$
+</p>
+<ul>
+<li><strong>工程意义</strong>：这个公式告诉我们，信号的<strong>最终频谱形状</strong>主要由单个脉冲波形 $g(t)$ 的频谱 $|G(f)|^2$ 决定，而<strong>具体的频谱结构</strong>（直流、线谱等）则由传输码序列 $\\{a\_n\\}$ 的统计特性（均值 $m\_a$、自相关函数 $R(k)$）共同决定。</li>
+</ul>
+<ul>
+<li><strong>关键结论</strong>：
+<ul>
+<li>若码元序列的<strong>均值不为零</strong>，则功率谱中含有<strong>直流分量</strong>和<strong>离散谱</strong>。</li>
+<li>通过精心设计线路编码（如AMI码），可以使码元序列的均值为零，从而<strong>消除直流分量</strong>，并在特定频率（如 $f=0$）处制造<strong>频谱零点</strong>，这对于适应信道特性至关重要。</li>
+</ul>
+</li>
+</ul>
+<p>【图片：双极性不归零码 (NRZ) 和 AMI 码的功率谱密度对比图，突出显示 NRZ 有直流而 AMI 在直流处为零点】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%207.png"
+class="wikilink" alt="600" />
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%208.png"
+class="wikilink" alt="600" /></p>
+
+<h3 class="relative group">5. 码间串扰与无失真传输条件 (Section 5.5) 
+    <div id="5-码间串扰与无失真传输条件-section-55" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#5-%e7%a0%81%e9%97%b4%e4%b8%b2%e6%89%b0%e4%b8%8e%e6%97%a0%e5%a4%b1%e7%9c%9f%e4%bc%a0%e8%be%93%e6%9d%a1%e4%bb%b6-section-55" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">5.1 ✨ 核心概念：码间串扰 (ISI) 
+    <div id="51--核心概念码间串扰-isi" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#51--%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5%e7%a0%81%e9%97%b4%e4%b8%b2%e6%89%b0-isi" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>定义</strong>：由于整个传输系统（发送、信道、接收）的带宽限制，导致脉冲波形在时域上发生展宽和拖尾，使得前一个码元的&quot;尾巴&quot;干扰到了当前码元的抽样判决。</li>
+<li><strong>生动比喻</strong>：想象一队人依次通过一个旋转门。如果每个人通过后，旋转门都要晃动一会儿才能停稳（脉冲拖尾），而下一个人不等门停稳就立刻进来（码元速率过快），那么前一个人的晃动就会影响到对当前这个人的判断。这种来自&quot;前任&quot;的干扰，就是码间串扰。</li>
+<li><strong>根源</strong>：系统总传输函数 $H(f) = H\_T(f) H\_C(f) H\_R(f)$ 是一个<strong>带限系统</strong>。时域的脉冲通过带限系统，必然会产生展宽和拖尾。</li>
+</ul>
+
+<h4 class="relative group">5.2 📜 奈奎斯特第一准则 (Nyquist&rsquo;s First Criterion) 
+    <div id="52--奈奎斯特第一准则-nyquists-first-criterion" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#52--%e5%a5%88%e5%a5%8e%e6%96%af%e7%89%b9%e7%ac%ac%e4%b8%80%e5%87%86%e5%88%99-nyquists-first-criterion" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>这是消除码间串扰的&quot;宪法&quot;，规定了无 ISI 传输所需满足的条件。</p>
+<ul>
+<li>
+<p><strong>时域条件</strong>：</p>
+<ul>
+<li><strong>定义</strong>：要实现无码间串扰，系统总的冲激响应 $h(t)$ 必须在当前码元的抽样时刻 $t=0$ 时值归一化为1，而在所有其他码元的抽样时刻 $t=kT\_s$ (k 为非零整数) 时，其值必须<strong>恰好为零</strong>。
+
+    $$
+    h(kT_s) = \begin{cases} 1, & k=0 \\ 0, & k \neq 0 \end{cases}
+    $$
+    </li>
+<li><strong>生动比喻</strong>：这相当于我们设计了一种神奇的波形，它的&quot;拖尾&quot;虽然存在，但在每一个邻居需要被&quot;拍照&quot;（抽样）的精确瞬间，它的尾巴都恰好垂到地面（值为零），完全不影响邻居上镜。</li>
+</ul>
+<p>【图片：一个满足奈奎斯特准则的 h(t) 波形，在 0, ±Ts, ±2Ts&hellip; 处的取值情况】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%209.png"
+class="wikilink" alt="file-5数字基带传输系统9.png" /></p>
+</li>
+<li>
+<p><strong>频域条件</strong>：</p>
+<ul>
+<li><strong>定义</strong>：时域条件等价于，将系统总的频域响应 $H(f)$ 按照码元速率 $f\_s = 1/T\_s$ 进行周期性延拓并叠加后，其结果必须为一个常数。
+
+    $$
+    \sum_{i=-\infty}^{\infty} H(f - i f_s) = T_s \quad (\text{常数})
+    $$
+    </li>
+<li><strong>生动比喻</strong>：这就像玩&quot;俄罗斯方块&quot;。虽然单个的方块（$H(f)$）形状各异，但只要我们按照固定的间隔（$f\_s$）把它们一个个堆叠起来，最终能完美地填满一行，形成一条平坦的直线（常数），那么这个系统就是无 ISI 的。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">5.3 🔧 无 ISI 的系统实现 
+    <div id="53--无-isi-的系统实现" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#53--%e6%97%a0-isi-%e7%9a%84%e7%b3%bb%e7%bb%9f%e5%ae%9e%e7%8e%b0" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+
+<h5 class="relative group">5.3.1 理想系统 (奈奎斯特带宽) 
+    <div id="531-理想系统-奈奎斯特带宽" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#531-%e7%90%86%e6%83%b3%e7%b3%bb%e7%bb%9f-%e5%a5%88%e5%a5%8e%e6%96%af%e7%89%b9%e5%b8%a6%e5%ae%bd" aria-label="锚点">#</a>
+    </span>        
+    
+</h5>
+<ul>
+<li><strong>系统特性</strong>：总传输特性 $H(f)$ 为一个理想的矩形低通滤波器。</li>
+<li><strong>冲激响应</strong>：$h(t) = \text{sinc}(t/T\_s)$。</li>
+<li><strong>奈奎斯特带宽</strong>：实现无 ISI 所需的<strong>最小理论带宽</strong>。
+
+  $$
+  W = f_N = \frac{1}{2T_s} = \frac{R_s}{2} \quad (\text{Hz})
+  $$
+  
+其中 $R\_s$ 是码元速率 (Baud)。</li>
+<li><strong>奈奎斯特速率</strong>：在带宽为 W 的信道中，能实现的<strong>最高无 ISI 码元速率</strong>。
+
+  $$
+  R_s = 2W
+  $$
+  </li>
+<li><strong>问题</strong>：
+<ol>
+<li><strong>物理不可实现</strong>：理想矩形滤波器的冲激响应是无限长的，且不满足因果性。</li>
+<li><strong>定时敏感</strong>：sinc 函数的拖尾按 $1/t$ 衰减，非常缓慢。抽样时刻稍有偏差，就会引入严重的 ISI。</li>
+</ol>
+</li>
+</ul>
+
+<h5 class="relative group">5.3.2 实际系统 (升余弦滚降系统) 
+    <div id="532-实际系统-升余弦滚降系统" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#532-%e5%ae%9e%e9%99%85%e7%b3%bb%e7%bb%9f-%e5%8d%87%e4%bd%99%e5%bc%a6%e6%bb%9a%e9%99%8d%e7%b3%bb%e7%bb%9f" aria-label="锚点">#</a>
+    </span>        
+    
+</h5>
+<ul>
+<li><strong>思想</strong>：对理想矩形滤波器的边沿进行&quot;平滑&quot;处理，使其物理可实现，同时仍满足奈奎斯特准则。</li>
+<li><strong>升余弦滚降滤波器</strong>：
+<ul>
+<li>
+<figure>
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2010.png"
+class="wikilink" alt="file-5数字基带传输系统10.png" />
+<figcaption aria-hidden="true">file-5数字基带传输系统10.png</figcaption>
+</figure>
+</li>
+<li>
+<p><strong>频率特性</strong>：在奈奎斯特带宽 $f\_N$ 之外，频谱不是戛然而止，而是按照余弦函数的形状平滑地滚降到零。</p>
+</li>
+<li>
+<p><strong>滚降系数 $\alpha$</strong>：一个介于 0 和 1 之间的参数，描述了滚降带的宽度。</p>
+<ul>
+<li>$\alpha = 0$：理想矩形系统，带宽为 $f\_N$，最陡峭，频谱效率最高。</li>
+<li>$\alpha = 1$：全升余弦系统，带宽为 $2f\_N$，最平滑，频谱效率最低，但 $h(t)$ 拖尾衰减最快（按 $1/t^3$），对定时抖动最不敏感。</li>
+<li>$0 < \alpha < 1$：介于两者之间，是性能和实现复杂度之间的折中。</li>
+</ul>
+</li>
+<li>
+<p><strong>实际带宽</strong>：
+
+    $$
+    W = (1+\alpha) f_N = \frac{1+\alpha}{2} R_s
+    $$
+    </p>
+</li>
+</ul>
+</li>
+</ul>
+<p>【图片：不同滚降系数α下的升余弦滤波器频域和时域响应图】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2011.png"
+class="wikilink" alt="file-5数字基带传输系统11.png" /></p>
+
+<h4 class="relative group">5.4 📜 奈奎斯特第二准则 (Nyquist&rsquo;s Second Criterion) 
+    <div id="54--奈奎斯特第二准则-nyquists-second-criterion" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#54--%e5%a5%88%e5%a5%8e%e6%96%af%e7%89%b9%e7%ac%ac%e4%ba%8c%e5%87%86%e5%88%99-nyquists-second-criterion" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>✨ 核心概念</strong>：转换点无失真准则。
+<ul>
+<li><strong>定义</strong>：为系统设计一种特定的、可控的码间串扰，使得在两个相邻码元的<strong>时间中点</strong>（即电平转换的理想位置），波形值恰好为零，从而实现无失真的<strong>转换点判决</strong>或<strong>过零点检测</strong>。</li>
+<li><strong>生动比喻</strong>：继续用旋转门的比喻。第一准则是保证每个人在门的正中央时不受干扰。而第二准则不关心门中央，它关心的是，当前一个人刚走出旋转门、下一个人正要踏入的那个&quot;交接瞬间&quot;，门恰好回到了静止的&quot;零位置&quot;。这使得我们可以通过观察门是否在正确的时间点静止，来判断节奏是否正确（实现同步）。</li>
+<li><strong>关键要素</strong>：
+<ol>
+<li><strong>目标时刻</strong>：不是码元中心的抽样时刻 $t=kT\_s$，而是码元边界的中点 $t = kT\_s - T\_s/2$。</li>
+<li><strong>目标效果</strong>：在这些中点时刻，总响应为零，不受数据码元序列的影响。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>🔧 时域条件</strong>：
+要满足转换点无失真，系统总冲激响应 $h(t)$ 必须满足：
+
+  $$
+  h(T_s/2) = -h(-T_s/2) \quad \text{且} \quad h(kT_s - T_s/2) = 0 \quad \text{for} \quad |k| \ge 1
+  $$
+  
+<ul>
+<li><strong>物理意义</strong>：在 $t=T\_s/2$ 时刻，只存在来自 $a\_0$ 和 $a\_1$ 两个相邻码元的响应。此条件要求这两个响应大小相等、方向相反，从而精确抵消。</li>
+</ul>
+</li>
+<li><strong>🔧 频域条件</strong>：
+该时域条件对应的频域特性为：
+
+  $$
+  \sum_{n=-\infty}^{\infty} (-1)^n H(f - n f_s) = j 2h_c T_s \sin(\pi f T_s)
+  $$
+  
+<ul>
+<li><strong>工程意义</strong>：这是一个<strong>部分响应</strong>系统的特例。它通过引入特定的相关性（码间串扰），来换取一些有益的特性，比如在码元转换点产生稳定的零点，这对于接收端的<strong>定时恢复</strong>非常有价值。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">5.5 📜 奈奎斯特第三准则 (Nyquist&rsquo;s Third Criterion) 
+    <div id="55--奈奎斯特第三准则-nyquists-third-criterion" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#55--%e5%a5%88%e5%a5%8e%e6%96%af%e7%89%b9%e7%ac%ac%e4%b8%89%e5%87%86%e5%88%99-nyquists-third-criterion" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li>
+<p><strong>✨ 核心概念</strong>：波形面积无失真准则。</p>
+<ul>
+<li><strong>定义</strong>：单个输入脉冲所产生的响应波形，在其对应的码元周期内的<strong>面积</strong>，正比于该脉冲的幅度，且不受其他输入脉冲的影响。</li>
+<li><strong>生动比喻</strong>：想象你在超市用传送带结账。第一准则像是在每个商品通过扫描器（抽样点）的瞬间去看价格。第三准则则是，不管商品在传送带上如何晃动（定时抖动），只要保证在它占据的那个&quot;时间窗口&quot;（码元周期）内，传送带下方连接的秤所测得的<strong>总重量</strong>（面积）是准确的，且不受前后商品重量的影响，那么信息就不会出错。</li>
+<li><strong>关键要素</strong>：
+<ol>
+<li><strong>衡量标准</strong>：不是瞬时采样值，而是<strong>一个码元周期内的积分值（面积）</strong>。</li>
+<li><strong>无扰动</strong>：其他码元的响应波形，在当前码元周期内的积分为零。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>🔧 时域条件</strong>：
+系统总冲激响应 $h(t)$ 必须满足：
+
+  $$
+  \int_{kT_s-T_s/2}^{kT_s+T_s/2} h(t) dt = \begin{cases} C, & k=0 \\ 0, & k \neq 0 \end{cases}
+  $$
+  
+其中 C 是一个非零常数。</p>
+</li>
+<li>
+<p><strong>🔧 频域条件</strong>：
+该时域条件等价于系统传输函数 $H(f)$ 在<strong>直流（f=0）处不为零</strong>，但在所有<strong>码元速率的整数倍频率处（$f=k/T\_s$, k为非零整数）必须为零</strong>。
+
+  $$
+  H(0) \neq 0 \quad \text{且} \quad H(k/T_s) = 0 \quad \text{for} \quad k = \pm 1, \pm 2, ...
+  $$
+  </p>
+<ul>
+<li><strong>工程意义</strong>：这提供了一种对抗<strong>定时抖动</strong>更为鲁棒的方法。因为对时间的积分操作本身就是一个平滑过程，它对抽样时刻的微小偏移不那么敏感。代价是接收机需要做积分运算，实现起来比直接抽样要复杂。</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<h3 class="relative group">6. 部分响应基带传输系统 (Section 5.6) 
+    <div id="6-部分响应基带传输系统-section-56" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#6-%e9%83%a8%e5%88%86%e5%93%8d%e5%ba%94%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f-section-56" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">6.1 🎯 设计动机 
+    <div id="61--设计动机" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#61--%e8%ae%be%e8%ae%a1%e5%8a%a8%e6%9c%ba" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>升余弦系统通过牺牲带宽（$\alpha > 0$）换来了物理可实现性。那么，有没有一种方法，既能达到<strong>理论最高的频带利用率</strong>（即带宽为奈奎斯特带宽 $R\_s/2$），又能<strong>物理实现</strong>（避免使用陡峭的滤波器）呢？</p>
+<p>答案是：<strong>部分响应系统</strong>。</p>
+
+<h4 class="relative group">6.2 ✨ 核心思想 
+    <div id="62--核心思想" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#62--%e6%a0%b8%e5%bf%83%e6%80%9d%e6%83%b3" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>变&quot;堵&quot;为&quot;疏&quot;</strong>：与其拼命消除 ISI，不如<strong>主动、可控地引入一定量的 ISI</strong>，然后在接收端利用其规律性将其消除。</li>
+<li><strong>生动比喻</strong>：奈奎斯特准则是要求前一个人的&quot;拖尾&quot;在当前抽样点必须为 0。部分响应则是说：&ldquo;没关系，我允许前一个人的拖尾在当前抽样点有个确定的值，比如固定为当前信号幅度的50%。只要这个干扰值是已知的，我在判决前把它减掉就行了。&rdquo;</li>
+</ul>
+
+<h4 class="relative group">6.3 🔧 实现原理 (以第一类部分响应为例) 
+    <div id="63--实现原理-以第一类部分响应为例" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#63--%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86-%e4%bb%a5%e7%ac%ac%e4%b8%80%e7%b1%bb%e9%83%a8%e5%88%86%e5%93%8d%e5%ba%94%e4%b8%ba%e4%be%8b" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>系统冲激响应</strong>：由两个 sinc 函数叠加而成，$h(t) = \text{sinc}(t/T\_s) + \text{sinc}((t-T\_s)/T\_s)$。</li>
+<li><strong>抽样值</strong>：在 $t=kT\_s$ 时刻的抽样值 $c\_k$ 不再是 $a\_k$，而是 $c\_k = a\_k + a\_{k-1}$。即，当前抽样值等于当前符号值与<strong>前一个符号值</strong>之和。</li>
+<li><strong>解码</strong>：接收端可以根据已判决出的 $a\_{k-1}$ 和当前抽样值 $c\_k$ 来推断当前的 $a\_k$：
+
+  $$
+  a_k = c_k - a_{k-1}
+  $$
+  </li>
+<li><strong>优点</strong>：
+<ol>
+<li><strong>频谱效率高</strong>：系统带宽与理想系统相同，达到了奈奎斯特带宽 $R\_s/2$。</li>
+<li><strong>物理可实现</strong>：其频谱是平滑的，没有陡峭的边沿。</li>
+</ol>
+</li>
+<li><strong>问题：误码扩散 (Error Propagation)</strong>
+<ul>
+<li>从解码公式 $a\_k = c\_k - a\_{k-1}$ 可以看出，如果 $a\_{k-1}$ 判错了，那么这个错误会像多米诺骨牌一样，导致后续的 $a\_k, a\_{k+1}, ...$ 全部判错。</li>
+</ul>
+</li>
+<li><strong>解决方案：预编码 (Precoding)</strong>
+<ul>
+<li>在发送端，先对原始信息序列 $\\{b\_n\\}$ 进行一次预处理，生成一个中间序列 $\\{d\_n\\}$，规则为 $d\_n = (b\_n - d\_{n-1}) \mod M$。</li>
+<li>再将 $\\{d\_n\\}$ 作为部分响应系统的输入。</li>
+<li>经过这样处理后，在接收端，原始信息 $b\_k$ 可以直接由抽样值 $c\_k$ 判决得到，而<strong>无需依赖之前的判决结果</strong>，从而切断了误码扩散的链条。</li>
+</ul>
+</li>
+</ul>
+
+<h3 class="relative group">7. 基带信号检测与最佳接收 (Section 5.7) 
+    <div id="7-基带信号检测与最佳接收-section-57" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#7-%e5%9f%ba%e5%b8%a6%e4%bf%a1%e5%8f%b7%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%9c%80%e4%bd%b3%e6%8e%a5%e6%94%b6-section-57" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">7.1 ✨ 核心概念：最佳接收 
+    <div id="71--核心概念最佳接收" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#71--%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5%e6%9c%80%e4%bd%b3%e6%8e%a5%e6%94%b6" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>目标</strong>：在噪声（通常是 AWGN）的干扰下，设计一个接收机，使得判决错误的概率（误码率）最小。</li>
+<li><strong>判决准则</strong>：
+<ul>
+<li><strong>最大后验概率 (MAP) 准则</strong>：在收到信号 $z$ 的条件下，判断哪个发送信号 $s\_i$ 的后验概率 $P(s\_i|z)$ 最大，就判为发送了 $s\_i$。这是理论上最普适、最严格的最佳准则。</li>
+<li><strong>最大似然 (ML) 准则</strong>：当发送各种信号的先验概率相等时，MAP 准则简化为 ML 准则。即，哪个 $s\_i$ 最&quot;像&quot;接收到的 $z$，就判为哪个。</li>
+<li><strong>最小错误率准则</strong>：最终目标，与 MAP 准则等价。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">7.2 🔧 最佳接收机：匹配滤波器 
+    <div id="72--最佳接收机匹配滤波器" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#72--%e6%9c%80%e4%bd%b3%e6%8e%a5%e6%94%b6%e6%9c%ba%e5%8c%b9%e9%85%8d%e6%bb%a4%e6%b3%a2%e5%99%a8" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>问题</strong>：如何处理接收信号，才能使抽样时刻的信噪比 (SNR) 最大，从而使判决最可靠？</li>
+<li><strong>答案</strong>：使用<strong>匹配滤波器</strong>。</li>
+<li><strong>定义</strong>：一个线性时不变系统，其冲激响应 $h(t)$ 是发送信号波形 $s(t)$ 的<strong>时间反转再加时移</strong>。
+
+  $$
+  h(t) = k \cdot s(T - t)
+  $$
+  </li>
+<li><strong>生动比喻</strong>：匹配滤波器就像一把为特定钥匙（信号波形）量身定制的锁。当正确的钥匙插入时，锁内的弹珠（滤波器的系数）会完美对齐，锁&quot;咔哒&quot;一声打开（输出达到最大值）。而任何其他形状的钥匙或噪声都无法使其完美对齐，输出会小很多。</li>
+<li><strong>等效实现</strong>：匹配滤波器在数学上等效于一个<strong>相关器</strong>，即将接收信号与本地存储的信号波形副本进行相乘并积分。</li>
+</ul>
+<p>【图片：匹配滤波器的三种实现结构图：滤波器形式、相关器形式、差分相关器形式】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2012.png"
+class="wikilink" alt="file-5数字基带传输系统12.png" /></p>
+
+<h4 class="relative group">7.3 📈 性能分析 
+    <div id="73--性能分析" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#73--%e6%80%a7%e8%83%bd%e5%88%86%e6%9e%90" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>误码率公式</strong>：对于二进制信号，在最佳接收下的误码率 $P\_E$ 为：
+
+  $$
+  P_E = Q\left(\frac{d}{\sqrt{2N_0}}\right) = Q\left(\sqrt{\frac{E_b(1-\rho)}{N_0}}\right)
+  $$
+  
+<ul>
+<li>$Q(\cdot)$：标准高斯分布的尾概率函数（Q 函数）。</li>
+<li>$d$：两个信号波形之间的&quot;距离&quot;。</li>
+<li>$E\_b$：平均比特能量。</li>
+<li>$N\_0/2$：噪声的功率谱密度。</li>
+<li>$\rho$：两个信号波形的相关系数。</li>
+</ul>
+</li>
+<li><strong>关键结论</strong>：误码率仅取决于 <strong>比特能量与噪声功率谱密度之比 ($E\_b/N\_0$)</strong> 和 <strong>信号波形的相关性 ($\rho$)</strong>。
+<ul>
+<li>$E\_b/N\_0$ 越大，信噪比越高，误码率越低。</li>
+<li>相关系数 $\rho$ 越小（两个信号波形越&quot;不像&quot;），误码率越低。</li>
+</ul>
+</li>
+<li><strong>常见信号性能对比</strong>：
+<ul>
+<li><strong>对极信号 (Antipodal)</strong>：$s\_2(t) = -s\_1(t)$，如双极性码。$\rho = -1$。性能<strong>最好</strong>。</li>
+<li><strong>正交信号 (Orthogonal)</strong>：$\int s\_1(t)s\_2(t)dt = 0$。$\rho = 0$。性能<strong>居中</strong>。</li>
+<li><strong>单极性信号 (On-Off Keying)</strong>：$s\_2(t) = 0$。$\rho = 0$（等效于正交）。但要达到与对极信号相同的误码率，需要<strong>两倍的比特能量</strong>（即高出 3dB）。</li>
+</ul>
+</li>
+</ul>
+
+<h4 class="relative group">7.4 👁️ 眼图 (Eye Diagram) 
+    <div id="74--眼图-eye-diagram" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#74--%e7%9c%bc%e5%9b%be-eye-diagram" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>定义</strong>：一种在示波器上快速、直观地评估基带传输系统性能的实验方法。它通过将接收到的信号按码元周期切割并叠加显示而形成。<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2013.png"
+class="wikilink" alt="file-5数字基带传输系统13.png" /></li>
+<li></li>
+<li><strong>生动比喻</strong>：眼图就像是系统性能的&quot;心电图&quot;。医生通过观察心电图的波形，就能判断心脏是否健康。我们通过观察眼图的形状，就能诊断传输系统存在的问题。</li>
+<li><strong>眼图解读</strong>：
+<ul>
+<li><strong>&ldquo;眼睛&quot;张开的高度</strong>：代表<strong>抗噪声的裕量</strong>。眼睛越大，抵抗噪声的能力越强。</li>
+<li><strong>&ldquo;眼睛&quot;张开的宽度</strong>：代表<strong>最佳抽样时刻的范围</strong>。眼睛越宽，对定时抖动的容忍度越高。</li>
+<li><strong>眼皮的厚度（迹线的分散度）</strong>：反映了<strong>噪声和码间串扰的强度</strong>。</li>
+<li><strong>斜边的斜率</strong>：反映了系统对<strong>定时误差的敏感程度</strong>。斜率越陡，微小的定时误差就会导致越大的判决电平变化。</li>
+</ul>
+</li>
+</ul>
+<p>【图片：一个典型的二进制眼图，并标注出最佳抽样时刻、噪声裕量、定时抖动裕量、过零点抖动等关键参数】
+<img
+src="file-5%20%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%2014.png"
+class="wikilink" alt="file-5数字基带传输系统14.png" /></p>
+<hr>
+
+<h2 class="relative group">🔗 知识关联与应用 
+    <div id="-知识关联与应用" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e7%9f%a5%e8%af%86%e5%85%b3%e8%81%94%e4%b8%8e%e5%ba%94%e7%94%a8" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<ul>
+<li><strong>承上启下</strong>：本章深入探讨了数字信号的&quot;原始形态&rdquo;&mdash;&mdash;基带信号如何传输。这是所有数字通信系统的基础。我们之前学习的信源编码（如PCM）产生了二进制序列，本章则负责将这些序列变成能在物理信道上传输的电信号。本章讨论的无失真传输条件（奈奎斯特准则）和最佳接收（匹配滤波）是通信理论的两大基石，其思想将贯穿后续的带通传输、扩频通信等所有章节。</li>
+<li><strong>现实应用</strong>：
+<ol>
+<li><strong>以太网</strong>：你电脑上的网线接口（RJ45）就是一个典型的基带传输系统。早期的10Mbps以太网使用了<strong>曼彻斯特编码</strong>来保证同步和去直流。后来的高速以太网（如千兆以太网）则采用了更复杂的多电平PAM（如PAM-5）结合复杂的均衡技术，以在有限带宽的双绞线上实现极高的传输速率。</li>
+<li><strong>USB接口</strong>：USB 2.0/3.0 等高速串行总线，其物理层也是基带传输。它们采用NRZI（不归零反转）编码结合&quot;比特填充&quot;技术来确保信号中有足够的跳变以维持同步。</li>
+</ol>
+</li>
+</ul>
+
+<h2 class="relative group">🤔 引导式提问 
+    <div id="-引导式提问" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e5%bc%95%e5%af%bc%e5%bc%8f%e6%8f%90%e9%97%ae" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<ol>
+<li><strong>为什么升余弦滚降系统的滚降系数 $\alpha$ 不是越大越好或越小越好，而是在工程中常常取 0.2 ~ 0.5 之间？</strong> 这背后体现了哪几个关键性能指标之间的权衡？</li>
+<li><strong>部分响应系统和差分编码都引入了&quot;前后码元的相关性&rdquo;，也都会导致误码扩散。请思考一下，它们引入相关性的目的和机理有何本质不同？为什么预编码能解决部分响应的误码扩散，而不能直接用于差分编码？</strong></li>
+<li><strong>匹配滤波器被证明是高斯白噪声背景下的&quot;最佳&quot;线性滤波器。这里的&quot;最佳&quot;具体指什么？如果噪声不是白色的（比如噪声在某些频率上特别强），匹配滤波器还是最佳选择吗？如果不是，你认为应该如何设计接收滤波器？</strong></li>
+</ol>
+
+<h2 class="relative group">💡 本讲总结 
+    <div id="-本讲总结" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e6%9c%ac%e8%ae%b2%e6%80%bb%e7%bb%93" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<p>本讲我们系统地学习了数字基带传输的全过程。从<strong>基本模型</strong>出发，我们拆解了系统的各个模块。核心在于理解，为了克服信道（特别是长距离有线信道）的<strong>高低频均受限</strong>的&quot;挑剔&quot;特性，我们必须对原始脉冲进行精心的<strong>波形设计与线路编码</strong>，其核心目标是<strong>去直流、利同步、限带宽</strong>。</p>
+<p>随后，我们深入探讨了基带传输的&quot;天敌&quot;&mdash;&mdash;<strong>码间串扰(ISI)</strong>，并学习了消灭它的&quot;法律武器&quot;&mdash;&mdash;<strong>奈奎斯特第一准则</strong>。我们认识到，理论上带宽利用率最高的理想系统无法实现，工程上采用<strong>升余弦滚降系统</strong>作为代价和性能的折中。而<strong>部分响应系统</strong>则另辟蹊径，通过&quot;变害为利&quot;的方式，主动引入可控的ISI，实现了高频谱效率和物理可实现性的统一。</p>
+<p>最后，在接收端，我们研究了如何在噪声中做出最明智的判决。<strong>最佳接收</strong>理论告诉我们，使用<strong>匹配滤波器</strong>可以最大化抽样时刻的信噪比，从而获得最小的误码率。而<strong>眼图</strong>作为一种强大的工程工具，为我们提供了一双能够直视系统综合性能的&quot;火眼金睛&quot;。</p>
+
+<h2 class="relative group">🔍 相关缩写 
+    <div id="-相关缩写" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e7%9b%b8%e5%85%b3%e7%bc%a9%e5%86%99" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">缩写</th>
+          <th style="text-align: left">英文全称</th>
+          <th style="text-align: left">中文含义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>PAM</strong></td>
+          <td style="text-align: left">Pulse Amplitude Modulation</td>
+          <td style="text-align: left">脉冲幅度调制</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>PWM</strong></td>
+          <td style="text-align: left">Pulse Width Modulation</td>
+          <td style="text-align: left">脉冲宽度调制</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>PPM</strong></td>
+          <td style="text-align: left">Pulse Position Modulation</td>
+          <td style="text-align: left">脉冲位置调制</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>ISI</strong></td>
+          <td style="text-align: left">Inter-Symbol Interference</td>
+          <td style="text-align: left">码间串扰</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>AWGN</strong></td>
+          <td style="text-align: left">Additive White Gaussian Noise</td>
+          <td style="text-align: left">加性高斯白噪声</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>NRZ</strong></td>
+          <td style="text-align: left">Non-Return-to-Zero</td>
+          <td style="text-align: left">不归零码</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>RZ</strong></td>
+          <td style="text-align: left">Return-to-Zero</td>
+          <td style="text-align: left">归零码</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>AMI</strong></td>
+          <td style="text-align: left">Alternate Mark Inversion</td>
+          <td style="text-align: left">传号交替反转码</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>HDB3</strong></td>
+          <td style="text-align: left">High-Density Bipolar 3-order</td>
+          <td style="text-align: left">3阶高密度双极性码</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>PSD</strong></td>
+          <td style="text-align: left">Power Spectral Density</td>
+          <td style="text-align: left">功率谱密度</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>MAP</strong></td>
+          <td style="text-align: left">Maximum A Posteriori</td>
+          <td style="text-align: left">最大后验概率</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>ML</strong></td>
+          <td style="text-align: left">Maximum Likelihood</td>
+          <td style="text-align: left">最大似然</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>SNR</strong></td>
+          <td style="text-align: left">Signal-to-Noise Ratio</td>
+          <td style="text-align: left">信噪比</td>
+      </tr>
+  </tbody>
+</table>
+
+          
+          
+          
+        </div>
+        
+        
+  <details class="mt-2 mb-5 overflow-hidden rounded-lg ms-0 ps-5">
+    
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 -ms-5 ps-5 dark:bg-primary-800 dark:text-neutral-100">
+    通信原理 -
+    这篇文章属于一个选集。
+  </summary>
+  
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/1%E7%BB%AA%E8%AE%BA/">
+          § 1:
+          通信原理1 绪论
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/3-%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/">
+          § 2:
+          通信原理3 模拟信号的数字编码
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        § 3:
+        本文
+      </div>
+    
+  
+
+
+  </details>
+
+
+        
+  
+  <section class="flex flex-row flex-wrap justify-center pt-4 text-xl">
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;title=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="分享到 LinkedIn"
+          aria-label="分享到 LinkedIn">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://twitter.com/intent/tweet/?url=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;text=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="分享到 Twitter"
+          aria-label="分享到 Twitter">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://bsky.app/intent/compose?text=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f&#43;https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/"
+          title="发布到 Bluesky"
+          aria-label="发布到 Bluesky">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256,232.562c-21.183,-41.196 -78.868,-117.97 -132.503,-155.834c-51.378,-36.272 -70.978,-29.987 -83.828,-24.181c-14.872,6.72 -17.577,29.554 -17.577,42.988c0,13.433 7.365,110.138 12.169,126.281c15.873,53.336 72.376,71.358 124.413,65.574c2.66,-0.395 5.357,-0.759 8.089,-1.097c-2.68,0.429 -5.379,0.796 -8.089,1.097c-76.259,11.294 -143.984,39.085 -55.158,137.972c97.708,101.165 133.908,-21.692 152.484,-83.983c18.576,62.291 39.972,180.718 150.734,83.983c83.174,-83.983 22.851,-126.674 -53.408,-137.969c-2.71,-0.302 -5.409,-0.667 -8.089,-1.096c2.732,0.337 5.429,0.702 8.089,1.096c52.037,5.785 108.54,-12.239 124.413,-65.574c4.804,-16.142 12.169,-112.847 12.169,-126.281c-0,-13.434 -2.705,-36.267 -17.577,-42.988c-12.85,-5.806 -32.45,-12.09 -83.829,24.181c-53.634,37.864 -111.319,114.635 -132.502,155.831Z"/></svg></span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://s2f.kytta.dev/?text=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f%20https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/"
+          title=""
+          aria-label="">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://reddit.com/submit/?url=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;resubmit=true&amp;title=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="提交到 Reddit"
+          aria-label="提交到 Reddit">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M201.5 305.5c-13.8 0-24.9-11.1-24.9-24.6 0-13.8 11.1-24.9 24.9-24.9 13.6 0 24.6 11.1 24.6 24.9 0 13.6-11.1 24.6-24.6 24.6zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-132.3-41.2c-9.4 0-17.7 3.9-23.8 10-22.4-15.5-52.6-25.5-86.1-26.6l17.4-78.3 55.4 12.5c0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.3 24.9-24.9s-11.1-24.9-24.9-24.9c-9.7 0-18 5.8-22.1 13.8l-61.2-13.6c-3-.8-6.1 1.4-6.9 4.4l-19.1 86.4c-33.2 1.4-63.1 11.3-85.5 26.8-6.1-6.4-14.7-10.2-24.1-10.2-34.9 0-46.3 46.9-14.4 62.8-1.1 5-1.7 10.2-1.7 15.5 0 52.6 59.2 95.2 132 95.2 73.1 0 132.3-42.6 132.3-95.2 0-5.3-.6-10.8-1.9-15.8 31.3-16 19.8-62.5-14.9-62.5zM302.8 331c-18.2 18.2-76.1 17.9-93.6 0-2.2-2.2-6.1-2.2-8.3 0-2.5 2.5-2.5 6.4 0 8.6 22.8 22.8 87.3 22.8 110.2 0 2.5-2.2 2.5-6.1 0-8.6-2.2-2.2-6.1-2.2-8.3 0zm7.7-75c-13.6 0-24.6 11.1-24.6 24.9 0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.1 24.9-24.6 0-13.8-11-24.9-24.9-24.9z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;description=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="钉到 Pinterest"
+          aria-label="钉到 Pinterest">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://www.facebook.com/sharer/sharer.php?u=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;quote=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="分享到 Facebook"
+          aria-label="分享到 Facebook">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="mailto:?body=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;subject=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="通过电子邮件发送"
+          aria-label="通过电子邮件发送">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://api.whatsapp.com/send?text=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;resubmit=true&amp;title=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="通过 WhatsApp 分享"
+          aria-label="通过 WhatsApp 分享">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://t.me/share/url?url=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/&amp;resubmit=true&amp;title=%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="通过 Telegram 分享"
+          aria-label="通过 Telegram 分享">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248,8C111.033,8,0,119.033,0,256S111.033,504,248,504,496,392.967,496,256,384.967,8,248,8ZM362.952,176.66c-3.732,39.215-19.881,134.378-28.1,178.3-3.476,18.584-10.322,24.816-16.948,25.425-14.4,1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25,5.342-39.5,3.652-3.793,67.107-61.51,68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608,69.142-14.845,10.194-26.894,9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7,18.45-13.7,108.446-47.248,144.628-62.3c68.872-28.647,83.183-33.623,92.511-33.789,2.052-.034,6.639.474,9.61,2.885a10.452,10.452,0,0,1,3.53,6.716A43.765,43.765,0,0,1,362.952,176.66Z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://line.me/R/share?text=https://www.asanilo.top/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/5-%E6%95%B0%E5%AD%97%E5%9F%BA%E5%B8%A6%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F/%20%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%865%20%e6%95%b0%e5%ad%97%e5%9f%ba%e5%b8%a6%e4%bc%a0%e8%be%93%e7%b3%bb%e7%bb%9f"
+          title="分享到 LINE"
+          aria-label="分享到 LINE">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License -https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M311 196.8v81.3c0 2.1-1.6 3.7-3.7 3.7h-13c-1.3 0-2.4-.7-3-1.5l-37.3-50.3v48.2c0 2.1-1.6 3.7-3.7 3.7h-13c-2.1 0-3.7-1.6-3.7-3.7V196.9c0-2.1 1.6-3.7 3.7-3.7h12.9c1.1 0 2.4 .6 3 1.6l37.3 50.3V196.9c0-2.1 1.6-3.7 3.7-3.7h13c2.1-.1 3.8 1.6 3.8 3.5zm-93.7-3.7h-13c-2.1 0-3.7 1.6-3.7 3.7v81.3c0 2.1 1.6 3.7 3.7 3.7h13c2.1 0 3.7-1.6 3.7-3.7V196.8c0-1.9-1.6-3.7-3.7-3.7zm-31.4 68.1H150.3V196.8c0-2.1-1.6-3.7-3.7-3.7h-13c-2.1 0-3.7 1.6-3.7 3.7v81.3c0 1 .3 1.8 1 2.5c.7 .6 1.5 1 2.5 1h52.2c2.1 0 3.7-1.6 3.7-3.7v-13c0-1.9-1.6-3.7-3.5-3.7zm193.7-68.1H327.3c-1.9 0-3.7 1.6-3.7 3.7v81.3c0 1.9 1.6 3.7 3.7 3.7h52.2c2.1 0 3.7-1.6 3.7-3.7V265c0-2.1-1.6-3.7-3.7-3.7H344V247.7h35.5c2.1 0 3.7-1.6 3.7-3.7V230.9c0-2.1-1.6-3.7-3.7-3.7H344V213.5h35.5c2.1 0 3.7-1.6 3.7-3.7v-13c-.1-1.9-1.7-3.7-3.7-3.7zM512 93.4V419.4c-.1 51.2-42.1 92.7-93.4 92.6H92.6C41.4 511.9-.1 469.8 0 418.6V92.6C.1 41.4 42.2-.1 93.4 0H419.4c51.2 .1 92.7 42.1 92.6 93.4zM441.6 233.5c0-83.4-83.7-151.3-186.4-151.3s-186.4 67.9-186.4 151.3c0 74.7 66.3 137.4 155.9 149.3c21.8 4.7 19.3 12.7 14.4 42.1c-.8 4.7-3.8 18.4 16.1 10.1s107.3-63.2 146.5-108.2c27-29.7 39.9-59.8 39.9-93.1z" /></svg></span>
+        </a>
+      
+    
+  </section>
+
+
+        
+  
+  
+    <h2 class="mt-8 text-2xl font-extrabold mb-10">相关文章</h2>
+    <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      
+        
+<div
+  class="group-hover-card group relative min-h-full min-w-full overflow-hidden rounded border border-2 border-neutral-200 shadow-2xl dark:border-neutral-700">
+  <a
+    
+  href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/3-%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/"
+    class="absolute inset-0"
+    aria-label="通信原理3 模拟信号的数字编码"></a>
+      
+    
+  <div class="px-6 py-4">
+    
+      <div
+        class="group-hover-card-title decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 group-hover:underline group-hover:underline-offset-2">
+        通信原理3 模拟信号的数字编码
+      </div>
+    
+    <div class="group-hover-cancel text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+
+  
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-09-10T18:02:23&#43;08:00">2025-09-10</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-10-19T22:29:44&#43;08:00">更新于: 2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>1272 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">6 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    通信原理
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="prose dark:prose-invert py-1"></div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</div>
+
+      
+        
+<div
+  class="group-hover-card group relative min-h-full min-w-full overflow-hidden rounded border border-2 border-neutral-200 shadow-2xl dark:border-neutral-700">
+  <a
+    
+  href="/posts/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/1%E7%BB%AA%E8%AE%BA/"
+    class="absolute inset-0"
+    aria-label="通信原理1 绪论"></a>
+      
+    
+  <div class="px-6 py-4">
+    
+      <div
+        class="group-hover-card-title decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 group-hover:underline group-hover:underline-offset-2">
+        通信原理1 绪论
+      </div>
+    
+    <div class="group-hover-cancel text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+
+  
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-09-04T00:17:39&#43;08:00">2025-09-04</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-10-19T22:32:35&#43;08:00">更新于: 2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>183 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">1 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    通信原理
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="prose dark:prose-invert py-1"></div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</div>
+
+      
+        
+<div
+  class="group-hover-card group relative min-h-full min-w-full overflow-hidden rounded border border-2 border-neutral-200 shadow-2xl dark:border-neutral-700">
+  <a
+    
+  href="/posts/%E4%BF%A1%E6%81%AF%E8%AE%BA/5-%E7%8E%87%E5%A4%B1%E7%9C%9F%E7%90%86%E8%AE%BA/"
+    class="absolute inset-0"
+    aria-label="信息论5 率失真理论"></a>
+      
+    
+  <div class="px-6 py-4">
+    
+      <div
+        class="group-hover-card-title decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 group-hover:underline group-hover:underline-offset-2">
+        信息论5 率失真理论
+      </div>
+    
+    <div class="group-hover-cancel text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+
+  
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-18T22:36:32&#43;08:00">2025-10-18</time><span class="px-2 text-primary-500">&middot;</span><span>313 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">2 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    信息论
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="prose dark:prose-invert py-1"></div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</div>
+
+      
+    </section>
+  
+
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/通信原理/5 数字基带传输系统/index.md"
+          data-oid-likes="likes_posts/通信原理/5 数字基带传输系统/index.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group mr-3" href="/posts/%E4%BF%A1%E6%81%AF%E8%AE%BA/5-%E7%8E%87%E5%A4%B1%E7%9C%9F%E7%90%86%E8%AE%BA/">
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >信息论5 率失真理论</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2025-10-18T22:36:32&#43;08:00">2025-10-18</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group ml-3" href="/posts/dsp/%E7%AC%AC5%E8%AE%B2-%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96/">
+              <span class="flex flex-col">
+                <span class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >DSP-5 连续时间信号的采样与量化</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+      
+        
+          <div class="pt-3">
+            <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+            <div class="pt-3">
+              <script src="https://giscus.app/client.js"
+        data-repo="Asanilo/BlogComnments"
+        data-repo-id="R_kgDOQCKujw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQCKuj84CwoCm"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+            </div>
+          </div>
+        
+      
+    </footer>
+  </article>
+
+        <div id="top-scroller" class="pointer-events-none absolute top-[110vh] bottom-0 w-12 ltr:right-0 rtl:left-0 z-10">
+  <a
+    href="#the-top"
+    class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 mb-16 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="返回顶部"
+    title="返回顶部">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+      
+      
+        
+          
+          
+      
+      
+      
+      <nav class="flex flex-row pb-4 text-base font-medium text-neutral-500 dark:text-neutral-400 ">
+        <ul class="flex list-none flex-col sm:flex-row">
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 ">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href="/tags/"
+                title="标签">
+                
+                标签
+              </a>
+            </li>
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 ">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href="/authors/"
+                title="作者列">
+                
+                作者
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2025
+          Asanilo
+      </p>
+    
+
+    
+    
+      <p class="text-xs text-neutral-500 dark:text-neutral-400">
+        
+        
+        由 <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://blowfish.page/" target="_blank" rel="noopener noreferrer">Blowfish</a> 强力驱动
+      </p>
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+    <a rel="me" href="https://masto.ai/@blowfish"></a><script>
+			window.MathJax = {
+				tex: {
+					inlineMath: [['$', '$'], ['\\(', '\\)']],
+					displayMath: [['$$', '$$'], ['\\[', '\\]']],
+					processEscapes: true,
+					tags: 'none'
+				},
+				options: {
+					skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+				}
+			};
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="https://www.asanilo.top/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="搜索"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="关闭 (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
