@@ -3,14 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://www.asanilo.top/posts/anime/%E5%8F%A4%E8%AF%BA%E5%B8%8C%E4%BA%9A/</loc>
-    <lastmod>2025-10-19T20:11:17+08:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.asanilo.top/</loc>
-    <lastmod>2025-10-19T22:32:35+08:00</lastmod>
+    <lastmod>2025-10-25T17:33:07+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -31,7 +25,7 @@
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/</loc>
-    <lastmod>2025-10-19T22:32:35+08:00</lastmod>
+    <lastmod>2025-10-25T17:33:07+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -49,6 +43,12 @@
       hreflang="zh-cn"
       href="https://www.asanilo.top/posts/"
     />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/anime/%E5%8F%A4%E8%AF%BA%E5%B8%8C%E4%BA%9A/</loc>
+    <lastmod>2025-10-19T20:11:17+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/anime/%E6%9C%80%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%86%8D%E6%8B%9C%E6%89%98%E6%82%A8%E4%B8%80%E4%BB%B6%E4%BA%8B%E5%90%97/</loc>

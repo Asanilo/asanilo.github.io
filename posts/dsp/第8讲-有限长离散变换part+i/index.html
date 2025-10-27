@@ -158,7 +158,7 @@
     "keywords": ["DSP","learning"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "264"
+    "wordCount": "385"
   }]
   </script>
 
@@ -981,7 +981,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-10-19T02:38:32&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>264 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">2 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
+      <time datetime="2025-10-19T02:38:32&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>385 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">2 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
   <span
     id="zen-mode-button"
     class="text-lg hover:text-primary-500"
@@ -1150,10 +1150,28 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#-欢迎来到第8讲有限长离散变换-part-i">🌟 欢迎来到第8讲：有限长离散变换 (Part I)</a></li>
-    <li><a href="#-本讲知识地图">📚 本讲知识地图</a>
+    <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
       <ul>
-        <li><a href="#1-离散傅里叶变换-dft-的定义">1. 离散傅里叶变换 (DFT) 的定义</a></li>
-        <li><a href="#2-有限长序列的运算圆周卷积">2. 有限长序列的运算：圆周卷积</a></li>
+        <li><a href="#1-离散傅里叶变换-discrete-fourier-transform-dft">1. 离散傅里叶变换 (Discrete Fourier Transform, DFT)</a>
+          <ul>
+            <li><a href="#11--为什么需要dft">1.1 ✨ 为什么需要DFT？</a></li>
+            <li><a href="#12--dft的定义从dtft到dft">1.2 🔧 DFT的定义：从DTFT到DFT</a></li>
+            <li><a href="#13--dft的计算与matlab实现">1.3 💻 DFT的计算与MATLAB实现</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-核心关系频域采样与时域周期延拓">2. 核心关系：频域采样与时域周期延拓</a>
+          <ul>
+            <li><a href="#21--核心对偶关系">2.1 ✨ 核心对偶关系</a></li>
+            <li><a href="#22--时域混叠-time-domain-aliasing">2.2 ⚠️ 时域混叠 (Time-Domain Aliasing)</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-有限长序列的周期运算">3. 有限长序列的周期运算</a>
+          <ul>
+            <li><a href="#31--序列的圆周移位-circular-shift">3.1 🔄 序列的圆周移位 (Circular Shift)</a></li>
+            <li><a href="#32--序列的圆周卷积-circular-convolution">3.2 ⚙️ 序列的圆周卷积 (Circular Convolution)</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
@@ -1174,10 +1192,28 @@
     <nav id="TableOfContents">
   <ul>
     <li><a href="#-欢迎来到第8讲有限长离散变换-part-i">🌟 欢迎来到第8讲：有限长离散变换 (Part I)</a></li>
-    <li><a href="#-本讲知识地图">📚 本讲知识地图</a>
+    <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
       <ul>
-        <li><a href="#1-离散傅里叶变换-dft-的定义">1. 离散傅里叶变换 (DFT) 的定义</a></li>
-        <li><a href="#2-有限长序列的运算圆周卷积">2. 有限长序列的运算：圆周卷积</a></li>
+        <li><a href="#1-离散傅里叶变换-discrete-fourier-transform-dft">1. 离散傅里叶变换 (Discrete Fourier Transform, DFT)</a>
+          <ul>
+            <li><a href="#11--为什么需要dft">1.1 ✨ 为什么需要DFT？</a></li>
+            <li><a href="#12--dft的定义从dtft到dft">1.2 🔧 DFT的定义：从DTFT到DFT</a></li>
+            <li><a href="#13--dft的计算与matlab实现">1.3 💻 DFT的计算与MATLAB实现</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-核心关系频域采样与时域周期延拓">2. 核心关系：频域采样与时域周期延拓</a>
+          <ul>
+            <li><a href="#21--核心对偶关系">2.1 ✨ 核心对偶关系</a></li>
+            <li><a href="#22--时域混叠-time-domain-aliasing">2.2 ⚠️ 时域混叠 (Time-Domain Aliasing)</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-有限长序列的周期运算">3. 有限长序列的周期运算</a>
+          <ul>
+            <li><a href="#31--序列的圆周移位-circular-shift">3.1 🔄 序列的圆周移位 (Circular Shift)</a></li>
+            <li><a href="#32--序列的圆周卷积-circular-convolution">3.2 ⚙️ 序列的圆周卷积 (Circular Convolution)</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
@@ -1388,7 +1424,16 @@
     
 </h2>
 <p>(对应课本第五章内容)</p>
-<p>本讲我们将从理论的傅里叶变换家族，迈向真正能在计算机上实现的<strong>离散傅里叶变换 (DFT)</strong>。我们将理解DFT的诞生背景，掌握其定义，并深入探讨由其有限长特性所引出的一个全新且至关重要的概念&mdash;&mdash;<strong>圆周卷积</strong>。</p>
+<p>到目前为止，我们已经学习了多种傅里叶变换，它们分别处理连续/离散、周期/非周期的信号。但它们都有一个共同点：至少在一个域（时域或频域）是连续或无限的，这使得它们无法直接在计算机上进行数值计算。</p>
+<p>本讲，我们将学习<strong>离散傅里叶变换 (DFT)</strong>，这是一种在<strong>时域和频域都是离散且有限长</strong>的变换。DFT是数字信号处理领域应用最广泛的工具，是连接理论分析与计算机实现的桥梁。我们还将探讨由于这种&quot;双重离散有限&quot;特性而引入的全新运算&mdash;&mdash;<strong>圆周卷积</strong>。</p>
+<p><strong>核心学习目标:</strong></p>
+<ol>
+<li><strong>理解DFT</strong>：掌握DFT的定义，明白它是如何从DTFT通过频域采样得到的。</li>
+<li><strong>掌握DFT与DTFT的关系</strong>：深刻理解&quot;频域采样等效于时域周期延拓（混叠）&ldquo;这一核心对偶关系。</li>
+<li><strong>熟悉有限长序列运算</strong>：掌握圆周移位和圆周卷积的概念与计算方法。</li>
+<li><strong>运用DFT实现线性卷积</strong>：学习如何通过补零，利用DFT的快速算法（FFT）来高效计算线性卷积。</li>
+</ol>
+<hr>
 
 <h2 class="relative group">📚 本讲知识地图 
     <div id="-本讲知识地图" class="anchor"></div>
@@ -1399,25 +1444,68 @@
     </span>        
     
 </h2>
-<p><img
+<figure>
+<img
 src="file-%E7%AC%AC8%E8%AE%B2%20%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2(Part%2BI)%202.png"
 class="wikilink" alt="file-第8讲有限长离散变换(Part+I)2.png" />
-## 📝 本讲主要内容</p>
+<figcaption
+aria-hidden="true">file-第8讲有限长离散变换(Part+I)2.png</figcaption>
+</figure>
+<hr>
 
-<h3 class="relative group">1. 离散傅里叶变换 (DFT) 的定义 
-    <div id="1-离散傅里叶变换-dft-的定义" class="anchor"></div>
+<h2 class="relative group">📝 本讲主要内容 
+    <div id="-本讲主要内容" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#1-%e7%a6%bb%e6%95%a3%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2-dft-%e7%9a%84%e5%ae%9a%e4%b9%89" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e6%9c%ac%e8%ae%b2%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9" aria-label="锚点">#</a>
+    </span>        
+    
+</h2>
+
+<h3 class="relative group">1. 离散傅里叶变换 (Discrete Fourier Transform, DFT) 
+    <div id="1-离散傅里叶变换-discrete-fourier-transform-dft" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#1-%e7%a6%bb%e6%95%a3%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2-discrete-fourier-transform-dft" aria-label="锚点">#</a>
     </span>        
     
 </h3>
-<p>✨ <strong>核心概念：离散傅里叶变换 (DFT - Discrete Fourier Transform)</strong></p>
+
+<h4 class="relative group">1.1 ✨ 为什么需要DFT？ 
+    <div id="11--为什么需要dft" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#11--%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81dft" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>我们在信号与系统中学到的傅里叶变换，在计算机看来都有&quot;硬伤&rdquo;：
+* <strong>CTFT</strong>：时域和频域都连续，计算机无法处理。
+* <strong>DTFT</strong>：时域离散，但频域是连续的周期函数，计算机仍无法存储和计算。</p>
+<p>计算机需要的是<strong>在时域和频域上都是离散且有限长</strong>的数据。DFT正是为此而生。</p>
+
+<h4 class="relative group">1.2 🔧 DFT的定义：从DTFT到DFT 
+    <div id="12--dft的定义从dtft到dft" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#12--dft%e7%9a%84%e5%ae%9a%e4%b9%89%e4%bb%8edtft%e5%88%b0dft" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
 <ul>
-<li><strong>定义与解释</strong>：DFT是一种将一个<strong>有限长离散时间序列</strong>映射到一个等长的<strong>有限长离散频率序列</strong>的变换。它是唯一一种在时域和频域上都同时是离散且有限的傅里ye变换，因此是计算机进行频谱分析的直接数学基础。</li>
-<li><strong>生动比喻</strong>：想象一下DTFT给出了信号频谱的&quot;超高清连续全景图&quot;。这张图太精细，计算机无法完整存储。于是，DFT就像是在这张全景图上，选取 <strong>N 个等间距的视角</strong>进行&quot;拍照采样&quot;，得到一组离散的频谱快照。这一组快照虽然不是连续的，但如果 N 足够大，它们就能很好地勾勒出原始全景图的轮廓。</li>
-<li><strong>从DTFT到DFT</strong>：DFT的本质就是对一个N点有限长序列的DTFT（一个连续的频谱）在 $[0, 2\pi]$ 区间上进行N点均匀采样。
+<li>
+<p><strong>核心思想</strong>：获得DFT最直观的方式，就是对DTFT的频谱进行<strong>均匀采样</strong>。</p>
+</li>
+<li>
+<p><strong>生动比喻</strong>：想象一下DTFT的频谱 $X(e^{j\omega})$ 是一幅平滑、连续的360度全景星空图。我们无法把整幅图都存入电脑，但我们可以用相机对着星空图，<strong>等间隔地拍摄N张照片</strong>。这N张照片（采样点）的集合，就是DFT。只要照片数量N足够多，我们就能很好地了解整个星空的样貌。</p>
+</li>
+<li>
+<p><strong>数学定义</strong>：
+对于一个长度为N的有限长序列 $x[n]$ ( $0 \le n \le N-1$ )，其N点DFT定义为：
 <script>
     window.MathJax = {
       tex: {
@@ -1433,90 +1521,194 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)2.png" />
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
   $$
-  X[k] = X(e^{j\omega})|_{\omega = \frac{2\pi}{N}k} \quad \text{for} \quad k=0, 1, \dots, N-1
-  $$
-  </li>
-</ul>
-<p>🔧 <strong>DFT变换对</strong></p>
-<ul>
-<li><strong>正变换 (DFT)</strong>：
-
-  $$
   X[k] = \sum_{n=0}^{N-1} x[n] W_N^{kn}, \quad 0 \le k \le N-1
   $$
-  </li>
-<li><strong>逆变换 (IDFT)</strong>：
+  
+其逆变换 (IDFT) 为：
 
   $$
   x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] W_N^{-kn}, \quad 0 \le n \le N-1
   $$
-  </li>
-<li><strong>关键符号</strong>:
+  </p>
 <ul>
-<li>$N$: 变换的点数，决定了时域和频域序列的长度。</li>
-<li>$W\_N$: <strong>旋转因子 (Twiddle Factor)</strong>， $W\_N = e^{-j\frac{2\pi}{N}}$。</li>
-<li><strong>物理意义</strong>：$W\_N$ 的几何意义是复平面单位圆上的一个点，其幂 $W\_N^k$ 代表了将单位圆 N 等分的各个点。DFT的计算过程，可以理解为将输入信号 $x[n]$ 与N个离散的正交复指数基函数（由$W\_N$的幂构成）进行相关性计算，得到信号在各个离散频率点上的分量。</li>
+<li><strong>关键符号</strong>：<strong>旋转因子 (Twiddle Factor)</strong> $W\_N$
+
+    $$
+    W_N = e^{-j\frac{2\pi}{N}}
+    $$
+    
+它代表了复平面单位圆上的一个基本旋转角度，DFT的计算本质上是序列与不同旋转因子的幂次相乘求和。</li>
 </ul>
 </li>
-<li><strong>重要性质</strong>：DFT及其逆变换的结果都是<strong>隐式周期性</strong>的，周期为N。即 $X[k+N] = X[k]$ 和 $x[n+N] = x[n]$。这个周期性是后续&quot;圆周&quot;概念的根源。</li>
-</ul>
-<hr>
+<li>
+<p><strong>矩阵形式</strong>：DFT和IDFT可以表示为矩阵运算，这在理论推导和硬件实现中很有用。
 
-<h3 class="relative group">2. 有限长序列的运算：圆周卷积 
-    <div id="2-有限长序列的运算圆周卷积" class="anchor"></div>
+  $$
+  \mathbf{X} = \mathbf{D}_N \mathbf{x} \quad \text{and} \quad \mathbf{x} = \mathbf{D}_N^{-1} \mathbf{X} = \frac{1}{N}\mathbf{D}_N^* \mathbf{x}
+  $$
+  
+其中 $\mathbf{D}\_N$ 是N×N的DFT矩阵，其元素为 $W\_N^{kn}$。</p>
+</li>
+</ul>
+
+<h4 class="relative group">1.3 💻 DFT的计算与MATLAB实现 
+    <div id="13--dft的计算与matlab实现" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#2-%e6%9c%89%e9%99%90%e9%95%bf%e5%ba%8f%e5%88%97%e7%9a%84%e8%bf%90%e7%ae%97%e5%9c%86%e5%91%a8%e5%8d%b7%e7%a7%af" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#13--dft%e7%9a%84%e8%ae%a1%e7%ae%97%e4%b8%8ematlab%e5%ae%9e%e7%8e%b0" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>DFT的直接计算复杂度为 $O(N^2)$。但在实际中，我们几乎总是使用<strong>快速傅里叶变换 (FFT)</strong> 算法，其复杂度仅为 $O(N\log N)$，这使得大规模DFT计算成为可能。</p>
+<ul>
+<li>
+<p><strong>MATLAB 函数</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-matlab" data-lang="matlab"><span class="line"><span class="cl"><span class="c">% 计算序列x的N点FFT (DFT)</span>
+</span></span><span class="line"><span class="cl"><span class="c">% 如果N &gt; length(x)，则对x补零</span>
+</span></span><span class="line"><span class="cl"><span class="c">% 如果N &lt; length(x)，则截断x</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="p">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">% 计算频谱X的N点IFFT (IDFT)</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="p">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>MATLAB 示例代码</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-matlab" data-lang="matlab"><span class="line"><span class="cl"><span class="c">% Editor - E:\MATLAB701\work\DFTexample.m</span>
+</span></span><span class="line"><span class="cl"><span class="c">% 计算序列的DFT</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span><span class="p">=</span><span class="n">input</span><span class="p">(</span><span class="s">&#39;输入序列的长度=&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">M</span><span class="p">=</span><span class="n">input</span><span class="p">(</span><span class="s">&#39;输入离散傅立叶变换长度=&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">u</span><span class="p">=[</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)];</span>
+</span></span><span class="line"><span class="cl"><span class="n">U</span><span class="p">=</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">figure</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span><span class="p">=</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">stem</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">title</span><span class="p">(</span><span class="s">&#39;原始时域序列&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;时间序号n&#39;</span><span class="p">);</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;振幅&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">figure</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">k</span><span class="p">=</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">stem</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">U</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">title</span><span class="p">(</span><span class="s">&#39;DFT抽样点的幅度&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;频率序号k&#39;</span><span class="p">);</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;幅度&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">stem</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">angle</span><span class="p">(</span><span class="n">U</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">title</span><span class="p">(</span><span class="s">&#39;DFT抽样点的相位&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;频率序号k&#39;</span><span class="p">);</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;相位&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><ul>
+<li><strong>代码说明</strong>：这段代码首先获取用户定义的序列长度N和DFT长度M，生成一个单位幅度的序列u，然后调用<code>fft</code>函数计算其M点DFT。最后，使用<code>stem</code>函数分别绘制了DFT结果的幅度和相位谱。</li>
+</ul>
+</li>
+</ul>
+
+<h3 class="relative group">2. 核心关系：频域采样与时域周期延拓 
+    <div id="2-核心关系频域采样与时域周期延拓" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#2-%e6%a0%b8%e5%bf%83%e5%85%b3%e7%b3%bb%e9%a2%91%e5%9f%9f%e9%87%87%e6%a0%b7%e4%b8%8e%e6%97%b6%e5%9f%9f%e5%91%a8%e6%9c%9f%e5%bb%b6%e6%8b%93" aria-label="锚点">#</a>
     </span>        
     
 </h3>
-<p>✨ <strong>核心概念：圆周移位 (Circular Shift)</strong></p>
+
+<h4 class="relative group">2.1 ✨ 核心对偶关系 
+    <div id="21--核心对偶关系" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#21--%e6%a0%b8%e5%bf%83%e5%af%b9%e5%81%b6%e5%85%b3%e7%b3%bb" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
 <ul>
-<li><strong>定义与解释</strong>：对一个N点序列进行移位时，移出序列一端的数据会从另一端&quot;卷回来&quot;。</li>
-<li><strong>生动比喻</strong>：想象N个点均匀分布在一个钟表的表盘上。对它们进行圆周移位，就像是转动这个表盘。点不会消失，只是在圆周上改变了位置。</li>
-</ul>
-<p>✨ <strong>核心概念：圆周卷积 (Circular Convolution)</strong></p>
-<ul>
-<li><strong>定义与解释</strong>：这是两个N点周期序列的卷积运算，其结果也是一个N点周期序列。它与线性卷积的核心区别在于，移位操作是圆周移位。</li>
-<li><strong>生动比喻</strong>：<strong>线性卷积</strong>就像是在一条无限长的跑道上，一个人（信号）站着不动，另一个人（翻转后的滤波器）从远处跑过来，两人重叠的部分不断相乘累加。而<strong>圆周卷积</strong>则是在一个N米长的<strong>圆形跑道</strong>上进行这个过程，跑过终点的人会立刻从起点再次出现，与前面的人再次发生重叠。</li>
-<li><strong>公式</strong>：
+<li><strong>专业定义</strong>：对一个非周期序列 $x[n]$ 的DTFT频谱 $X(e^{j\omega})$ 进行N点均匀采样，得到DFT序列 $Y[k]$。对 $Y[k]$ 进行IDFT得到的时域序列 $y[n]$，并不是原始的 $x[n]$，而是 $x[n]$ 以N为周期的<strong>无限周期延拓序列</strong>。
 
   $$
-  y_c[n] = x[n] \circledast h[n] = \sum_{m=0}^{N-1} x[m] h((n-m)_N)
+  y[n] = \sum_{m=-\infty}^{\infty} x[n - mN]
+  $$
+  </li>
+<li><strong>生动比喻</strong>：再次回到全景星空图（DTFT）和N张照片（DFT）的比喻。当你只用这N张照片来&quot;重构&quot;星空时，计算机并不知道这是一个完整的360度全景。它会认为你给它的就是全部信息，并<strong>想当然地把这N张照片首尾相连，无限地复制下去</strong>，形成一个重复的、周期的&quot;星空壁纸&quot;。这个&quot;壁纸&quot;就是时域的周期延拓序列。</li>
+</ul>
+<p>【图片：DTFT和DFT的关系示意图，展示频域采样和时域周期延拓的对应关系 (参考PPT P18)】
+<img
+src="file-未命名.png"
+class="wikilink"
+alt="file-未命名.png" /></p>
+
+<h4 class="relative group">2.2 ⚠️ 时域混叠 (Time-Domain Aliasing) 
+    <div id="22--时域混叠-time-domain-aliasing" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#22--%e6%97%b6%e5%9f%9f%e6%b7%b7%e5%8f%a0-time-domain-aliasing" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>从上述关系可以看出，如果原始序列 $x[n]$ 的长度 $L$ 大于DFT的点数 $N$，那么在周期延拓求和时，序列的&quot;尾部&quot;会和下一个周期的&quot;头部&quot;发生重叠，这就是<strong>时域混叠</strong>。
+* <strong>无混叠条件</strong>：为了能从IDFT的结果 $y[n]$ 中无失真地恢复出原始序列 $x[n]$，必须保证DFT点数 $N$ <strong>不小于</strong> 原始序列的长度 $L$，即 $N \ge L$。</p>
+
+<h3 class="relative group">3. 有限长序列的周期运算 
+    <div id="3-有限长序列的周期运算" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#3-%e6%9c%89%e9%99%90%e9%95%bf%e5%ba%8f%e5%88%97%e7%9a%84%e5%91%a8%e6%9c%9f%e8%bf%90%e7%ae%97" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+<p>由于DFT内在的周期性，它引出了一套与线性运算不同的&quot;圆周&quot;或&quot;周期&quot;运算。</p>
+
+<h4 class="relative group">3.1 🔄 序列的圆周移位 (Circular Shift) 
+    <div id="31--序列的圆周移位-circular-shift" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#31--%e5%ba%8f%e5%88%97%e7%9a%84%e5%9c%86%e5%91%a8%e7%a7%bb%e4%bd%8d-circular-shift" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>定义</strong>：对一个N点序列 $x[n]$ 进行的移位，其结果仍然被限制在 $[0, N-1]$ 的范围内。移出边界的部分会从另一端&quot;卷回来&quot;。</li>
+<li><strong>生动比喻</strong>：想象这N个点均匀地分布在一个<strong>钟表</strong>的表盘上。圆周移位就像是<strong>转动这个表盘</strong>，点永远不会离开表盘，只是位置发生了周期性的变化。</li>
+<li><strong>公式</strong>：$x((n-n\_0))\_N$ 表示将 $x[n]$ 圆周右移 $n\_0$ 位。</li>
+</ul>
+<p>【图片：圆周移位示意图，展示序列点在圆环上的移动 (参考PPT P29)】
+<img
+src="file-未命名 1.png"
+class="wikilink"
+alt="file-未命名1.png" /></p>
+
+<h4 class="relative group">3.2 ⚙️ 序列的圆周卷积 (Circular Convolution) 
+    <div id="32--序列的圆周卷积-circular-convolution" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#32--%e5%ba%8f%e5%88%97%e7%9a%84%e5%9c%86%e5%91%a8%e5%8d%b7%e7%a7%af-circular-convolution" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>定义</strong>：这是由DFT的乘积性质自然导出的卷积形式。
+
+  $$
+  \text{DFT}\{x_1[n]\} \cdot \text{DFT}\{x_2[n]\} = \text{DFT}\{x_1[n] \text{ N } x_2[n]\}
   $$
   
+其中 $\text{ N }$ 表示N点圆周卷积。</li>
+<li><strong>生动比喻</strong>：
 <ul>
-<li>$(n-m)\_N$ 表示 $(n-m) \pmod N$。</li>
+<li><strong>线性卷积</strong>：像是在一条无限长的传送带上，一个模板（$h[n]$）滑过一个物件（$x[n]$），计算每时每刻的重叠面积。结果的长度是 $L+M-1$。</li>
+<li><strong>圆周卷积</strong>：像是一个有N个齿的<strong>旋转齿轮</strong>（$h[n]$的反转序列）与另一个有N个齿的固定齿轮（$x[n]$）啮合。每旋转一格，就计算一次啮合齿对应值的乘积和。结果的长度仍然是N。</li>
 </ul>
 </li>
-</ul>
-<p>🔧 <strong>圆周卷积与线性卷积的关系</strong></p>
+<li><strong>与线性卷积的关系</strong>：
 <ul>
-<li>
-<p><strong>核心定理 (DFT卷积定理)</strong>：两个序列DFT的乘积，对应于这两个序列在时域的<strong>圆周卷积</strong>。
-
-  $$
-  \text{DFT}(x[n]) \cdot \text{DFT}(h[n]) = \text{DFT}(x[n] \circledast h[n])
-  $$
-  </p>
-</li>
-<li>
-<p><strong>关键问题</strong>：我们通常希望用DFT来计算<strong>线性卷积</strong>（因为它代表LTI系统的输出），但DFT的性质直接导向的是<strong>圆周卷积</strong>。如果直接计算，当线性卷积的结果长度超过N时，超出部分会&quot;卷回来&quot;叠加到前面，产生<strong>时域混叠 (Time-domain Aliasing)</strong>，导致结果错误。</p>
-</li>
-<li>
-<p><strong>解决方案</strong>：</p>
-<ol>
-<li><strong>确定长度</strong>：一个M点序列和一个N点序列的线性卷积结果是一个 <strong>L = M+N-1</strong> 点的序列。</li>
-<li><strong>补零 (Zero Padding)</strong>：在进行DFT之前，必须将原始的 $x[n]$ 和 $h[n]$ 序列都<strong>补零</strong>到长度<strong>至少为L</strong>。</li>
-<li><strong>计算</strong>：对补零后的序列进行L点DFT，相乘，再进行L点IDFT。</li>
-</ol>
-<ul>
-<li><strong>结论</strong>：当且仅当DFT的点数 $K \ge M+N-1$ 时，K点圆周卷积的结果才与线性卷积的结果完全相同。</li>
+<li>通常情况下，<strong>圆周卷积 ≠ 线性卷积</strong>。圆周卷积的结果是线性卷积结果发生时域混叠后的产物。</li>
+<li><strong>关键应用</strong>：如果对两个长度分别为L和M的序列，在进行DFT前先<strong>补零</strong>至长度 $N \ge L+M-1$，那么它们N点<strong>圆周卷积的结果将与线性卷积完全相同</strong>！</li>
 </ul>
 </li>
 </ul>
-<p>【图片：线性卷积与不同点数圆周卷积的结果对比图，清晰展示时域混叠现象 (参考PPT P33)】
+<p>【图片：线性卷积与圆周卷积的关系图，对比补零前后的结果 (参考PPT P33)】
 <img
 src="file-%E7%AC%AC8%E8%AE%B2%20%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2(Part%2BI)%203.png"
 class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
@@ -1532,14 +1724,18 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
     
 </h2>
 <ul>
-<li><strong>承上启下</strong>：DFT是我们整个傅里叶分析工具箱的最终归宿和实用化身。它通过对DTFT进行<strong>频域采样</strong>，构建了一个在计算机中闭环的分析体系。而理解圆周卷积与线性卷积的关系，是正确使用DFT进行系统滤波和信号处理的<strong>先决条件</strong>。</li>
-<li><strong>现实应用</strong>：
+<li>
+<p><strong>承上启下</strong>：DFT是我们整个傅里叶变换理论体系的终点，也是通往实际应用的起点。它将我们之前学习的连续、无限的理论，转化为了计算机可以执行的有限、离散的算法。圆周卷积的概念，正是理解DFT内在周期性的关键。</p>
+</li>
+<li>
+<p><strong>现实应用</strong>：</p>
 <ol>
-<li><strong>快速傅里叶变换 (FFT)</strong>：DFT的直接计算复杂度是 $O(N^2)$，当N很大时非常耗时。FFT是一种实现了DFT的快速算法，将复杂度降至 $O(N\log N)$，使得对长序列进行实时频谱分析成为可能。手机里的频谱分析APP、音频软件的均衡器等都依赖于FFT。</li>
-<li><strong>快速卷积 (Fast Convolution)</strong>：在信号处理中，计算长序列的线性卷积是基本操作。通过&quot;补零 + FFT + 频域相乘 + IFFT&quot;这一流程，可以比直接在时域计算线性卷积快得多。这在通信系统（如信道均衡）、图像处理（如模糊和锐化）等领域是标准的高效实现方法。</li>
+<li><strong>快速卷积</strong>：直接计算两个长序列的线性卷积非常耗时（复杂度 $O(L \cdot M)$）。但我们可以利用DFT：先将序列补零到 $N \ge L+M-1$，然后做N点FFT，在频域相乘，再做IFFT。整个过程利用FFT的效率，复杂度仅为 $O(N\log N)$。这在音频处理、图像滤波等领域是标准操作。</li>
+<li><strong>OFDM通信</strong>：现代通信系统（如Wi-Fi, 4G/5G）广泛使用OFDM技术。其核心就是利用IFFT和FFT来高效地实现多路信号的调制和解调。系统巧妙地利用了圆周卷积的特性，通过添加循环前缀（Cyclic Prefix）来对抗信道延迟带来的符号间干扰。</li>
 </ol>
 </li>
 </ul>
+<hr>
 
 <h2 class="relative group">🤔 引导式提问 
     <div id="-引导式提问" class="anchor"></div>
@@ -1551,10 +1747,11 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
     
 </h2>
 <ol>
-<li><strong>傅里叶变换家族中，为什么只有DFT能在计算机上被直接、完整地计算？</strong> 请从时域和频域的&quot;连续/离散&quot;与&quot;周期/非周期&quot;四个维度进行对比说明。</li>
-<li><strong>&ldquo;频域采样导致时域周期延拓&quot;是傅里叶变换的一条重要对偶性质。</strong> 这条性质如何解释DFT运算中&quot;圆周卷积&quot;现象的必然性？</li>
-<li><strong>假设一个长度为50的信号 $x[n]$ 通过一个长度为30的FIR滤波器 $h[n]$。</strong> 为了用FFT无误地计算出线性卷积结果 $y[n]$，你应该选择的FFT点数N最小应为多少？并简述你的计算步骤。</li>
+<li><strong>为什么说&quot;频域采样&quot;和&quot;时域周期延拓&quot;是同一枚硬币的两面？</strong> 请尝试从DFT和IDFT的求和公式中寻找线索。</li>
+<li><strong>既然DFT的乘积对应的是圆周卷积，而我们工程中通常需要的是线性卷积，这是否意味着DFT的卷积定理&quot;用处不大&quot;？</strong> 我们是如何&quot;欺骗&quot;DFT来为我们计算线性卷积的？</li>
+<li><strong>计算一个1024点序列的DFT，直接计算和使用FFT算法，在计算量（复数乘法次数）上大约会相差多少倍？</strong> （提示：对比 $N^2$ 和 $N\log\_2 N$）</li>
 </ol>
+<hr>
 
 <h2 class="relative group">💡 本讲总结 
     <div id="-本讲总结" class="anchor"></div>
@@ -1565,12 +1762,12 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
     </span>        
     
 </h2>
-<p>本讲我们聚焦于将频谱分析理论落地到计算机实践中，核心是理解DFT。</p>
-<ol>
-<li><strong>DFT的诞生</strong>：为了满足计算机处理<strong>离散、有限长</strong>数据的需求，DFT通过对DTFT进行<strong>频域采样</strong>而产生，它将N点时域序列映射到N点频域序列。</li>
-<li><strong>DFT的本质</strong>：DFT世界是<strong>周期</strong>的（或者说是<strong>圆周</strong>的）。这一内禀属性导致了信号的运算，如移位和卷积，都呈现出&quot;圆周&quot;特性。</li>
-<li><strong>圆周卷积 vs. 线性卷积</strong>：DFT卷积定理指出，频域乘积对应时域<strong>圆周卷积</strong>。为了利用DFT计算我们通常需要的<strong>线性卷积</strong>，必须预先将信号<strong>补零</strong>到足够大的长度($L \ge M+N-1$)，以避免时域混叠，这是使用DFT进行滤波和信号处理的黄金法则。</li>
-</ol>
+<p>今天，我们踏入了数字信号处理的实践核心&mdash;&mdash;DFT。
+* <strong>DFT是为计算机而生的</strong>：它在时域和频域都是离散且有限的，是所有傅里叶分析工具中唯一可以直接进行数值计算的。
+* <strong>DFT是DTFT的采样版本</strong>：这个关系是理解DFT所有特性的基石。
+* <strong>周期性是DFT的灵魂（也是&quot;诅咒&quot;）</strong>：频域采样不可避免地导致了时域的周期性，这引入了<strong>圆周移位</strong>和<strong>圆周卷积</strong>等新概念。
+* <strong>圆周卷积不等于线性卷积</strong>：除非进行了充分的<strong>补零</strong>。这个技巧是利用DFT（通过FFT算法）实现高效线性滤波和卷积的关键。</p>
+<hr>
 
 <h2 class="relative group">🔍 相关缩写 
     <div id="-相关缩写" class="anchor"></div>
@@ -1591,24 +1788,24 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>CFS</strong></td>
-          <td style="text-align: left">Continuous Fourier Series</td>
-          <td style="text-align: left">连续傅里叶级数</td>
-      </tr>
-      <tr>
           <td style="text-align: left"><strong>CTFT</strong></td>
           <td style="text-align: left">Continuous-Time Fourier Transform</td>
           <td style="text-align: left">连续时间傅里叶变换</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>DFS</strong></td>
-          <td style="text-align: left">Discrete Fourier Series</td>
-          <td style="text-align: left">离散傅里叶级数</td>
+          <td style="text-align: left"><strong>CFS</strong></td>
+          <td style="text-align: left">Continuous Fourier Series</td>
+          <td style="text-align: left">连续傅里叶级数</td>
       </tr>
       <tr>
           <td style="text-align: left"><strong>DTFT</strong></td>
           <td style="text-align: left">Discrete-Time Fourier Transform</td>
           <td style="text-align: left">离散时间傅里叶变换</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>DFS</strong></td>
+          <td style="text-align: left">Discrete Fourier Series</td>
+          <td style="text-align: left">离散傅里叶级数</td>
       </tr>
       <tr>
           <td style="text-align: left"><strong>DFT</strong></td>
@@ -2191,7 +2388,7 @@ class="wikilink" alt="file-第8讲有限长离散变换(Part+I)3.png" /></p>
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>387 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">2 分钟</span>
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>551 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">3 分钟</span>
     
 
     

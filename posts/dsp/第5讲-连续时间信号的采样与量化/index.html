@@ -159,7 +159,7 @@
     "keywords": ["DSP","learning"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "387"
+    "wordCount": "551"
   }]
   </script>
 
@@ -982,7 +982,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>387 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">2 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>551 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">3 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
   <span
     id="zen-mode-button"
     class="text-lg hover:text-primary-500"
@@ -1150,14 +1150,37 @@
     class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#-第5讲连续时间信号的采样与量化">🌟 第5讲：连续时间信号的采样与量化</a></li>
+    <li><a href="#-欢迎来到第5讲连续时间信号的采样与量化">🌟 欢迎来到第5讲：连续时间信号的采样与量化</a></li>
     <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
     <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
       <ul>
-        <li><a href="#1-连续时间信号的采样">1. 连续时间信号的采样</a></li>
-        <li><a href="#2-采样定理-nyquist-shannon-theorem">2. 采样定理 (Nyquist-Shannon Theorem)</a></li>
-        <li><a href="#3-信号的重构-reconstruction">3. 信号的重构 (Reconstruction)</a></li>
-        <li><a href="#4-信号的量化-quantization">4. 信号的量化 (Quantization)</a></li>
+        <li><a href="#1-连续时间信号的采样-sampling">1. 连续时间信号的采样 (Sampling)</a>
+          <ul>
+            <li><a href="#11--理想采样过程与数学建模">1.1 ✨ 理想采样过程与数学建模</a></li>
+            <li><a href="#12--采样后信号的频谱">1.2 🔧 采样后信号的频谱</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-采样定理-the-sampling-theorem">2. 采样定理 (The Sampling Theorem)</a>
+          <ul>
+            <li><a href="#21--奈奎斯特-香农采样定理-nyquist-shannon-sampling-theorem">2.1 ✨ 奈奎斯特-香农采样定理 (Nyquist-Shannon Sampling Theorem)</a></li>
+            <li><a href="#22--频谱混叠-aliasing">2.2 ⚠️ 频谱混叠 (Aliasing)</a></li>
+            <li><a href="#23--采样类型与实例">2.3 📋 采样类型与实例</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-信号的重构-signal-reconstruction--da">3. 信号的重构 (Signal Reconstruction / D/A)</a>
+          <ul>
+            <li><a href="#31--重构原理">3.1 ✨ 重构原理</a></li>
+            <li><a href="#32--理想重构插值公式">3.2 🔧 理想重构&mdash;&mdash;插值公式</a></li>
+            <li><a href="#33--实际重构方法">3.3 🛠️ 实际重构方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-信号的量化-quantization">4. 信号的量化 (Quantization)</a>
+          <ul>
+            <li><a href="#41--为什么需要量化">4.1 ✨ 为什么需要量化</a></li>
+            <li><a href="#42--关键概念与指标">4.2 🔧 关键概念与指标</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-频率的概念梳理">5. 频率的概念梳理</a></li>
       </ul>
     </li>
     <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
@@ -1177,14 +1200,37 @@
     class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#-第5讲连续时间信号的采样与量化">🌟 第5讲：连续时间信号的采样与量化</a></li>
+    <li><a href="#-欢迎来到第5讲连续时间信号的采样与量化">🌟 欢迎来到第5讲：连续时间信号的采样与量化</a></li>
     <li><a href="#-本讲知识地图">📚 本讲知识地图</a></li>
     <li><a href="#-本讲主要内容">📝 本讲主要内容</a>
       <ul>
-        <li><a href="#1-连续时间信号的采样">1. 连续时间信号的采样</a></li>
-        <li><a href="#2-采样定理-nyquist-shannon-theorem">2. 采样定理 (Nyquist-Shannon Theorem)</a></li>
-        <li><a href="#3-信号的重构-reconstruction">3. 信号的重构 (Reconstruction)</a></li>
-        <li><a href="#4-信号的量化-quantization">4. 信号的量化 (Quantization)</a></li>
+        <li><a href="#1-连续时间信号的采样-sampling">1. 连续时间信号的采样 (Sampling)</a>
+          <ul>
+            <li><a href="#11--理想采样过程与数学建模">1.1 ✨ 理想采样过程与数学建模</a></li>
+            <li><a href="#12--采样后信号的频谱">1.2 🔧 采样后信号的频谱</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-采样定理-the-sampling-theorem">2. 采样定理 (The Sampling Theorem)</a>
+          <ul>
+            <li><a href="#21--奈奎斯特-香农采样定理-nyquist-shannon-sampling-theorem">2.1 ✨ 奈奎斯特-香农采样定理 (Nyquist-Shannon Sampling Theorem)</a></li>
+            <li><a href="#22--频谱混叠-aliasing">2.2 ⚠️ 频谱混叠 (Aliasing)</a></li>
+            <li><a href="#23--采样类型与实例">2.3 📋 采样类型与实例</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-信号的重构-signal-reconstruction--da">3. 信号的重构 (Signal Reconstruction / D/A)</a>
+          <ul>
+            <li><a href="#31--重构原理">3.1 ✨ 重构原理</a></li>
+            <li><a href="#32--理想重构插值公式">3.2 🔧 理想重构&mdash;&mdash;插值公式</a></li>
+            <li><a href="#33--实际重构方法">3.3 🛠️ 实际重构方法</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-信号的量化-quantization">4. 信号的量化 (Quantization)</a>
+          <ul>
+            <li><a href="#41--为什么需要量化">4.1 ✨ 为什么需要量化</a></li>
+            <li><a href="#42--关键概念与指标">4.2 🔧 关键概念与指标</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-频率的概念梳理">5. 频率的概念梳理</a></li>
       </ul>
     </li>
     <li><a href="#-知识关联与应用">🔗 知识关联与应用</a></li>
@@ -1385,17 +1431,25 @@
 
         <div class="article-content max-w-prose mb-20">
           
-<h2 class="relative group">🌟 第5讲：连续时间信号的采样与量化 
-    <div id="-第5讲连续时间信号的采样与量化" class="anchor"></div>
+<h2 class="relative group">🌟 欢迎来到第5讲：连续时间信号的采样与量化 
+    <div id="-欢迎来到第5讲连续时间信号的采样与量化" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e7%ac%ac5%e8%ae%b2%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#-%e6%ac%a2%e8%bf%8e%e6%9d%a5%e5%88%b0%e7%ac%ac5%e8%ae%b2%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96" aria-label="锚点">#</a>
     </span>        
     
 </h2>
 <p>(对应课本第三章 3.8-3.10)</p>
-<p>本讲是连接模拟世界与数字世界的桥梁。我们将深入探讨如何将一个连续的模拟信号，通过<strong>采样</strong>（在时间上离散化）和<strong>量化</strong>（在幅度上离散化）这两个关键步骤，无损或可控损失地转换为数字信号，为计算机处理做好准备。</p>
+<p>今天我们将探讨数字信号处理中最核心、最基础的环节&mdash;&mdash;<strong>采样与量化</strong>。这一讲是连接模拟世界与数字世界的桥梁。我们将理解如何将一个连续变化的模拟信号（比如我们的声音、自然界的图像）&ldquo;翻译&quot;成计算机能够理解和处理的离散数字信号。</p>
+<p><strong>核心学习目标:</strong></p>
+<ol>
+<li><strong>理解采样</strong>：掌握理想采样的数学模型，并从时域和频域两个角度洞悉采样过程的本质。</li>
+<li><strong>掌握采样定理</strong>：深刻理解奈奎斯特定理的内涵，明白为什么它是数字通信的基石，并能识别和解释&quot;频谱混叠&quot;现象。</li>
+<li><strong>探索信号重构</strong>：学习如何从采样后的信号无失真地恢复出原始模拟信号。</li>
+<li><strong>认识量化</strong>：了解将连续幅度离散化的过程，并掌握量化位数、比特率等关键性能指标。</li>
+</ol>
+<hr>
 
 <h2 class="relative group">📚 本讲知识地图 
     <div id="-本讲知识地图" class="anchor"></div>
@@ -1413,6 +1467,7 @@ class="wikilink" alt="file-第5讲连续时间信号的采样与量化5.png" />
 <figcaption
 aria-hidden="true">file-第5讲连续时间信号的采样与量化5.png</figcaption>
 </figure>
+<hr>
 
 <h2 class="relative group">📝 本讲主要内容 
     <div id="-本讲主要内容" class="anchor"></div>
@@ -1424,36 +1479,41 @@ aria-hidden="true">file-第5讲连续时间信号的采样与量化5.png</figcap
     
 </h2>
 
-<h3 class="relative group">1. 连续时间信号的采样 
-    <div id="1-连续时间信号的采样" class="anchor"></div>
+<h3 class="relative group">1. 连续时间信号的采样 (Sampling) 
+    <div id="1-连续时间信号的采样-sampling" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#1-%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#1-%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7-sampling" aria-label="锚点">#</a>
     </span>        
     
 </h3>
-<p>✨ <strong>核心概念：采样 (Sampling)</strong></p>
+
+<h4 class="relative group">1.1 ✨ 理想采样过程与数学建模 
+    <div id="11--理想采样过程与数学建模" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#11--%e7%90%86%e6%83%b3%e9%87%87%e6%a0%b7%e8%bf%87%e7%a8%8b%e4%b8%8e%e6%95%b0%e5%ad%a6%e5%bb%ba%e6%a8%a1" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
 <ul>
 <li>
-<p><strong>定义与解释</strong>：采样是在时间轴上，以固定的时间间隔 $T$（采样周期）对连续信号 $x(t)$ 的值进行&quot;测量&quot;或&quot;抽取&quot;，从而将其转换为离散序列的过程。</p>
+<p><strong>专业定义</strong>：采样是指在时间轴上以固定的时间间隔 <code>T</code>（采样周期）对连续时间信号 <code>x(t)</code> 进行&quot;取值&rdquo;，从而将其转换为一个离散时间序列的过程。</p>
 </li>
 <li>
-<p><strong>生动比喻</strong>：想象一下观看一部流畅的电影（连续信号），&ldquo;采样&quot;就像是用相机对这部电影进行快速连拍，得到一系列的静态照片（采样点）。只要你拍得足够快，这一系列照片就能完整地代表原始电影的动作。</p>
+<p><strong>生动比喻</strong>：想象一下你在观看一部电影（连续时间信号）。&ldquo;采样&quot;就像是对这部电影进行快速截图，每秒钟截取固定数量的图片（样本）。如果截图的速度足够快，你依然可以通过这些静止的图片&quot;脑补&quot;出连贯的动作。</p>
 </li>
 <li>
-<p><strong>关键要素</strong>：</p>
-<ul>
-<li>$T$: 采样周期，两次采样之间的时间间隔。</li>
-<li>$f\_s$: 采样频率，单位时间内的采样次数， $f\_s = 1/T$。</li>
-<li>$\Omega\_s$: 采样角频率，$\Omega\_s = 2\pi f\_s = 2\pi/T$。</li>
-</ul>
-</li>
-</ul>
-<p>🔧 <strong>理想采样过程的数学建模</strong></p>
+<p><strong>数学建模</strong>：理想采样可以看作是原始连续信号 $x(t)$ 与一个周期性的冲激脉冲序列 $p(t)$ 相乘。
+【图片：连续信号、周期冲击序列、采样后信号的时域波形对比图 (参考PPT P5)】
+<img
+src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96.png"
+class="wikilink" alt="file-第5讲连续时间信号的采样与量化.png" /></p>
 <ol>
 <li>
-<p><strong>时域分析</strong>：理想采样可以看作是原始连续信号 $x(t)$ 与一个周期性的冲激序列 $p(t)$ 相乘。</p>
+<p><strong>采样信号 (冲激串)</strong>：
 <script>
     window.MathJax = {
       tex: {
@@ -1468,126 +1528,269 @@ aria-hidden="true">file-第5讲连续时间信号的采样与量化5.png</figcap
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
-    $$
-    x_s(t) = x(t) \cdot p(t) = x(t) \cdot \sum_{n=-\infty}^{\infty} \delta(t - nT) = \sum_{n=-\infty}^{\infty} x(nT)\delta(t-nT)
-    $$
-    
-<ul>
-<li>$x\_s(t)$: 采样后的信号，它是一个加权的冲激串，在每个采样时刻 $nT$ 有一个冲激，其强度为该时刻的信号值 $x(nT)$。</li>
-<li>$p(t)$: 周期冲激序列，扮演着&quot;快门&quot;的角色，只在特定时刻打开，让信号通过。</li>
-</ul>
-<p>【图片：连续信号、周期冲激序列和采样后信号的时域波形图对比 (参考PPT P5-6)】
-<img
-src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96.png"
-class="wikilink" alt="file-第5讲连续时间信号的采样与量化.png" /></p>
+      $$
+      p(t) = \sum_{n=-\infty}^{\infty} \delta(t - nT_s)
+      $$
+      
+其中，$T\_s$ 是采样周期，$\delta(t)$ 是单位冲激函数。这个信号就是在每个采样时刻 $nT\_s$ 出现一个&quot;尖峰&rdquo;。</p>
 </li>
 <li>
-<p><strong>频域分析</strong>：时域的乘积对应于频域的卷积。但由于冲激序列的傅里叶变换仍然是冲激序列，我们得到了一个更简洁优美的结论。</p>
+<p><strong>采样后的信号</strong>：
 
-    $$
-    \hat{X}(\omega) = \frac{1}{T} \sum_{k=-\infty}^{\infty} X(\omega - k\omega_s)
-    $$
-    
+      $$
+      x_s(t) = x(t) \cdot p(t) = x(t) \sum_{n=-\infty}^{\infty} \delta(t - nT_s) = \sum_{n=-\infty}^{\infty} x(nT_s) \delta(t - nT_s)
+      $$
+      </p>
 <ul>
-<li>$\hat{X}(\omega)$: 采样后信号的频谱。</li>
-<li>$X(\omega)$: 原始信号的频谱。</li>
-<li>$\omega\_s$: 采样角频率。</li>
-<li><strong>物理意义</strong>：这个公式揭示了采样的本质&mdash;&mdash;<strong>原始信号的频谱被以采样频率 $\omega\_s$ 为周期进行了复制和延拓</strong>。就像用一组平行镜子产生无穷影像一样，采样在频域里复制出了无穷个原始频谱。</li>
+<li><strong>物理意义</strong>：这个公式表示，采样后的信号 $x\_s(t)$ 在每个采样时刻 $nT\_s$ 的&quot;强度&quot;（冲激的系数）就是原始信号在那个时刻的幅值 $x(nT\_s)$，而在其他所有时间点，信号值为零。</li>
 </ul>
-<p>【图片：原始信号频谱与采样后信号频谱的对比图，清晰展示频谱的周期性延拓 (参考PPT P8)】
-<img
-src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96%201.png"
-class="wikilink" alt="600" /></p>
 </li>
 </ol>
-<hr>
+</li>
+<li>
+<p><strong>关键参数</strong>：</p>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">参数</th>
+          <th style="text-align: left">符号</th>
+          <th style="text-align: left">公式</th>
+          <th style="text-align: left">单位</th>
+          <th style="text-align: left">描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">采样周期</td>
+          <td style="text-align: left">$T\_s$</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">秒 (s)</td>
+          <td style="text-align: left">两次采样之间的时间间隔</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">采样频率</td>
+          <td style="text-align: left">$f\_s$</td>
+          <td style="text-align: left">$f\_s = 1/T\_s$</td>
+          <td style="text-align: left">赫兹 (Hz)</td>
+          <td style="text-align: left">每秒采样的次数</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">采样角频率</td>
+          <td style="text-align: left">$\Omega\_s$</td>
+          <td style="text-align: left">$\Omega\_s = 2\pi/T\_s = 2\pi f\_s$</td>
+          <td style="text-align: left">弧度/秒 (rad/s)</td>
+          <td style="text-align: left">频率的另一种表示</td>
+      </tr>
+  </tbody>
+</table>
 
-<h3 class="relative group">2. 采样定理 (Nyquist-Shannon Theorem) 
-    <div id="2-采样定理-nyquist-shannon-theorem" class="anchor"></div>
+<h4 class="relative group">1.2 🔧 采样后信号的频谱 
+    <div id="12--采样后信号的频谱" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#2-%e9%87%87%e6%a0%b7%e5%ae%9a%e7%90%86-nyquist-shannon-theorem" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#12--%e9%87%87%e6%a0%b7%e5%90%8e%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%a2%91%e8%b0%b1" aria-label="锚点">#</a>
     </span>        
     
-</h3>
-<p>✨ <strong>核心概念：采样定理</strong></p>
+</h4>
 <ul>
 <li>
-<p><strong>定义与解释</strong>：一个最高频率为 $f\_{max}$（或 $\omega\_{max}$）的带限信号，为了能够从其采样样本中无失真地恢复原始信号，采样频率 $f\_s$ 必须大于或等于其最高频率的2倍。</p>
+<p><strong>核心结论</strong>：<strong>时域的采样，等效于频域的周期性延拓</strong>。</p>
 </li>
 <li>
-<p><strong>生动比喻</strong>：要拍摄一个快速旋转的风扇叶片，如果你的相机快门速度（采样率）太慢，拍出的照片序列可能会让你觉得叶片在倒转甚至静止，这就是&quot;频谱混叠&rdquo;。为了捕捉到真实的旋转情况，你的快门速度必须至少是叶片转速的两倍。</p>
+<p><strong>生动比喻</strong>：还记得截图的比喻吗？在频域（或者说&quot;内容复杂度&quot;）层面，采样相当于把你原始电影的&quot;频谱&quot;信息（比如画面细节、色彩变化的快慢等）复制了很多份，然后以&quot;采样频率&quot;为间距，整齐地排列在频域轴上。</p>
 </li>
 <li>
-<p><strong>公式</strong>：
+<p><strong>频谱公式</strong>：
 
   $$
-  f_s \ge 2f_{max} \quad \text{或} \quad \omega_s \ge 2\omega_{max}
+  X_s(j\Omega) = \frac{1}{T_s} \sum_{k=-\infty}^{\infty} X\left(j(\Omega - k\Omega_s)\right)
   $$
   </p>
 <ul>
-<li><strong>奈奎斯特采样率 (Nyquist Rate)</strong>：$2f\_{max}$，即允许无失真恢复的最低采样率。</li>
-<li><strong>频谱混叠 (Aliasing)</strong>：如果 $f\_s < 2f\_{max}$（欠采样），频域中周期延拓的频谱会发生重叠，高频信息会&quot;伪装&quot;成低频信息，导致信号失真，且这种失真是不可逆的。</li>
+<li>$X\_s(j\Omega)$：采样后信号 $x\_s(t)$ 的频谱。</li>
+<li>$X(j\Omega)$：原始信号 $x(t)$ 的频谱。</li>
+<li>$\Omega\_s$：采样角频率。</li>
+<li><strong>工程意义</strong>：这个公式告诉我们，采样后的信号频谱是原始信号频谱以 $\Omega\_s$ 为周期进行复制、平移和叠加的结果，并且幅度上被缩放了 $1/T\_s$ 倍。</li>
 </ul>
+<p>【图片：采样前后频谱示意图，展示原始频谱、冲激序列频谱和采样后信号的周期性频谱 (参考PPT P8)】
+<img
+src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96%201.png"
+class="wikilink" alt="500" /></p>
 </li>
 </ul>
-<p>🔧 <strong>实际应用中的采样</strong>
-* <strong>过采样 (Oversampling)</strong>：$f\_s > 2f\_{max}$。这是最常见的做法，可以给后续的信号处理（如滤波）留出更多余地。</p>
-<ul>
-<li>
-<p><strong>临界采样 (Critical Sampling)</strong>：$f\_s = 2f\_{max}$。理论上可行，但对后续的恢复滤波器要求极为苛刻，工程上很少使用。</p>
-</li>
-<li>
-<p><strong>抗混叠滤波器 (Anti-aliasing Filter)</strong>：在采样之前，必须使用一个<strong>低通滤波器</strong>来滤除信号中所有高于 $f\_s/2$ 的频率成分，以确保满足采样定理的前提（带限信号），从根本上防止频谱混叠的发生。</p>
-</li>
-</ul>
-<hr>
 
-<h3 class="relative group">3. 信号的重构 (Reconstruction) 
-    <div id="3-信号的重构-reconstruction" class="anchor"></div>
+<h3 class="relative group">2. 采样定理 (The Sampling Theorem) 
+    <div id="2-采样定理-the-sampling-theorem" class="anchor"></div>
     
     <span
         class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
-        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#3-%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%8d%e6%9e%84-reconstruction" aria-label="锚点">#</a>
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#2-%e9%87%87%e6%a0%b7%e5%ae%9a%e7%90%86-the-sampling-theorem" aria-label="锚点">#</a>
     </span>        
     
 </h3>
-<p>✨ <strong>核心概念：信号重构</strong></p>
+
+<h4 class="relative group">2.1 ✨ 奈奎斯特-香农采样定理 (Nyquist-Shannon Sampling Theorem) 
+    <div id="21--奈奎斯特-香农采样定理-nyquist-shannon-sampling-theorem" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#21--%e5%a5%88%e5%a5%8e%e6%96%af%e7%89%b9-%e9%a6%99%e5%86%9c%e9%87%87%e6%a0%b7%e5%ae%9a%e7%90%86-nyquist-shannon-sampling-theorem" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
 <ul>
 <li>
-<p><strong>定义与解释</strong>：从采样信号 $x\_s(t)$ 或离散序列 $x[n]$ 中恢复出原始连续信号 $x(t)$ 的过程，本质上是数模转换 (D/A) 的核心。</p>
+<p><strong>专业定义</strong>：对于一个最高频率为 $f\_{max}$ 的带限信号，为了能够从其采样样本中无失真地恢复出原始信号，采样频率 $f\_s$ 必须大于等于最高频率的2倍。</p>
 </li>
 <li>
-<p><strong>生动比喻</strong>：重构就像是根据你拍摄的一系列静态照片，通过一种完美的&quot;插值&quot;方法，将其重新&quot;播放&quot;成一部与原始一模一样的流畅电影。</p>
+<p><strong>生动比喻</strong>：为了捕捉一辆高速旋转的车轮（信号）的真实运动，你的相机快门速度（采样率）必须至少是车轮转速（最高频率）的两倍。如果你拍得太慢，就可能会看到车轮静止甚至倒转的&quot;假象&quot;，这就是&quot;混叠&quot;。</p>
+</li>
+<li>
+<p><strong>核心公式</strong>：
+
+  $$
+  f_s \ge 2f_{max} \quad \text{或} \quad \Omega_s \ge 2\Omega_{max}
+  $$
+  </p>
+</li>
+<li>
+<p><strong>关键术语</strong>：</p>
+<ul>
+<li><strong>奈奎斯特采样率 (Nyquist Rate)</strong>：指能够无失真恢复信号的<strong>最低</strong>采样频率，即 $2f\_{max}$。</li>
+<li><strong>奈奎斯特频率 (Nyquist Frequency)</strong>：指采样频率的一半，即 $f\_s/2$。它是系统能够处理的无混叠的最高信号频率。</li>
+</ul>
 </li>
 </ul>
-<p>🔧 <strong>理想重构过程</strong></p>
-<ol>
+
+<h4 class="relative group">2.2 ⚠️ 频谱混叠 (Aliasing) 
+    <div id="22--频谱混叠-aliasing" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#22--%e9%a2%91%e8%b0%b1%e6%b7%b7%e5%8f%a0-aliasing" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
 <li>
-<p><strong>频域角度</strong>：从采样信号的频谱（周期延拓的频谱）中，我们只需要提取出位于中央的、未经搬移的原始频谱即可。这可以通过一个<strong>理想低通滤波器</strong>实现。
-* <strong>滤波器要求</strong>：截止频率为 $\omega\_c = \omega\_s / 2$，通带增益为 $T$。</p>
+<p><strong>定义</strong>：如果采样频率 $f\_s < 2f\_{max}$（不满足采样定理），那么在频域上，周期性延拓的频谱会发生重叠。重叠部分的高频成分会&quot;伪装&quot;成低频成分，导致原始信号信息被破坏，且无法恢复。</p>
 </li>
 <li>
-<p><strong>时域角度 (插值公式)</strong>：频域的相乘对应于时域的卷积。将采样信号 $x\_s(t)$ 通过上述理想低通滤波器的过程，在时域上表现为与滤波器的冲激响应 $h(t)$进行卷积。</p>
-<p>
-    $$
-    y(t) = x_s(t) * h(t) = \left( \sum_{n=-\infty}^{\infty} x(nT)\delta(t-nT) \right) * h(t) = \sum_{n=-\infty}^{\infty} x(nT) h(t-nT)
-    $$
+<p><strong>现实应用</strong>：</p>
+<ul>
+<li><strong>车轮倒转</strong>：电影中快速旋转的车轮看起来在倒转，就是因为电影的帧率（采样率）不足以捕捉车轮辐条的真实运动速度，发生了时间上的混叠。</li>
+<li><strong>抗混叠滤波器</strong>：在实际的A/D转换前，必须使用一个<strong>低通滤波器（抗混叠滤波器）</strong>，将信号中所有高于 $f\_s/2$ 的频率成分滤除，确保送去采样的信号是严格带限的，从根本上防止混叠的发生。</li>
+</ul>
+<p>【图片：实际物理采样系统框图，包含抗混叠滤波器 (参考PPT P14)】
+<img
+src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%962.png"
+class="wikilink" alt="file-第5讲连续时间信号的采样与量化2.png" /></p>
+</li>
+</ul>
+
+<h4 class="relative group">2.3 📋 采样类型与实例 
+    <div id="23--采样类型与实例" class="anchor"></div>
     
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#23--%e9%87%87%e6%a0%b7%e7%b1%bb%e5%9e%8b%e4%b8%8e%e5%ae%9e%e4%be%8b" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">采样类型</th>
+          <th style="text-align: left">条件</th>
+          <th style="text-align: left">说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>过采样 (Oversampling)</strong></td>
+          <td style="text-align: left">$f\_s > 2f\_{max}$</td>
+          <td style="text-align: left">采样频率远大于奈奎斯特率。这是实际中最常用的方式，可以简化后续重构滤波器的设计。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>临界采样 (Critical Sampling)</strong></td>
+          <td style="text-align: left">$f\_s = 2f\_{max}$</td>
+          <td style="text-align: left">理论上可行，但对重构滤波器的要求极为苛刻（需要理想的&quot;砖墙&quot;滤波器），工程上难以实现。</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>欠采样 (Undersampling)</strong></td>
+          <td style="text-align: left">$f\_s < 2f\_{max}$</td>
+          <td style="text-align: left">导致频谱混叠，通常要避免。但在特定应用如<strong>带通采样</strong>中，可以巧妙利用。</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>实例</strong>：
+<ul>
+<li><strong>语音信号</strong>：人声主要频率在 300Hz ~ 3.4kHz 之间。根据采样定理，采样率需 &gt; 6.8kHz。工业标准通常采用 8kHz。</li>
+<li><strong>CD音乐</strong>：人耳能听到的最高频率约为 20kHz。因此CD标准采样率定为 44.1kHz，远高于 $2 \times 20\text{kHz} = 40\text{kHz}$，属于过采样。</li>
+</ul>
+</li>
+</ul>
+
+<h3 class="relative group">3. 信号的重构 (Signal Reconstruction / D/A) 
+    <div id="3-信号的重构-signal-reconstruction--da" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#3-%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%8d%e6%9e%84-signal-reconstruction--da" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+
+<h4 class="relative group">3.1 ✨ 重构原理 
+    <div id="31--重构原理" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#31--%e9%87%8d%e6%9e%84%e5%8e%9f%e7%90%86" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li><strong>目标</strong>：从离散的采样信号 $x[n]$ 或 $x\_s(t)$ 恢复出原始的连续信号 $x(t)$。</li>
+<li><strong>频域视角</strong>：重构的本质是从采样后周期性延拓的频谱中，精确地&quot;切割&quot;出位于中心的、未经混叠的原始频谱。这个&quot;切割&quot;工具就是一个<strong>理想低通滤波器</strong>。</li>
+<li><strong>生动比喻</strong>：你有一长串由镜子反射出来的原始图画的复制品（采样后频谱），重构就像是用一个只允许中心原始图画通过的窗口（理想低通滤波器）来观察，从而忽略掉所有复制品，只看到原始的画面。</li>
+<li><strong>滤波器要求</strong>：该理想低通滤波器的截止频率为奈奎斯特频率，即 $\Omega\_c = \Omega\_s / 2$。</li>
+</ul>
+
+<h4 class="relative group">3.2 🔧 理想重构&mdash;&mdash;插值公式 
+    <div id="32--理想重构插值公式" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#32--%e7%90%86%e6%83%b3%e9%87%8d%e6%9e%84%e6%8f%92%e5%80%bc%e5%85%ac%e5%bc%8f" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<ul>
+<li>
+<p>频域的相乘对应于时域的卷积。将采样信号 $x\_s(t)$ 通过上述理想低通滤波器的过程，在时域上表现为与滤波器的冲激响应 $h(t)$进行卷积。</p>
+<p>
+  $$
+  y(t) = x_s(t) * h(t) = \left( \sum_{n=-\infty}^{\infty} x(nT)\delta(t-nT) \right) * h(t) = \sum_{n=-\infty}^{\infty} x(nT) h(t-nT)
+  $$
+  
 理想低通滤波器的冲激响应是一个 Sinc 函数：
 
-    $$
-    h(t) = T \frac{\sin(\omega_s t / 2)}{\pi t} = \frac{\sin(\pi t/T)}{\pi t/T}
-    $$
-    
+  $$
+  h(t) = T \frac{\sin(\omega_s t / 2)}{\pi t} = \frac{\sin(\pi t/T)}{\pi t/T}
+  $$
+  
 这个公式被称为<strong>惠特克-香农插值公式</strong>。它说明，每个采样点 $x(nT)$ 都贡献一个相应移位和缩放的Sinc函数，所有这些Sinc函数叠加起来，就完美地重构了原始信号。</p>
 <p>【图片：单个采样点对应的Sinc函数以及多个Sinc函数叠加恢复原始信号的示意图 (参考PPT P22)】
 
-    $$
-    y(t)= \sum_{n=-\infty}^{\infty} x(nT) h(t-nT)=\sum_{n=-\infty}^{\infty} x(nT)  \frac{T_s\sin(\frac{\Omega_s}{2}(t-nT_s)}{\pi (t-nT_s)}
-    $$
-    
+  $$
+  y(t)= \sum_{n=-\infty}^{\infty} x(nT) h(t-nT)=\sum_{n=-\infty}^{\infty} x(nT)  \frac{T_s\sin(\frac{\Omega_s}{2}(t-nT_s)}{\pi (t-nT_s)}
+  $$
+  
 <img
 src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96%204.png"
 class="wikilink" alt="400" />
@@ -1595,8 +1798,22 @@ class="wikilink" alt="400" />
 src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96%203.png"
 class="wikilink" alt="file-第5讲连续时间信号的采样与量化3.png" /></p>
 </li>
-</ol>
-<hr>
+</ul>
+
+<h4 class="relative group">3.3 🛠️ 实际重构方法 
+    <div id="33--实际重构方法" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#33--%e5%ae%9e%e9%99%85%e9%87%8d%e6%9e%84%e6%96%b9%e6%b3%95" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<p>理想 Sinc 函数在时域上是无限长的，且非因果，无法物理实现。实际中采用近似方法：</p>
+<ul>
+<li><strong>零阶保持 (ZOH)</strong>：将每个采样值保持一个采样周期 $T\_s$ 的时长，形成阶梯状波形。这在频域上等效于一个不理想的低通滤波。</li>
+<li><strong>一阶保持 (FOH)</strong>：用直线连接相邻的采样点，形成折线波形。比 ZOH 更平滑，滤波效果更好。</li>
+</ul>
 
 <h3 class="relative group">4. 信号的量化 (Quantization) 
     <div id="4-信号的量化-quantization" class="anchor"></div>
@@ -1607,39 +1824,133 @@ class="wikilink" alt="file-第5讲连续时间信号的采样与量化3.png" /><
     </span>        
     
 </h3>
-<p>✨ <strong>核心概念：量化</strong>
-* <strong>定义与解释</strong>：将经过采样后、幅度上仍然是连续的样本值，映射到一组有限的、预先设定的离散电平上的过程。这是将信号幅度数字化的关键一步。</p>
+
+<h4 class="relative group">4.1 ✨ 为什么需要量化 
+    <div id="41--为什么需要量化" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#41--%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e9%87%8f%e5%8c%96" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
 <ul>
-<li>
-<p><strong>生动比喻</strong>：如果说采样是把一条连续的曲线变成了&quot;点&quot;，那么量化就是为这些&quot;点&quot;的高度值（幅度）找一个&quot;最近的台阶&quot;站上去。我们的测量尺精度是有限的（只有台阶的高度可选），而不是无限精度的。</p>
-</li>
-<li>
-<p><strong>关键要素</strong>：</p>
+<li><strong>问题</strong>：经过采样后，信号在时间上是离散的，但每个采样点的<strong>幅度</strong>仍然是连续的，可以取无限多个值。计算机无法存储和处理无限精度的数值。</li>
+<li><strong>定义</strong>：量化就是将连续的信号幅度映射到有限个离散的&quot;量化电平&quot;上的过程。</li>
+<li><strong>生动比喻</strong>：给你一把精度极高的尺子测量身高，你可能会得到 175.12345&hellip;cm 这样的数值（连续幅度）。量化就像是规定你只能用整数厘米来报告身高，所以你必须把测量值&quot;四舍五入&quot;到最接近的整数，比如 175cm（离散电平）。</li>
+</ul>
+
+<h4 class="relative group">4.2 🔧 关键概念与指标 
+    <div id="42--关键概念与指标" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#42--%e5%85%b3%e9%94%ae%e6%a6%82%e5%bf%b5%e4%b8%8e%e6%8c%87%e6%a0%87" aria-label="锚点">#</a>
+    </span>        
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">概念</th>
+          <th style="text-align: left">描述</th>
+          <th style="text-align: left">公式/关系</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>量化位数 (b)</strong></td>
+          <td style="text-align: left">用多少个二进制位 (bit) 来表示一个采样值。</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>量化电平数 (L)</strong></td>
+          <td style="text-align: left">幅度被划分成的离散等级数量。</td>
+          <td style="text-align: left">$L = 2^b$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>量化误差/噪声</strong></td>
+          <td style="text-align: left">原始采样值与量化后数值之间的差值。这是量化过程引入的固有误差。</td>
+          <td style="text-align: left">$e[n] = x[n] - \hat{x}[n]$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>比特率 (Bit Rate)</strong></td>
+          <td style="text-align: left">单位时间内传输或存储的总比特数，衡量数据量的大小。</td>
+          <td style="text-align: left">Bit Rate = $f\_s \times b$ (bps)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>信噪比 (SNR)</strong></td>
+          <td style="text-align: left">信号功率与量化噪声功率的比值，衡量量化质量。</td>
+          <td style="text-align: left">SNR(dB) $\approx 6.02b + 1.76$</td>
+      </tr>
+  </tbody>
+</table>
 <ul>
-<li><strong>量化位数 (b)</strong>：用于表示一个量化电平的二进制位数。$b$ bit 可以表示 $L=2^b$ 个不同的量化等级。</li>
-<li><strong>量化误差 (Quantization Error)</strong>：原始采样值与量化后电平之间的差值。这是A/D转换中不可避免的误差源，通常被建模为一种噪声。</li>
-<li><strong>比特率 (Bit Rate)</strong>：表示数字化后每秒产生的数据量。
-
-    $$
-    \text{Bit Rate} = f_s \times b \quad (\text{单位: bits per second, bps})
-    $$
-    </li>
+<li><strong>黄金法则</strong>：从 SNR 公式可以看出，每增加 1 个量化比特，信噪比大约提升 <strong>6dB</strong>。这就是为什么 16位 CD 音质（SNR ≈ 98dB）远好于 8位电话音质（SNR ≈ 50dB）。</li>
 </ul>
-</li>
-</ul>
-<p>💡 <strong>量化位数与音质的关系</strong>
-量化位数直接决定了信号的保真度。位数越高，量化台阶越密，误差越小，信噪比 (SNR) 越高。
-* <strong>经验公式</strong>：对于均匀量化，量化位数 <code>b</code> 和信噪比的关系近似为：
+<p>【图片：量化位数对音质影响的波形对比图 (参考PPT P34)】
+<img
+src="file-%E7%AC%AC5%E8%AE%B2%20%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%962%201.png"
+class="wikilink" alt="file-第5讲连续时间信号的采样与量化21.png" /></p>
 
-$$
-    \text{SNR (dB)} \approx 6.02b + 1.76
-    $$
-
-* <strong>直观感受</strong> (参考PPT P33-34):
-* <strong>4-bit</strong>: 强噪声
-* <strong>8-bit</strong>: 明显噪声
-* <strong>16-bit</strong> (CD音质): 接近无损
-* <strong>24-bit</strong> (录音室标准): 纯净音质</p>
+<h3 class="relative group">5. 频率的概念梳理 
+    <div id="5-频率的概念梳理" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#5-%e9%a2%91%e7%8e%87%e7%9a%84%e6%a6%82%e5%bf%b5%e6%a2%b3%e7%90%86" aria-label="锚点">#</a>
+    </span>        
+    
+</h3>
+<p>在数字信号处理中，我们经常与不同类型的&quot;频率&quot;打交道，理清它们的关系至关重要。</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">频率类型</th>
+          <th style="text-align: left">符号</th>
+          <th style="text-align: left">单位</th>
+          <th style="text-align: left">描述</th>
+          <th style="text-align: left">转换关系</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>模拟频率</strong></td>
+          <td style="text-align: left">$f\_c$ 或 $F$</td>
+          <td style="text-align: left">Hz</td>
+          <td style="text-align: left">物理世界中的真实频率，每秒周期数。</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>模拟角频率</strong></td>
+          <td style="text-align: left">$\Omega$</td>
+          <td style="text-align: left">rad/s</td>
+          <td style="text-align: left">模拟频率的另一种形式。</td>
+          <td style="text-align: left">$\Omega = 2\pi f\_c$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>数字频率</strong></td>
+          <td style="text-align: left">$f$</td>
+          <td style="text-align: left">cycles/sample</td>
+          <td style="text-align: left">归一化频率，表示每个采样周期内信号变化的周期数。</td>
+          <td style="text-align: left">$f = f\_c / f\_s$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>数字角频率</strong></td>
+          <td style="text-align: left">$\omega$</td>
+          <td style="text-align: left">rad/sample</td>
+          <td style="text-align: left">数字频率的另一种形式，范围在 $[-\pi, \pi]$。</td>
+          <td style="text-align: left">$\omega = \Omega \cdot T\_s = 2\pi f$</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>DFT频率</strong></td>
+          <td style="text-align: left">$k$</td>
+          <td style="text-align: left">N/A (索引)</td>
+          <td style="text-align: left">离散傅里叶变换后的频率点索引，取值为 $0, 1, ..., N-1$。</td>
+          <td style="text-align: left">$\omega = \frac{2\pi k}{N}$</td>
+      </tr>
+  </tbody>
+</table>
 <hr>
 
 <h2 class="relative group">🔗 知识关联与应用 
@@ -1652,14 +1963,18 @@ $$
     
 </h2>
 <ul>
-<li><strong>承上启下</strong>：本讲内容是整个数字信号处理领域的基石。它承接了我们之前学习的连续信号傅里叶分析，并将其与即将学习的离散时间信号处理（如DTFT、DFT、数字滤波器等）紧密联系起来，解释了数字世界如何&quot;看到&quot;并处理模拟世界的信息。</li>
-<li><strong>现实应用</strong>：
+<li>
+<p><strong>承上启下</strong>：我们之前学习的<strong>傅里叶变换</strong>是今天所有频域分析的基础。正是因为傅里叶变换揭示了时域和频域的对偶关系，我们才能深刻理解&quot;时域采样&quot;为何会导致&quot;频域周期延拓&quot;。采样定理本质上是傅里葉变换时域卷积定理的一个精彩应用。</p>
+</li>
+<li>
+<p><strong>现实应用</strong>：</p>
 <ol>
-<li><strong>CD 音质标准</strong>: CD采用 $f\_s = 44.1$ kHz 的采样率和 $b=16$ bit 的量化。人耳的听觉上限约为 20 kHz，根据采样定理，采样率需大于 40 kHz。44.1 kHz 的设定既满足了该要求，又为抗混叠滤波器的非理想特性留出了过渡带。16-bit 量化则提供了约 96 dB 的动态范围，足以覆盖绝大多数音乐场景。</li>
-<li><strong>车轮倒转效应 (Wagon-wheel effect)</strong>：在电影或视频中，快速旋转的车轮有时看起来会倒转或静止。这是典型的视觉欠采样（频谱混叠）现象。摄影机的帧率（采样率）低于车轮转速的两倍，导致人眼将高频的旋转&quot;误解&quot;为低频的倒转。</li>
+<li><strong>数字音频</strong>：从麦克风录音（模拟信号）到生成 MP3 或 WAV 文件（数字信号），整个过程的核心就是采样（如 44.1kHz）和量化（如 16-bit）。</li>
+<li><strong>数码相机</strong>：相机传感器上的每个像素点对光线强度进行&quot;采样&quot;，然后将采样值&quot;量化&quot;为 8-bit（256级灰度）或更高位数的颜色值，最终组合成一张数字照片。</li>
 </ol>
 </li>
 </ul>
+<hr>
 
 <h2 class="relative group">🤔 引导式提问 
     <div id="-引导式提问" class="anchor"></div>
@@ -1671,10 +1986,11 @@ $$
     
 </h2>
 <ol>
-<li><strong>为什么抗混叠滤波器必须放在采样过程<em>之前</em>？</strong> 如果信号已经被欠采样导致频谱混叠，还能用数字滤波器来消除混叠、恢复原始信号吗？为什么？</li>
-<li><strong>采样定理要求 $f\_s \ge 2f\_{max}$，那为什么实际应用（如CD音质）中总是选择一个比理论最低值高一些的采样率（例如用44.1k采样20k的音频）？</strong> 这种&quot;过采样&quot;带来了哪些工程上的便利和好处？</li>
-<li><strong>在设计一个数字音频系统时，你需要在&quot;采样率&quot;和&quot;量化位数&quot;之间做权衡。</strong> 如果总比特率（数据量）受限，你是倾向于稍微降低采样率来换取更高的量化位数，还是相反？请结合它们各自对音质（频响范围、噪声水平）的影响来解释你的选择。</li>
+<li><strong>为什么在实际系统中，我们总是选择&quot;过采样&quot;（$f\_s$ 显著大于 $2f\_{max}$），而不是严格等于 $2f\_{max}$ 的&quot;临界采样&quot;？</strong> (提示: 考虑一下理想滤波器和实际滤波器的区别。)</li>
+<li><strong>&ldquo;每增加1bit量化，SNR提升6dB&quot;这个规则对于所有类型的信号都精确成立吗？</strong> (提示: 思考均匀量化对信号幅度分布的假设。)</li>
+<li><strong>既然欠采样 ($f\_s < 2f\_{max}$) 会导致混叠，为什么还有&quot;带通采样&quot;这种技术存在？它是在什么特定条件下，如何巧妙地&quot;利用&quot;混叠来降低采样率的？</strong></li>
 </ol>
+<hr>
 
 <h2 class="relative group">💡 本讲总结 
     <div id="-本讲总结" class="anchor"></div>
@@ -1685,12 +2001,13 @@ $$
     </span>        
     
 </h2>
-<p>本讲我们打通了从模拟到数字的关键链路。其核心可以概括为两个维度的离散化：</p>
-<ol>
-<li><strong>时间轴离散化（采样）</strong>：核心是<strong>奈奎斯特采样定理</strong>，它规定了保证信息不丢失的最低采样速度，并揭示了欠采样会导致不可逆的<strong>频谱混叠</strong>。</li>
-<li><strong>幅度轴离散化（量化）</strong>：核心是将连续幅度映射到有限电平，必然引入<strong>量化噪声</strong>。提高<strong>量化位数</strong>可以显著提升信噪比，但会增加数据量（<strong>比特率</strong>）。</li>
-</ol>
-<p>整个 <strong>A/D 转换</strong> 流程可以总结为：<strong>连续信号 → (抗混叠滤波) → 采样 → 量化 → 数字信号</strong>。这两个步骤共同决定了数字信号能在多大程度上忠实地还原原始模拟世界。</p>
+<p>今天，我们完成了从模拟世界到数字世界的关键一跃。我们学习了：
+* <strong>采样</strong>是将连续时间信号转换为离散时间信号的第一步，其在频域的体现是频谱的周期性延拓。
+* <strong>奈奎斯特定理</strong>是确保信息不丢失的&quot;交通法规&rdquo;，它规定了最低采样频率，并警示我们&quot;频谱混叠&quot;的危险。
+* <strong>信号重构</strong>是采样的逆过程，理论上通过一个理想低通滤波器即可完美实现。
+* <strong>量化</strong>则完成了对幅度的数字化，将无限精度的采样值映射到有限的等级上，虽然会引入量化噪声，但这是数字处理不可或缺的一步。</p>
+<p>采样和量化是所有数字信号处理系统的&quot;咽喉要道&quot;，深刻理解它们，就掌握了打开数字世界大门的钥匙。</p>
+<hr>
 
 <h2 class="relative group">🔍 相关缩写 
     <div id="-相关缩写" class="anchor"></div>
@@ -1711,34 +2028,39 @@ $$
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>A/D</strong></td>
+          <td style="text-align: left">A/D</td>
           <td style="text-align: left">Analog-to-Digital</td>
-          <td style="text-align: left">模拟到数字（转换）</td>
+          <td style="text-align: left">模数转换</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>D/A</strong></td>
+          <td style="text-align: left">D/A</td>
           <td style="text-align: left">Digital-to-Analog</td>
-          <td style="text-align: left">数字到模拟（转换）</td>
+          <td style="text-align: left">数模转换</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>LPF</strong></td>
+          <td style="text-align: left">LPF</td>
           <td style="text-align: left">Low-Pass Filter</td>
           <td style="text-align: left">低通滤波器</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>SNR</strong></td>
+          <td style="text-align: left">ZOH</td>
+          <td style="text-align: left">Zero-Order Hold</td>
+          <td style="text-align: left">零阶保持器</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">FOH</td>
+          <td style="text-align: left">First-Order Hold</td>
+          <td style="text-align: left">一阶保持器</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">SNR</td>
           <td style="text-align: left">Signal-to-Noise Ratio</td>
           <td style="text-align: left">信噪比</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>PCM</strong></td>
-          <td style="text-align: left">Pulse Code Modulation</td>
-          <td style="text-align: left">脉冲编码调制</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>bps</strong></td>
-          <td style="text-align: left">bits per second</td>
-          <td style="text-align: left">比特率（位/秒）</td>
+          <td style="text-align: left">DFT</td>
+          <td style="text-align: left">Discrete Fourier Transform</td>
+          <td style="text-align: left">离散傅里叶变换</td>
       </tr>
   </tbody>
 </table>
