@@ -3,40 +3,35 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://www.asanilo.top/en/posts/2025-10-27/</loc>
+    <loc>https://www.asanilo.top/en/hide/2025-10-27/</loc>
     <lastmod>2025-10-25T17:33:07+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://www.asanilo.top/posts/2025-10-27/"
+      href="https://www.asanilo.top/hide/2025-10-27/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://www.asanilo.top/en/posts/2025-10-27/"
+      href="https://www.asanilo.top/en/hide/2025-10-27/"
     />
   </url>
   <url>
-    <loc>https://www.asanilo.top/en/posts/</loc>
+    <loc>https://www.asanilo.top/en/hide/</loc>
     <lastmod>2025-10-25T17:33:07+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://www.asanilo.top/posts/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://www.asanilo.top/ja/posts/"
+      href="https://www.asanilo.top/hide/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://www.asanilo.top/en/posts/"
+      href="https://www.asanilo.top/en/hide/"
     />
   </url>
   <url>
@@ -77,6 +72,27 @@
     />
   </url>
   <url>
+    <loc>https://www.asanilo.top/en/posts/</loc>
+    <lastmod>2025-10-14T20:18:24+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://www.asanilo.top/posts/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ja"
+      href="https://www.asanilo.top/ja/posts/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://www.asanilo.top/en/posts/"
+    />
+  </url>
+  <url>
     <loc>https://www.asanilo.top/en/about/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -94,6 +110,26 @@
       rel="alternate"
       hreflang="en"
       href="https://www.asanilo.top/en/about/"
+    />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/en/home/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://www.asanilo.top/home/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="ja"
+      href="https://www.asanilo.top/ja/home/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://www.asanilo.top/en/home/"
     />
   </url>
 </urlset>
