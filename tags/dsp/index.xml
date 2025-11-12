@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© 2025 Asanilo</copyright>
-    <lastBuildDate>Sat, 01 Nov 2025 19:03:58 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/tags/dsp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Nov 2025 23:16:56 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/tags/dsp/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>DSP-12 数字滤波器的结构</title>
+      <link>https://www.asanilo.top/posts/dsp/%E7%AC%AC12%E8%AE%B2-%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 11 Nov 2025 23:16:56 +0800</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/dsp/%E7%AC%AC12%E8%AE%B2-%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>DSP-11 LTI系统的变换域分析 (Part II)</title>
