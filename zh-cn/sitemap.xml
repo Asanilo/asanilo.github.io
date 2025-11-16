@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://www.asanilo.top/</loc>
-    <lastmod>2025-11-13T00:25:02+08:00</lastmod>
+    <lastmod>2025-11-16T23:37:08+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -24,14 +24,8 @@
     />
   </url>
   <url>
-    <loc>https://www.asanilo.top/posts/%E5%B0%84%E9%A2%91%E7%94%B5%E8%B7%AF/%E7%AC%AC16%E8%AE%B2-%E9%98%BB%E6%8A%97%E5%8C%B9%E9%85%8D/</loc>
-    <lastmod>2025-11-13T00:25:02+08:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.asanilo.top/posts/</loc>
-    <lastmod>2025-11-13T00:25:02+08:00</lastmod>
+    <lastmod>2025-11-16T23:37:08+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -49,6 +43,18 @@
       hreflang="zh-cn"
       href="https://www.asanilo.top/posts/"
     />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/%E6%A1%8C%E9%9D%A2%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2025-11-16T23:37:08+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/%E5%B0%84%E9%A2%91%E7%94%B5%E8%B7%AF/%E7%AC%AC16%E8%AE%B2-%E9%98%BB%E6%8A%97%E5%8C%B9%E9%85%8D/</loc>
+    <lastmod>2025-11-13T00:25:02+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/%E5%B0%84%E9%A2%91%E7%94%B5%E8%B7%AF/%E7%AC%AC14%E8%AE%B2-%E5%BE%AE%E6%B3%A2%E6%BB%A4%E6%B3%A2%E5%99%A81/</loc>

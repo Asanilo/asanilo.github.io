@@ -1784,7 +1784,7 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 
   $$ Z_c = \frac{30\pi}{\sqrt{\epsilon_r}} \frac{b}{W_e + 0.441b} $$
   
-其中，等效宽度 $W\_e$ 的计算方式如下：
+其中，等效宽度 $W_e$ 的计算方式如下：
 
   $$ \frac{W_e}{b} = \begin{cases} \frac{W}{b} & \text{for } \frac{W}{b} > 0.35 \\ \frac{W}{b} - (0.35 - \frac{W}{b})^2 & \text{for } \frac{W}{b} < 0.35 \end{cases} $$
   
@@ -1800,7 +1800,7 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 </ul>
 </li>
 <li><strong>综合公式 (已知阻抗求尺寸)</strong>：
-当给定 $Z\_c$, $b$, $\epsilon\_r$ 时，求线宽 <code>W</code>：
+当给定 $Z_c$, $b$, $\epsilon_r$ 时，求线宽 <code>W</code>：
 
   $$ \frac{W}{b} = \begin{cases} x & \text{for } \sqrt{\epsilon_r}Z_c < 120 \\ 0.85 - \sqrt{0.6 - x} & \text{for } \sqrt{\epsilon_r}Z_c > 120 \end{cases} $$
   
@@ -1819,8 +1819,8 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
     
 </h4>
 <ul>
-<li><strong>导体损耗 (Conductor Loss)</strong>, $\alpha\_c$: 由导体的有限电导率引起。</li>
-<li><strong>介质损耗 (Dielectric Loss)</strong>, $\alpha\_d$: 由介质的损耗角正切引起。
+<li><strong>导体损耗 (Conductor Loss)</strong>, $\alpha_c$: 由导体的有限电导率引起。</li>
+<li><strong>介质损耗 (Dielectric Loss)</strong>, $\alpha_d$: 由介质的损耗角正切引起。
 
   $$ \alpha_d = \frac{k \tan\delta}{2} $$
   
@@ -1828,7 +1828,7 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 <li><strong>符号说明</strong>: <code>k</code> 是波数, <code>tanδ</code> 是介质的损耗角正切。</li>
 </ul>
 </li>
-<li><strong>总衰减常数</strong>: $\alpha = \alpha\_c + \alpha\_d$</li>
+<li><strong>总衰减常数</strong>: $\alpha = \alpha_c + \alpha_d$</li>
 </ul>
 
 <h4 class="relative group">2.5. ✨ 设计实例：50Ω 带状线设计 
@@ -1845,10 +1845,10 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 <li><strong>问题</strong>: 设计一条 50Ω 的铜质带状线，基片厚度 <code>b=0.32cm</code>, 相对介电常数 <code>εr=2.2</code>。导体厚度 <code>t=0.01mm</code>。计算在 10GHz 时的线宽和衰减常数（介质损耗角正切为 0.001）。</li>
 <li><strong>设计步骤</strong>:
 <ol>
-<li><strong>判断条件</strong>: 计算 $\sqrt{\epsilon\_r}Z\_0 = \sqrt{2.2} \times 50 = 74.2 < 120$。</li>
-<li><strong>计算中间变量 x</strong>: $x = \frac{30\pi}{\sqrt{\epsilon\_r}Z\_0} - 0.441 = \frac{30\pi}{74.2} - 0.441 = 0.830$。</li>
+<li><strong>判断条件</strong>: 计算 $\sqrt{\epsilon_r}Z_0 = \sqrt{2.2} \times 50 = 74.2 < 120$。</li>
+<li><strong>计算中间变量 x</strong>: $x = \frac{30\pi}{\sqrt{\epsilon_r}Z_0} - 0.441 = \frac{30\pi}{74.2} - 0.441 = 0.830$。</li>
 <li><strong>计算线宽 W</strong>: 因为条件 &lt; 120，所以 $W/b = x = 0.830 \Rightarrow W = b \times x = 0.32 \text{cm} \times 0.830 = 0.266 \text{cm}$。</li>
-<li><strong>计算衰减</strong>: 分别计算导体损耗 $\alpha\_c$ 和介质损耗 $\alpha\_d$，然后相加得到总衰减 $\alpha = 0.277 \text{ Np/m}$。</li>
+<li><strong>计算衰减</strong>: 分别计算导体损耗 $\alpha_c$ 和介质损耗 $\alpha_d$，然后相加得到总衰减 $\alpha = 0.277 \text{ Np/m}$。</li>
 </ol>
 </li>
 </ul>
@@ -1896,17 +1896,17 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 </h4>
 <ul>
 <li><strong>为什么是&quot;准&quot;TEM？</strong>
-因为空气中的波速（c）和介质中的波速（$c/\sqrt{\epsilon\_r}$）不同。如果存在纯TEM模，电磁波在空气-介质交界处将无法满足相位匹配条件，这是物理上不可能的。因此，场必须有微小的纵向分量来&quot;补偿&quot;这种速度差异。</li>
-<li><strong>等效介电常数 ($\epsilon\_e$)</strong>
+因为空气中的波速（c）和介质中的波速（$c/\sqrt{\epsilon_r}$）不同。如果存在纯TEM模，电磁波在空气-介质交界处将无法满足相位匹配条件，这是物理上不可能的。因此，场必须有微小的纵向分量来&quot;补偿&quot;这种速度差异。</li>
+<li><strong>等效介电常数 ($\epsilon_e$)</strong>
 <ul>
-<li><strong>定义</strong>：为了简化分析，我们将这种非均匀介质等效成一个均匀介质，其相对介电常数就是 $\epsilon\_e$。它代表了电磁场感受到的&quot;平均&quot;介电环境。</li>
-<li><strong>取值范围</strong>: $1 < \epsilon\_e < \epsilon\_r$。因为一部分场在空气中，所以等效值会比基片的 $\epsilon\_r$ 小。</li>
+<li><strong>定义</strong>：为了简化分析，我们将这种非均匀介质等效成一个均匀介质，其相对介电常数就是 $\epsilon_e$。它代表了电磁场感受到的&quot;平均&quot;介电环境。</li>
+<li><strong>取值范围</strong>: $1 < \epsilon_e < \epsilon_r$。因为一部分场在空气中，所以等效值会比基片的 $\epsilon_r$ 小。</li>
 <li><strong>计算公式</strong>:
 
     $$ \epsilon_e = \frac{\epsilon_r+1}{2} + \frac{\epsilon_r-1}{2}\frac{1}{\sqrt{1+12d/W}} $$
     
 <ul>
-<li><strong>工程意义</strong>: 这个公式告诉我们，$\epsilon\_e$ 不仅和介质材料 ($\epsilon\_r$) 有关，还和线的几何尺寸（<code>W/d</code>）有关。宽线（W/d 大）的场更多地集中在介质中，$\epsilon\_e$ 接近 $\epsilon\_r$；窄线（W/d 小）的场更多地散布在空气中，$\epsilon\_e$ 接近 $(\epsilon\_r+1)/2$。</li>
+<li><strong>工程意义</strong>: 这个公式告诉我们，$\epsilon_e$ 不仅和介质材料 ($\epsilon_r$) 有关，还和线的几何尺寸（<code>W/d</code>）有关。宽线（W/d 大）的场更多地集中在介质中，$\epsilon_e$ 接近 $\epsilon_r$；窄线（W/d 小）的场更多地散布在空气中，$\epsilon_e$ 接近 $(\epsilon_r+1)/2$。</li>
 </ul>
 </li>
 </ul>
@@ -1922,7 +1922,7 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
     </span>        
     
 </h4>
-<p>一旦我们求出了 $\epsilon\_e$，就可以像分析 TEM 线一样分析准TEM模：</p>
+<p>一旦我们求出了 $\epsilon_e$，就可以像分析 TEM 线一样分析准TEM模：</p>
 <ul>
 <li><strong>相速 (Phase Velocity)</strong>：
 
@@ -1948,12 +1948,12 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
     
 </h4>
 <p>(对应 PPT: P21)</p>
-<p>当我们需要设计一条具有特定特性阻抗 $Z\_c$ 的微带线时（已知基板参数 $\epsilon\_r$ 和 $d$），就需要使用综合公式来反求所需的线宽 <code>W</code>。</p>
+<p>当我们需要设计一条具有特定特性阻抗 $Z_c$ 的微带线时（已知基板参数 $\epsilon_r$ 和 $d$），就需要使用综合公式来反求所需的线宽 <code>W</code>。</p>
 <ul>
 <li>
 <p><strong>计算步骤</strong>:</p>
 <ol>
-<li>首先根据已知的 $Z\_c$ 和 $\epsilon\_r$ 计算两个中间变量 <code>A</code> 和 <code>B</code>。</li>
+<li>首先根据已知的 $Z_c$ 和 $\epsilon_r$ 计算两个中间变量 <code>A</code> 和 <code>B</code>。</li>
 <li>然后根据 <code>W/d</code> 的预估范围（通常射频电路中 <code>W/d</code> &gt; 2 比较常见），选择对应的公式计算 <code>W/d</code> 的值。</li>
 <li>最后乘以基板厚度 <code>d</code> 得到最终的线宽 <code>W</code>。</li>
 </ol>
@@ -1993,12 +1993,12 @@ class="wikilink" alt="file-第9讲平面波导4.png" /></li>
 <ol>
 <li><strong>求 W/d</strong>: 使用综合公式（P21），首先猜测 W/d &gt; 2。计算得到 <code>B = 7.985</code>，代入公式得到 <code>W/d = 3.081</code>，满足 &gt; 2 的假设。</li>
 <li><strong>计算线宽 W</strong>: $W = 3.081 \times d = 3.081 \times 0.127\text{cm} = 0.391\text{cm}$。</li>
-<li><strong>计算等效介电常数 εe</strong>: 将 W/d 和 εr 代入 εe 的公式，得 $\epsilon\_e = 1.87$。</li>
-<li><strong>计算线长 l</strong>: 90° 相移意味着 $\beta l = \pi/2$。首先计算自由空间波数 $k\_0 = 2\pi f/c = 52.35 \text{ rad/m}$。然后 $\beta = k\_0\sqrt{\epsilon\_e}$。最后计算线长 $l = (\pi/2) / \beta = 2.19\text{cm}$。
+<li><strong>计算等效介电常数 εe</strong>: 将 W/d 和 εr 代入 εe 的公式，得 $\epsilon_e = 1.87$。</li>
+<li><strong>计算线长 l</strong>: 90° 相移意味着 $\beta l = \pi/2$。首先计算自由空间波数 $k_0 = 2\pi f/c = 52.35 \text{ rad/m}$。然后 $\beta = k_0\sqrt{\epsilon_e}$。最后计算线长 $l = (\pi/2) / \beta = 2.19\text{cm}$。
 
       $$\epsilon_e=\frac {\epsilon_r+1}{2}+\frac {\epsilon_r-1}{2}  \frac{1}{\sqrt{1+12d/W}}$$
       
-【例题】计算微带宽度和长度，要求在2.5GHz有50Ω特性阻抗和90度相移。基片厚度d=0.127cm，$\epsilon\_r$ =2.2。
+【例题】计算微带宽度和长度，要求在2.5GHz有50Ω特性阻抗和90度相移。基片厚度d=0.127cm，$\epsilon_r$ =2.2。
 解：
 求W/d. <strong>猜测W/d＞2</strong>
 由特性阻抗综合公式得
@@ -2007,7 +2007,7 @@ src="file-%E7%AC%AC9%E8%AE%B2%20%E5%B9%B3%E9%9D%A2%E6%B3%A2%E5%AF%BC.png"
 class="wikilink" alt="file-第9讲平面波导.png" />
 B = &hellip;., W/d = &hellip;..<strong>是否大于2</strong>
 W = &hellip;&hellip;.
-介电常数$\epsilon\_r$ = &hellip;&hellip;
+介电常数$\epsilon_r$ = &hellip;&hellip;
 对于90度相移，线长为&hellip;&hellip;.
 ### 4. 耦合线与奇偶模分析法</li>
 </ol>
@@ -2043,7 +2043,7 @@ W = &hellip;&hellip;.
 <li><strong>核心思想</strong>: 任何施加在对称结构上的任意激励，都可以分解为纯粹的**偶模 (Even Mode)<strong>激励和</strong>奇模 (Odd Mode)**激励的线性叠加。</li>
 <li><strong>偶模 (Even Mode)</strong>
 <ul>
-<li><strong>激励</strong>: 两条线上施加等幅、同相的激励 ($U\_1 = U\_2 = U\_e$)。</li>
+<li><strong>激励</strong>: 两条线上施加等幅、同相的激励 ($U_1 = U_2 = U_e$)。</li>
 <li><strong>对称面</strong>: 相当于一个<strong>磁壁 (Magnetic Wall)</strong>，可以看作<strong>开路</strong>。电力线平行于对称面，磁力线垂直于对称面。</li>
 <li>【图片：耦合带状线偶模激励的电场分布和等效电容图】
 <img
@@ -2054,7 +2054,7 @@ class="wikilink" alt="file-第9讲平面波导5.png" /></li>
 </li>
 <li><strong>奇模 (Odd Mode)</strong>
 <ul>
-<li><strong>激励</strong>: 两条线上施加等幅、反相的激励 ($U\_1 = -U\_2 = U\_o$)。</li>
+<li><strong>激励</strong>: 两条线上施加等幅、反相的激励 ($U_1 = -U_2 = U_o$)。</li>
 <li><strong>对称面</strong>: 相当于一个<strong>电壁 (Electric Wall)</strong>，可以看作<strong>短路</strong>。电力线垂直于对称面，磁力线平行于对称面。</li>
 <li>【图片：耦合带状线奇模激励的电场分布和等效电容图】
 <img
@@ -2063,7 +2063,7 @@ class="wikilink" alt="file-第9讲平面波导1.png" /></li>
 </ul>
 </li>
 </ul>
-<p>通过分别计算偶模特性阻抗 ($Z\_{ce}$) 和奇模特性阻抗 ($Z\_{co}$)，就可以完全描述耦合线的特性。</p>
+<p>通过分别计算偶模特性阻抗 ($Z_{ce}$) 和奇模特性阻抗 ($Z_{co}$)，就可以完全描述耦合线的特性。</p>
 
 <h3 class="relative group">5. 其他重要的平面传输线 
     <div id="5-其他重要的平面传输线" class="anchor"></div>
@@ -2181,7 +2181,7 @@ class="wikilink" alt="file-第9讲平面波导1.png" /></li>
     
 </h2>
 <ul>
-<li><strong>承上启下</strong>：本讲学习的平面传输线，其所有特性参数（特性阻抗 $Z\_c$、传播常数 $\beta$、衰减常数 $\alpha$ 等）都源于我们之前学习的通用传输线理论。而对 TEM、TE、TM 模的分析，则建立在电磁场理论和麦克斯韦方程组的基础上。</li>
+<li><strong>承上启下</strong>：本讲学习的平面传输线，其所有特性参数（特性阻抗 $Z_c$、传播常数 $\beta$、衰减常数 $\alpha$ 等）都源于我们之前学习的通用传输线理论。而对 TEM、TE、TM 模的分析，则建立在电磁场理论和麦克斯韦方程组的基础上。</li>
 <li><strong>现实应用</strong>：
 <ol>
 <li><strong>印刷电路板 (PCB)</strong>: 你电脑主板、手机里密密麻麻的线路，绝大多数都是微带线或带状线结构，它们负责CPU、内存、射频芯片之间的高速信号传输。</li>
@@ -2202,7 +2202,7 @@ class="wikilink" alt="file-第9讲平面波导1.png" /></li>
 </h2>
 <ol>
 <li>为什么带状线传输的是纯 TEM 模，而结构相似的微带线却只能传输&quot;准 TEM&quot;模？这种差异给两种线在<strong>色散</strong>特性上带来了什么根本性的不同，并如何影响它们在高频应用中的选择？</li>
-<li>奇偶模分析法是一种&quot;分而治之&quot;的巧妙思想。在分析对称耦合微带线时，奇模和偶模的等效介电常数（$\epsilon\_{eo}, \epsilon\_{ee}$）哪个更大？为什么？这又会导致奇模和偶模的波速有什么差异？（提示：思考奇偶模的电场线分布有何不同）</li>
+<li>奇偶模分析法是一种&quot;分而治之&quot;的巧妙思想。在分析对称耦合微带线时，奇模和偶模的等效介电常数（$\epsilon_{eo}, \epsilon_{ee}$）哪个更大？为什么？这又会导致奇模和偶模的波速有什么差异？（提示：思考奇偶模的电场线分布有何不同）</li>
 <li>对比PPT P33中的表格，如果一个应用要求<strong>极高的功率容量</strong>和<strong>极低的损耗</strong>（如雷达馈线），你会选择哪种传输线？如果要求<strong>极高的集成度</strong>和<strong>极低的成本</strong>（如消费电子产品），你又会选择哪种？这背后的物理原因是什么？</li>
 </ol>
 <hr>
