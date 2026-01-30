@@ -3,24 +3,56 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://www.asanilo.top/en/hide/2025-10-27/</loc>
-    <lastmod>2025-10-25T17:33:07+08:00</lastmod>
+    <loc>https://www.asanilo.top/en/posts/</loc>
+    <lastmod>2026-01-30T06:27:46+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://www.asanilo.top/hide/2025-10-27/"
+      href="https://www.asanilo.top/posts/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://www.asanilo.top/en/hide/2025-10-27/"
+      href="https://www.asanilo.top/en/posts/"
+    />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/en/posts/%E9%9A%8F%E7%AC%94/%E6%BC%AB%E9%87%8E/</loc>
+    <lastmod>2026-01-30T06:27:46+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://www.asanilo.top/posts/%E9%9A%8F%E7%AC%94/%E6%BC%AB%E9%87%8E/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://www.asanilo.top/en/posts/%E9%9A%8F%E7%AC%94/%E6%BC%AB%E9%87%8E/"
+    />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/en/</loc>
+    <lastmod>2026-01-30T06:27:46+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://www.asanilo.top/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://www.asanilo.top/en/"
     />
   </url>
   <url>
     <loc>https://www.asanilo.top/en/hide/</loc>
-    <lastmod>2025-10-25T17:33:07+08:00</lastmod>
+    <lastmod>2026-01-12T01:19:48+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -35,24 +67,35 @@
     />
   </url>
   <url>
-    <loc>https://www.asanilo.top/en/</loc>
+    <loc>https://www.asanilo.top/en/hide/2025-10-21/</loc>
+    <lastmod>2026-01-12T01:19:48+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link
+      rel="alternate"
+      hreflang="zh-cn"
+      href="https://www.asanilo.top/hide/2025-10-21/"
+    />
+    <xhtml:link
+      rel="alternate"
+      hreflang="en"
+      href="https://www.asanilo.top/en/hide/2025-10-21/"
+    />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/en/hide/2025-10-27/</loc>
     <lastmod>2025-10-25T17:33:07+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
       rel="alternate"
       hreflang="zh-cn"
-      href="https://www.asanilo.top/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://www.asanilo.top/ja/"
+      href="https://www.asanilo.top/hide/2025-10-27/"
     />
     <xhtml:link
       rel="alternate"
       hreflang="en"
-      href="https://www.asanilo.top/en/"
+      href="https://www.asanilo.top/en/hide/2025-10-27/"
     />
   </url>
   <url>
@@ -72,27 +115,6 @@
     />
   </url>
   <url>
-    <loc>https://www.asanilo.top/en/posts/</loc>
-    <lastmod>2025-10-14T20:18:24+08:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link
-      rel="alternate"
-      hreflang="zh-cn"
-      href="https://www.asanilo.top/posts/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://www.asanilo.top/ja/posts/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="en"
-      href="https://www.asanilo.top/en/posts/"
-    />
-  </url>
-  <url>
     <loc>https://www.asanilo.top/en/about/</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -100,11 +122,6 @@
       rel="alternate"
       hreflang="zh-cn"
       href="https://www.asanilo.top/about/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://www.asanilo.top/ja/about/"
     />
     <xhtml:link
       rel="alternate"
@@ -120,11 +137,6 @@
       rel="alternate"
       hreflang="zh-cn"
       href="https://www.asanilo.top/home/"
-    />
-    <xhtml:link
-      rel="alternate"
-      hreflang="ja"
-      href="https://www.asanilo.top/ja/home/"
     />
     <xhtml:link
       rel="alternate"

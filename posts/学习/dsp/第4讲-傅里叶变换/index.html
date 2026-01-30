@@ -1,0 +1,4025 @@
+<!doctype html>
+<html
+  lang="zh-cn"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="dark"
+  data-auto-appearance="true"><head>
+  <meta charset="utf-8">
+  
+    <meta http-equiv="content-language" content="zh-cn">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color">
+
+  
+  
+    <title>DSP-4 连续时间信号的采样与量化 &middot; Asanilo&#39;s Blog</title>
+    <meta name="title" content="DSP-4 连续时间信号的采样与量化 &middot; Asanilo&#39;s Blog">
+  
+
+  
+  
+    <meta name="description" content="Website of Asanilo - Learning, Gaming and Creating.">
+  
+  
+    <meta name="keywords" content="DSP,learning,">
+  
+  
+    <meta name="robots" content="asanilo.top, asanilo.github.io, asanilo&#39;s blog, Asanilo的博客">
+  
+  
+  <link rel="canonical" href="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/">
+  
+
+  
+  
+    <meta name="author" content="Asanilo">
+  
+  
+    
+      
+        
+          <link href="https://github.com/asanilo" rel="me">
+        
+      
+    
+  
+
+  
+  <meta property="og:url" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/">
+  <meta property="og:site_name" content="Asanilo&#39;s Blog">
+  <meta property="og:title" content="DSP-4 连续时间信号的采样与量化">
+  <meta property="og:description" content="Website of Asanilo - Learning, Gaming and Creating.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-19T00:33:21+08:00">
+    <meta property="article:modified_time" content="2025-10-19T00:33:21+08:00">
+    <meta property="article:tag" content="DSP">
+    <meta property="article:tag" content="学习笔记">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/dsp%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC16%E8%AE%B2-%E5%BF%AB%E9%80%9Fdft%E7%AE%97%E6%B3%95-fft/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC15%E8%AE%B2-fir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC14%E8%AE%B2--iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1part2/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC13%E8%AE%B2-iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC12%E8%AE%B2-%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84/">
+      <meta property="og:see_also" content="https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC11%E8%AE%B2-lti%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%98%E6%8D%A2%E5%9F%9F%E5%88%86%E6%9E%90-part-ii/">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DSP-4 连续时间信号的采样与量化">
+  <meta name="twitter:description" content="Website of Asanilo - Learning, Gaming and Creating.">
+
+  
+  
+  
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+  
+    
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.f9b03c330a19c38e8ff2be3696c1c71db874c145f17b62f330a63db44c710ab321af890b18b5b16a342db1630cb48fd8fd508a4afc60d51333d253e92ae5df09.css"
+    integrity="sha512-&#43;bA8MwoZw46P8r42lsHHHbh0wUXxe2LzMKY9tExxCrMhr4kLGLWxajQtsWMMtI/Y/VCKSvxg1RMz0lPpKuXfCQ==">
+
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.6f41174b3a05b680820fe08cadbfa5fb7a7ca347b76a0955cdc68b9d8aca1ce24f0547e138cea33bcc7904d551a90afcb1cc7f2d9fe8557075d501419046c08c.js"
+    integrity="sha512-b0EXSzoFtoCCD&#43;CMrb&#43;l&#43;3p8o0e3aglVzcaLnYrKHOJPBUfhOM6jO8x5BNVRqQr8scx/LZ/oVXB11QFBkEbAjA=="></script>
+  
+  
+  
+  
+  
+    
+    <script
+      type="text/javascript"
+      src="/js/zen-mode.min.9814dee9614d32aeb56239d118edfe20acd6231424f9b19c2dd48835038414130a5e946c0d1c9087d60e60e31840c9babfd217e3d4b95643dc8d651a71ccdf4a.js"
+      integrity="sha512-mBTe6WFNMq61YjnRGO3&#43;IKzWIxQk&#43;bGcLdSINQOEFBMKXpRsDRyQh9YOYOMYQMm6v9IX49S5VkPcjWUacczfSg=="></script>
+  
+  
+    
+    <script src="/lib/zoom/zoom.min.umd.a527109b68c082a70f3697716dd72a9d5aa8b545cf800cecbbc7399f2ca6f6e0ce3e431f2062b48bbfa47c9ea42822714060bef309be073f49b9c0e30d318d7b.js" integrity="sha512-pScQm2jAgqcPNpdxbdcqnVqotUXPgAzsu8c5nyym9uDOPkMfIGK0i7&#43;kfJ6kKCJxQGC&#43;8wm&#43;Bz9JucDjDTGNew=="></script>
+  
+
+  
+  
+  
+    
+  
+  
+    
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+    <script
+      defer
+      type="text/javascript"
+      id="script-bundle"
+      src="/js/main.bundle.min.b16d807a513bd375edb24c501502c85cc94dfdaf3cf1979d51e2362e4eb5deaeab801c26116a5ee436a7ac00f27d244f7778458fee832a0cbb274ee23900d6bf.js"
+      integrity="sha512-sW2AelE703XtskxQFQLIXMlN/a888ZedUeI2Lk613q6rgBwmEWpe5DanrADyfSRPd3hFj&#43;6DKgy7J07iOQDWvw=="
+      data-copy="复制"
+      data-copied="已复制"></script>
+  
+
+  
+  
+
+<script src="/lib/jquery/jquery.slim.min.b0dca576e87d7eaa5850ae4e61759c065786cdb6489d68fcc82240539eebd5da522bdb4fda085ffd245808c8fe2acb2516408eb774ef26b5f6015fc6737c0ea8.js" integrity="sha512-sNylduh9fqpYUK5OYXWcBleGzbZInWj8yCJAU57r1dpSK9tP2ghf/SRYCMj&#43;KsslFkCOt3TvJrX2AV/Gc3wOqA=="></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+  
+
+  
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "文章",
+    "name": "DSP-4 连续时间信号的采样与量化",
+    "headline": "DSP-4 连续时间信号的采样与量化",
+    
+    "inLanguage": "zh-cn",
+    "url" : "https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/",
+    "author" : {
+      "@type": "Person",
+      "name": "Asanilo"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-10-19T00:33:21\u002b08:00",
+    "datePublished": "2025-10-19T00:33:21\u002b08:00",
+    
+    "dateModified": "2025-10-19T00:33:21\u002b08:00",
+    
+    "keywords": ["DSP","learning"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1197"
+  }]
+  </script>
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+</head>
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+  
+  <body class="flex flex-col h-screen m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32 text-lg bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral bf-scrollbar">
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content">
+        <span class="font-bold text-primary-600 pe-2 dark:text-primary-400">&darr;</span>
+        跳过正文
+      </a>
+    </div>
+    
+    
+      <div class="min-h-[148px]"></div>
+<div
+  class="fixed inset-x-0 min-h-[130px] opacity-65 bg-gradient-to-b from-neutral from-60% dark:from-neutral-800 to-transparent mix-blend-normal z-80"></div>
+<div class="fixed inset-x-0 z-100">
+  <div
+    id="menu-blur"
+    class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl"></div>
+  <div class="relative m-auto leading-7 max-w-7xl px-6 sm:px-14 md:px-24 lg:px-32">
+    <div class="main-menu flex items-center w-full gap-2 p-1 pl-0">
+  
+    
+    
+      <div>
+        <a href="/" class="flex">
+          <span class="sr-only">Asanilo&rsquo;s Blog</span>
+          
+            <img
+              src="/img/l2s.png"
+              width="221"
+              height="221"
+              class="logo max-h-20 max-w-20 object-scale-down object-left nozoom"
+              alt="">
+          
+        </a>
+      </div>
+    
+  
+  
+    <a href="/" class="text-base font-medium truncate min-w-0 shrink">
+      Asanilo&rsquo;s Blog
+    </a>
+  
+  <div class="flex items-center ms-auto">
+    <div class="hidden md:flex">
+      <nav class="flex items-center gap-x-5 h-12">
+  
+    
+      
+  
+    <a
+      href="/home/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="主页"
+      title="欢迎来到 Asanilo的博客!">
+      
+      
+        <span class="text-base font-medium break-normal">
+          主页
+        </span>
+      
+    </a>
+  
+
+    
+      
+  
+    <a
+      href="/posts/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="文章"
+      title="文章">
+      
+      
+        <span class="text-base font-medium break-normal">
+          文章
+        </span>
+      
+    </a>
+  
+
+    
+      
+  
+    <a
+      href="/tags/learning/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="学习"
+      title="学习笔记">
+      
+      
+        <span class="text-base font-medium break-normal">
+          学习
+        </span>
+      
+    </a>
+  
+
+    
+      
+  
+    <div class="nested-menu">
+      <div class="cursor-pointer flex items-center">
+        <a
+          
+            tabindex="0"
+          
+          aria-label="休闲"
+          class="flex items-center text-base font-medium bf-icon-color-hover"
+          title="">
+          
+          <span class="text-bg font-bg break-normal" title="">
+            休闲
+          </span>
+          <span>
+            <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+          </span>
+        </a>
+      </div>
+      <div class="menuhide">
+        <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl bg-neutral/25 dark:bg-neutral-800/25">
+          <div class="flex flex-col space-y-3">
+            
+              <a
+                href="/tags/anime/"
+                
+                aria-label="动漫"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="动漫">
+                  动漫
+                </span>
+              </a>
+            
+              <a
+                href="/tags/gaming/"
+                
+                aria-label="游戏"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="游戏">
+                  游戏
+                </span>
+              </a>
+            
+              <a
+                href="/tags/music/"
+                
+                aria-label="音乐"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="音乐">
+                  音乐
+                </span>
+              </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    
+      
+  
+    <div class="nested-menu">
+      <div class="cursor-pointer flex items-center">
+        <a
+          
+            tabindex="0"
+          
+          aria-label="创作"
+          class="flex items-center text-base font-medium bf-icon-color-hover"
+          title="">
+          
+          <span class="text-bg font-bg break-normal" title="">
+            创作
+          </span>
+          <span>
+            <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+          </span>
+        </a>
+      </div>
+      <div class="menuhide">
+        <div class="pt-2 p-5 mt-2 rounded-xl backdrop-blur shadow-2xl bg-neutral/25 dark:bg-neutral-800/25">
+          <div class="flex flex-col space-y-3">
+            
+              <a
+                href="/tags/projects/"
+                
+                aria-label="项目"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="项目">
+                  项目
+                </span>
+              </a>
+            
+              <a
+                href="/tags/essays/"
+                
+                aria-label="随笔"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="随笔">
+                  随笔
+                </span>
+              </a>
+            
+              <a
+                href="/tags/designs/"
+                
+                aria-label="设计"
+                class="flex items-center bf-icon-color-hover">
+                
+                <span class="text-sm font-sm" title="设计">
+                  设计
+                </span>
+              </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    
+      
+  
+    <a
+      href="/about/"
+      
+      class="flex items-center bf-icon-color-hover"
+      aria-label="关于"
+      title="关于">
+      
+      
+        <span class="text-base font-medium break-normal">
+          关于
+        </span>
+      
+    </a>
+  
+
+    
+  
+
+  
+
+  
+
+  
+    <button
+      id="search-button"
+      aria-label="Search"
+      class="text-base bf-icon-color-hover"
+      title="搜索 (/)">
+      <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+    </button>
+  
+
+  
+    <div class="flex items-center">
+      <button
+        id="appearance-switcher"
+        aria-label="Dark mode switcher"
+        type="button"
+        class="text-base bf-icon-color-hover">
+        <div class="flex items-center justify-center dark:hidden">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+        </div>
+        <div class="items-center justify-center hidden dark:flex">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+        </div>
+      </button>
+    </div>
+  
+</nav>
+
+
+
+    </div>
+    <div class="flex md:hidden">
+      <div class="flex items-center h-14 gap-4">
+  
+    <button
+      id="search-button-mobile"
+      aria-label="Search"
+      class="flex items-center justify-center bf-icon-color-hover"
+      title="搜索 (/)">
+      <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+    </button>
+  
+
+  
+    <button
+      id="appearance-switcher-mobile"
+      type="button"
+      aria-label="Dark mode switcher"
+      class="flex items-center justify-center text-neutral-900 hover:text-primary-600 dark:text-neutral-200 dark:hover:text-primary-400">
+      <div class="dark:hidden">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+</span>
+      </div>
+      <div class="hidden dark:block">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+</span>
+      </div>
+    </button>
+  
+
+  
+    <input type="checkbox" id="mobile-menu-toggle" autocomplete="off" class="hidden peer">
+    <label for="mobile-menu-toggle" class="flex items-center justify-center cursor-pointer bf-icon-color-hover">
+      <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+    </label>
+
+    <div
+      role="dialog"
+      aria-modal="true"
+      style="scrollbar-gutter: stable;"
+      class="fixed inset-0 z-50 invisible overflow-y-auto px-6 py-20 opacity-0 transition-[opacity,visibility] duration-300 peer-checked:visible peer-checked:opacity-100 bg-neutral-50/97 dark:bg-neutral-900/99
+      bf-scrollbar">
+      <label
+        for="mobile-menu-toggle"
+        class="fixed end-8 top-5 flex items-center justify-center z-50 h-12 w-12 cursor-pointer select-none rounded-full bf-icon-color-hover border bf-border-color bf-border-color-hover bg-neutral-50 dark:bg-neutral-900">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </label>
+      <nav class="mx-auto max-w-md space-y-6">
+        
+  
+    
+    <div class="px-2">
+      <a
+        href="/home/"
+        aria-label="主页"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="欢迎来到 Asanilo的博客!" class="text-2xl font-bold tracking-tight">
+          主页
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href="/posts/"
+        aria-label="文章"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="文章" class="text-2xl font-bold tracking-tight">
+          文章
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href="/tags/learning/"
+        aria-label="学习"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="学习笔记" class="text-2xl font-bold tracking-tight">
+          学习
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href=""
+        aria-label="休闲"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="" class="text-2xl font-bold tracking-tight">
+          休闲
+        </span>
+        
+          <label
+            for="fullscreen-submenu-休闲"
+            class="ms-auto flex items-center justify-center h-10 w-10 cursor-pointer rounded-lg bf-icon-color-hover border bf-border-color bf-border-color-hover">
+            <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+          </label>
+        
+      </a>
+
+      
+        <input checked type="checkbox" id="fullscreen-submenu-休闲" autocomplete="off" class="hidden peer/full">
+
+        <div
+          class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 peer-checked/full:grid-rows-[1fr]">
+          <div class="overflow-hidden">
+            <div class="ms-7 mt-4">
+              
+                <a
+                  href="/tags/anime/"
+                  aria-label="动漫"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="动漫" class="text-lg">
+                    动漫
+                  </span>
+                </a>
+              
+                <a
+                  href="/tags/gaming/"
+                  aria-label="游戏"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="游戏" class="text-lg">
+                    游戏
+                  </span>
+                </a>
+              
+                <a
+                  href="/tags/music/"
+                  aria-label="音乐"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="音乐" class="text-lg">
+                    音乐
+                  </span>
+                </a>
+              
+            </div>
+          </div>
+        </div>
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href=""
+        aria-label="创作"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="" class="text-2xl font-bold tracking-tight">
+          创作
+        </span>
+        
+          <label
+            for="fullscreen-submenu-创作"
+            class="ms-auto flex items-center justify-center h-10 w-10 cursor-pointer rounded-lg bf-icon-color-hover border bf-border-color bf-border-color-hover">
+            <span class="relative block icon"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 20 20"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    fill-rule="evenodd"
+    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+    clip-rule="evenodd"
+  />
+</svg>
+</span>
+          </label>
+        
+      </a>
+
+      
+        <input checked type="checkbox" id="fullscreen-submenu-创作" autocomplete="off" class="hidden peer/full">
+
+        <div
+          class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 peer-checked/full:grid-rows-[1fr]">
+          <div class="overflow-hidden">
+            <div class="ms-7 mt-4">
+              
+                <a
+                  href="/tags/projects/"
+                  aria-label="项目"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="项目" class="text-lg">
+                    项目
+                  </span>
+                </a>
+              
+                <a
+                  href="/tags/essays/"
+                  aria-label="随笔"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="随笔" class="text-lg">
+                    随笔
+                  </span>
+                </a>
+              
+                <a
+                  href="/tags/designs/"
+                  aria-label="设计"
+                  
+                  class="flex items-center gap-3 p-2 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+                  
+                  <span title="设计" class="text-lg">
+                    设计
+                  </span>
+                </a>
+              
+            </div>
+          </div>
+        </div>
+      
+    </div>
+  
+    
+    <div class="px-2">
+      <a
+        href="/about/"
+        aria-label="关于"
+        
+        class="flex items-center gap-4 group bf-icon-color-hover text-neutral-700 dark:text-neutral-200">
+        
+        <span title="关于" class="text-2xl font-bold tracking-tight">
+          关于
+        </span>
+        
+      </a>
+
+      
+    </div>
+  
+
+        
+  
+
+        
+  
+    <div
+      class="flex flex-wrap items-center [&_span]:text-2xl [&_.translation_button_.icon]:text-4xl! [&_.translation_button_span]:text-base! [&_.translation_.menuhide_span]:text-sm! gap-x-6 ps-2 mt-8 pt-8 border-t bf-border-color">
+      
+
+
+      
+    </div>
+  
+
+      </nav>
+    </div>
+  
+</div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <script>
+    (function () {
+      var mainmenu = document.querySelector(".main-menu");
+      if (!mainmenu) return;
+
+      var path = window.location.pathname;
+      var links = mainmenu.querySelectorAll('a[href="' + path + '"]');
+
+      links.forEach(function (link) {
+        var targets = link.querySelectorAll("span");
+        targets.forEach(function (el) {
+          el.classList.add("active");
+        });
+      });
+    })();
+  </script>
+
+
+  </div>
+</div>
+
+
+<script
+  type="text/javascript"
+  src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+  integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+  data-blur-id="menu-blur"></script>
+
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        
+  
+  <article>
+    
+    
+      
+      
+      
+      
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  
+  
+    
+    
+  
+
+
+
+
+  
+    
+    
+      
+      
+    
+  
+
+
+
+
+
+    <div id="hero" class="h-[150px] md:h-[200px]"></div>
+  
+  <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom">
+    
+    
+    
+    <img
+      id="background-image"
+      src="/img/BG2_hu_933594876a1fb7da.png"
+      role="presentation"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="absolute inset-0 w-full h-full object-cover"
+      >
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-neutral dark:from-neutral-800 to-transparent mix-blend-normal"></div>
+    <div
+      class="absolute inset-0 opacity-60 bg-gradient-to-t from-neutral dark:from-neutral-800 to-neutral-100 dark:to-neutral-800 mix-blend-normal"></div>
+  </div>
+
+  
+    <div
+      id="background-blur"
+      class="fixed opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-xl bg-neutral-100/75 dark:bg-neutral-800/60"></div>
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/background-blur.min.00a57c73ea12f2cab2980c3c3d649e89f6d82f190f74bbe2b67f2f5e39ab7d032ece47086400ca05396758aace13299da49aca43ea643d2625e62c506267a169.js"
+      integrity="sha512-AKV8c&#43;oS8sqymAw8PWSeifbYLxkPdLvitn8vXjmrfQMuzkcIZADKBTlnWKrOEymdpJrKQ&#43;pkPSYl5ixQYmehaQ=="
+      data-blur-id="background-blur"
+      data-image-id="background-image"
+      data-image-url="/img/BG2_hu_933594876a1fb7da.png"></script>
+  
+      
+    
+
+    
+    <header id="single_header" class="mt-5 max-w-prose">
+      
+        <ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  
+  
+    
+  
+    
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/"
+      >欢迎来到 Asanilo的博客!</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="inline">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/"
+      >文章</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+  
+  <li class="hidden">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/"
+      >DSP-4 连续时间信号的采样与量化</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+
+</ol>
+
+
+      
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        DSP-4 连续时间信号的采样与量化
+      </h1>
+      <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+        
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>1197 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">6 分钟</span><span class="px-2 text-primary-500">&middot;</span><span class="mb-[2px]">
+  <span
+    id="zen-mode-button"
+    class="text-lg hover:text-primary-500"
+    title="啟用阅读模式"
+    data-title-i18n-disable="啟用阅读模式"
+    data-title-i18n-enable="停用阅读模式">
+    <span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px">
+    <path fill="currentColor" d="M 12.980469 4 C 9.1204688 4 5.9804688 7.14 5.9804688 11 L 6 26 L 9.9804688 26 L 9.9804688 11 C 9.9804688 9.35 11.320469 8 12.980469 8 L 40.019531 8 C 41.679531 8 43.019531 9.35 43.019531 11 L 43.019531 39 C 43.019531 40.65 41.679531 42 40.019531 42 L 29 42 C 29 43.54 28.420938 44.94 27.460938 46 L 40.019531 46 C 43.879531 46 47.019531 42.86 47.019531 39 L 47.019531 11 C 47.019531 7.14 43.879531 4 40.019531 4 L 12.980469 4 z M 7 28 C 4.794 28 3 29.794 3 32 L 3 42 C 3 44.206 4.794 46 7 46 L 23 46 C 25.206 46 27 44.206 27 42 L 27 32 C 27 29.794 25.206 28 23 28 L 7 28 z M 7 32 L 23 32 L 23.001953 42 L 7 42 L 7 32 z"/>
+</svg></span></span>
+  </span>
+</span>
+
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/dsp/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    DSP
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+      </div>
+      
+        
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    
+    
+<div class="flex author">
+  
+    
+    
+      
+    
+    
+      
+      
+      
+        
+        
+        
+      
+      <img
+        class="!mt-0 !mb-0 h-24 w-24 rounded-full me-4"
+        width="96"
+        height="96"
+        alt="Asanilo"
+        src="/img/asanilo_hu_65644e7e49e6f326.png"
+        data-zoom-src="/img/asanilo_hu_69e2310a68b4d08b.png">
+    
+  
+  <div class="place-self-center">
+    
+      <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+        作者
+      </div>
+      <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+        Asanilo
+      </div>
+    
+    
+      <div class="text-sm text-neutral-700 dark:text-neutral-400">如果不能优美地活著，那和死去没有分别</div>
+    
+    <div class="text-2xl sm:text-lg">
+  <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://github.com/asanilo"
+          target="_blank"
+          aria-label="Github"
+          title="Github"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+</span></span></a
+        >
+      
+    
+  </div>
+
+</div>
+  </div>
+</div>
+
+  
+
+  
+
+  
+    <div class="mb-5"></div>
+  
+
+      
+    </header>
+
+    
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      
+      
+      
+      
+      
+        <div class="order-first lg:ms-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs">
+          <div class="toc ps-5 print:hidden lg:sticky lg:top-[140px]">
+            <details
+  open
+  id="TOCView"
+  class="toc-right mt-0 overflow-y-auto overscroll-contain bf-scrollbar rounded-lg -ms-5 ps-5 pe-2 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    目录
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ppt例题很重要">PPT例题很重要</a></li>
+    <li><a href="#-欢迎来到第四讲">🌟 欢迎来到第四讲！</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a></li>
+    <li><a href="#-变换缩写">🔍 变换缩写</a></li>
+    <li><a href="#一傅里叶变换的四世同堂从理论到计算的演进-">一、傅里叶变换的&quot;四世同堂&quot;：从理论到计算的演进 🔄</a>
+      <ul>
+        <li><a href="#11-祖辈1连续时间傅里叶级数ctfs周期信号的基石">1.1 祖辈1：连续时间傅里叶级数（CTFS）&mdash;&mdash;周期信号的基石</a></li>
+        <li><a href="#12-祖辈2连续时间傅里叶变换ctft非周期信号的突破">1.2 祖辈2：连续时间傅里叶变换（CTFT）&mdash;&mdash;非周期信号的突破</a></li>
+        <li><a href="#13-父辈离散时间傅里叶变换dtft数字世界的初探">1.3 父辈：离散时间傅里叶变换（DTFT）&mdash;&mdash;数字世界的初探</a></li>
+        <li><a href="#14-王者离散傅里叶变换dftfft工程计算的终极武器">1.4 王者：离散傅里叶变换（DFT/FFT）&mdash;&mdash;工程计算的终极武器</a></li>
+        <li><a href="#15-前沿实战fft的典型应用shazam听歌识曲-">1.5 前沿实战：FFT的典型应用&mdash;&mdash;Shazam&quot;听歌识曲&quot; 🎵</a></li>
+      </ul>
+    </li>
+    <li><a href="#二傅里叶变换基础核心概念与定理-">二、傅里叶变换基础：核心概念与定理 📖</a>
+      <ul>
+        <li><a href="#21-为什么需要傅里叶变换历史与核心价值">2.1 为什么需要傅里叶变换？&mdash;&mdash;历史与核心价值</a></li>
+        <li><a href="#22-傅里叶变换的复数表示ctftdtft">2.2 傅里叶变换的复数表示（CTFT/DTFT）</a>
+          <ul>
+            <li><a href="#1ctft的复数表示">（1）CTFT的复数表示</a></li>
+            <li><a href="#2dtft的复数表示">（2）DTFT的复数表示</a></li>
+          </ul>
+        </li>
+        <li><a href="#23-傅里叶变换的收敛条件">2.3 傅里叶变换的收敛条件</a>
+          <ul>
+            <li><a href="#1ctft收敛条件dirichlet条件">（1）CTFT收敛条件：Dirichlet条件</a></li>
+            <li><a href="#2dtft收敛条件一致收敛与均方收敛">（2）DTFT收敛条件：一致收敛与均方收敛</a></li>
+          </ul>
+        </li>
+        <li><a href="#24-能量密度谱parseval定理与维纳-辛欣定理">2.4 能量密度谱：Parseval定理与维纳-辛欣定理</a>
+          <ul>
+            <li><a href="#1parseval定理能量守恒">（1）Parseval定理（能量守恒）</a></li>
+            <li><a href="#2维纳-辛欣定理自相关与能量谱的关系">（2）维纳-辛欣定理（自相关与能量谱的关系）</a></li>
+          </ul>
+        </li>
+        <li><a href="#25-带限信号分类连续离散时间">2.5 带限信号分类（连续/离散时间）</a>
+          <ul>
+            <li><a href="#1连续时间带限信号模拟角频率单位rads">（1）连续时间带限信号（：模拟角频率，单位rad/s）</a></li>
+            <li><a href="#2离散时间带限信号数字角频率单位radsample范围">（2）离散时间带限信号（：数字角频率，单位rad/sample，范围）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#三dtft的核心性质从数学到应用-">三、DTFT的核心性质：从数学到应用 📊</a>
+      <ul>
+        <li><a href="#31-dtft逆变换的证明">3.1 DTFT逆变换的证明</a></li>
+        <li><a href="#32-常用dtft变换对表格整理">3.2 常用DTFT变换对（表格整理）</a></li>
+        <li><a href="#33-dtft的基本性质表格整理">3.3 DTFT的基本性质（表格整理）</a></li>
+        <li><a href="#34-复序列与实序列的dtft对称关系">3.4 复序列与实序列的DTFT对称关系</a>
+          <ul>
+            <li><a href="#1复序列的对称关系">（1）复序列的对称关系</a></li>
+            <li><a href="#2实序列的对称关系复序列的特例">（2）实序列的对称关系（复序列的特例，）</a></li>
+          </ul>
+        </li>
+        <li><a href="#35-dtft的周期性证明与意义">3.5 DTFT的周期性（证明与意义）</a></li>
+        <li><a href="#36-例题dtft逆变换求解与性质应用">3.6 例题：DTFT逆变换求解与性质应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#四离散时间lti系统的频率响应-">四、离散时间LTI系统的频率响应 🚀</a>
+      <ul>
+        <li><a href="#41-频率响应的定义与物理意义">4.1 频率响应的定义与物理意义</a></li>
+        <li><a href="#42-幅频特性相频特性与增益衰减函数">4.2 幅频特性、相频特性与增益/衰减函数</a></li>
+        <li><a href="#43-fir与iir系统的频率响应对比">4.3 FIR与IIR系统的频率响应对比</a></li>
+        <li><a href="#44-matlab实战滑动平均滤波器的频率响应">4.4 MATLAB实战：滑动平均滤波器的频率响应</a>
+          <ul>
+            <li><a href="#matlab代码">MATLAB代码：</a></li>
+            <li><a href="#结果分析">结果分析：</a></li>
+          </ul>
+        </li>
+        <li><a href="#45-实战简单fir滤波器设计通带阻带控制">4.5 实战：简单FIR滤波器设计（通带/阻带控制）</a>
+          <ul>
+            <li><a href="#设计步骤">设计步骤：</a></li>
+          </ul>
+        </li>
+        <li><a href="#46-相位延迟与群延迟信号时延分析">4.6 相位延迟与群延迟：信号时延分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    目录
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ppt例题很重要">PPT例题很重要</a></li>
+    <li><a href="#-欢迎来到第四讲">🌟 欢迎来到第四讲！</a></li>
+    <li><a href="#-本讲主要内容">📝 本讲主要内容</a></li>
+    <li><a href="#-变换缩写">🔍 变换缩写</a></li>
+    <li><a href="#一傅里叶变换的四世同堂从理论到计算的演进-">一、傅里叶变换的&quot;四世同堂&quot;：从理论到计算的演进 🔄</a>
+      <ul>
+        <li><a href="#11-祖辈1连续时间傅里叶级数ctfs周期信号的基石">1.1 祖辈1：连续时间傅里叶级数（CTFS）&mdash;&mdash;周期信号的基石</a></li>
+        <li><a href="#12-祖辈2连续时间傅里叶变换ctft非周期信号的突破">1.2 祖辈2：连续时间傅里叶变换（CTFT）&mdash;&mdash;非周期信号的突破</a></li>
+        <li><a href="#13-父辈离散时间傅里叶变换dtft数字世界的初探">1.3 父辈：离散时间傅里叶变换（DTFT）&mdash;&mdash;数字世界的初探</a></li>
+        <li><a href="#14-王者离散傅里叶变换dftfft工程计算的终极武器">1.4 王者：离散傅里叶变换（DFT/FFT）&mdash;&mdash;工程计算的终极武器</a></li>
+        <li><a href="#15-前沿实战fft的典型应用shazam听歌识曲-">1.5 前沿实战：FFT的典型应用&mdash;&mdash;Shazam&quot;听歌识曲&quot; 🎵</a></li>
+      </ul>
+    </li>
+    <li><a href="#二傅里叶变换基础核心概念与定理-">二、傅里叶变换基础：核心概念与定理 📖</a>
+      <ul>
+        <li><a href="#21-为什么需要傅里叶变换历史与核心价值">2.1 为什么需要傅里叶变换？&mdash;&mdash;历史与核心价值</a></li>
+        <li><a href="#22-傅里叶变换的复数表示ctftdtft">2.2 傅里叶变换的复数表示（CTFT/DTFT）</a>
+          <ul>
+            <li><a href="#1ctft的复数表示">（1）CTFT的复数表示</a></li>
+            <li><a href="#2dtft的复数表示">（2）DTFT的复数表示</a></li>
+          </ul>
+        </li>
+        <li><a href="#23-傅里叶变换的收敛条件">2.3 傅里叶变换的收敛条件</a>
+          <ul>
+            <li><a href="#1ctft收敛条件dirichlet条件">（1）CTFT收敛条件：Dirichlet条件</a></li>
+            <li><a href="#2dtft收敛条件一致收敛与均方收敛">（2）DTFT收敛条件：一致收敛与均方收敛</a></li>
+          </ul>
+        </li>
+        <li><a href="#24-能量密度谱parseval定理与维纳-辛欣定理">2.4 能量密度谱：Parseval定理与维纳-辛欣定理</a>
+          <ul>
+            <li><a href="#1parseval定理能量守恒">（1）Parseval定理（能量守恒）</a></li>
+            <li><a href="#2维纳-辛欣定理自相关与能量谱的关系">（2）维纳-辛欣定理（自相关与能量谱的关系）</a></li>
+          </ul>
+        </li>
+        <li><a href="#25-带限信号分类连续离散时间">2.5 带限信号分类（连续/离散时间）</a>
+          <ul>
+            <li><a href="#1连续时间带限信号模拟角频率单位rads">（1）连续时间带限信号（：模拟角频率，单位rad/s）</a></li>
+            <li><a href="#2离散时间带限信号数字角频率单位radsample范围">（2）离散时间带限信号（：数字角频率，单位rad/sample，范围）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#三dtft的核心性质从数学到应用-">三、DTFT的核心性质：从数学到应用 📊</a>
+      <ul>
+        <li><a href="#31-dtft逆变换的证明">3.1 DTFT逆变换的证明</a></li>
+        <li><a href="#32-常用dtft变换对表格整理">3.2 常用DTFT变换对（表格整理）</a></li>
+        <li><a href="#33-dtft的基本性质表格整理">3.3 DTFT的基本性质（表格整理）</a></li>
+        <li><a href="#34-复序列与实序列的dtft对称关系">3.4 复序列与实序列的DTFT对称关系</a>
+          <ul>
+            <li><a href="#1复序列的对称关系">（1）复序列的对称关系</a></li>
+            <li><a href="#2实序列的对称关系复序列的特例">（2）实序列的对称关系（复序列的特例，）</a></li>
+          </ul>
+        </li>
+        <li><a href="#35-dtft的周期性证明与意义">3.5 DTFT的周期性（证明与意义）</a></li>
+        <li><a href="#36-例题dtft逆变换求解与性质应用">3.6 例题：DTFT逆变换求解与性质应用</a></li>
+      </ul>
+    </li>
+    <li><a href="#四离散时间lti系统的频率响应-">四、离散时间LTI系统的频率响应 🚀</a>
+      <ul>
+        <li><a href="#41-频率响应的定义与物理意义">4.1 频率响应的定义与物理意义</a></li>
+        <li><a href="#42-幅频特性相频特性与增益衰减函数">4.2 幅频特性、相频特性与增益/衰减函数</a></li>
+        <li><a href="#43-fir与iir系统的频率响应对比">4.3 FIR与IIR系统的频率响应对比</a></li>
+        <li><a href="#44-matlab实战滑动平均滤波器的频率响应">4.4 MATLAB实战：滑动平均滤波器的频率响应</a>
+          <ul>
+            <li><a href="#matlab代码">MATLAB代码：</a></li>
+            <li><a href="#结果分析">结果分析：</a></li>
+          </ul>
+        </li>
+        <li><a href="#45-实战简单fir滤波器设计通带阻带控制">4.5 实战：简单FIR滤波器设计（通带/阻带控制）</a>
+          <ul>
+            <li><a href="#设计步骤">设计步骤：</a></li>
+          </ul>
+        </li>
+        <li><a href="#46-相位延迟与群延迟信号时延分析">4.6 相位延迟与群延迟：信号时延分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+
+<script>
+  (function () {
+    'use strict'
+
+    const SCROLL_OFFSET_RATIO = 0.33
+    const TOC_SELECTOR = '#TableOfContents'
+    const ANCHOR_SELECTOR = '.anchor'
+    const TOC_LINK_SELECTOR = 'a[href^="#"]'
+    const NESTED_LIST_SELECTOR = 'li ul'
+    const ACTIVE_CLASS = 'active'
+    let isJumpingToAnchor = false
+
+    function getActiveAnchorId(anchors, offsetRatio) {
+      const threshold = window.scrollY + window.innerHeight * offsetRatio
+      const tocLinks = [...document.querySelectorAll('#TableOfContents a[href^="#"]')]
+      const tocIds = new Set(tocLinks.map(link => link.getAttribute('href').substring(1)))
+
+      if (isJumpingToAnchor) {
+        for (let i = 0; i < anchors.length; i++) {
+          const anchor = anchors[i]
+          if (!tocIds.has(anchor.id)) continue
+          const top = anchor.getBoundingClientRect().top + window.scrollY
+          if (Math.abs(window.scrollY - top) < 100) {
+            return anchor.id
+          }
+        }
+      }
+
+      for (let i = anchors.length - 1; i >= 0; i--) {
+        const top = anchors[i].getBoundingClientRect().top + window.scrollY
+        if (top <= threshold && tocIds.has(anchors[i].id)) {
+          return anchors[i].id
+        }
+      }
+      return anchors.find(anchor => tocIds.has(anchor.id))?.id || ''
+    }
+
+    function updateTOC({ toc, anchors, links, scrollOffset, collapseInactive }) {
+      const activeId = getActiveAnchorId(anchors, scrollOffset)
+      if (!activeId) return
+
+      links.forEach(link => {
+        const isActive = link.getAttribute('href') === `#${activeId}`
+        link.classList.toggle(ACTIVE_CLASS, isActive)
+
+        if (collapseInactive) {
+          const ul = link.closest('li')?.querySelector('ul')
+          if (ul) ul.style.display = isActive ? '' : 'none'
+        }
+      })
+
+      if (collapseInactive) {
+        const activeLink = toc.querySelector(`a[href="#${CSS.escape(activeId)}"]`)
+        let el = activeLink
+        while (el && el !== toc) {
+          if (el.tagName === 'UL') el.style.display = ''
+          if (el.tagName === 'LI') el.querySelector('ul')?.style.setProperty('display', '')
+          el = el.parentElement
+        }
+      }
+    }
+
+    function initTOC() {
+      const toc = document.querySelector(TOC_SELECTOR)
+      if (!toc) return
+
+      const collapseInactive = false
+      const anchors = [...document.querySelectorAll(ANCHOR_SELECTOR)]
+      const links = [...toc.querySelectorAll(TOC_LINK_SELECTOR)]
+
+      if (collapseInactive) {
+        toc.querySelectorAll(NESTED_LIST_SELECTOR).forEach(ul => ul.style.display = 'none')
+      }
+
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          isJumpingToAnchor = true
+        })
+      })
+
+      const config = {
+        toc,
+        anchors,
+        links,
+        scrollOffset: SCROLL_OFFSET_RATIO,
+        collapseInactive
+      }
+
+      window.addEventListener('scroll', () => updateTOC(config), { passive: true })
+      window.addEventListener('hashchange', () => updateTOC(config), { passive: true })
+
+      updateTOC(config)
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', initTOC)
+      : initTOC()
+  })()
+</script>
+
+
+          </div>
+        </div>
+      
+
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+  <details
+    class="mt-2 mb-5 overflow-hidden rounded-lg ms-0 ps-5"
+    >
+    
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 -ms-5 ps-5 dark:bg-primary-800 dark:text-neutral-100">
+    DSP -
+    这篇文章属于一个选集。
+  </summary>
+  
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC1%E8%AE%B2-%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A6%82%E8%BF%B0/">
+          § 1:
+          DSP-1 数字信号处理概述
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC2%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/">
+          § 2:
+          DSP-2 离散时间信号的时域分析
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC3%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/">
+          § 3:
+          DSP-3 离散时间系统的时域分析
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        § 4:
+        本文
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC5%E8%AE%B2-%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96/">
+          § 5:
+          DSP-5 连续时间信号的采样与量化
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC6%E8%AE%B2-z%E5%8F%98%E6%8D%A2-part-i/">
+          § 6:
+          DSP-6 Z变换 (Part I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC7%E8%AE%B2-z%E5%8F%98%E6%8D%A2-part-ii/">
+          § 7:
+          DSP-7 Z变换 (Part II)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC8%E8%AE%B2-%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2part&#43;i/">
+          § 8:
+          DSP-8 有限长离散变换(Part&#43;I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC9%E8%AE%B2-%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2-part-ii/">
+          § 9:
+          DSP-9 有限长离散变换(Part2)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC10%E8%AE%B2-lti%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%98%E6%8D%A2%E5%9F%9F%E5%88%86%E6%9E%90-part-i/">
+          § 10:
+          DSP-10 LTI系统的变换域分析 (Part I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC11%E8%AE%B2-lti%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%98%E6%8D%A2%E5%9F%9F%E5%88%86%E6%9E%90-part-ii/">
+          § 11:
+          DSP-11 LTI系统的变换域分析 (Part II)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC12%E8%AE%B2-%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84/">
+          § 12:
+          DSP-12 数字滤波器的结构
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC13%E8%AE%B2-iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1/">
+          § 13:
+          DSP-13 IIR数字滤波器设计（Part1)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC14%E8%AE%B2--iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1part2/">
+          § 14:
+          DSP-14 IIR数字滤波器设计（Part2)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC15%E8%AE%B2-fir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/">
+          § 15:
+          DSP-15 FIR数字滤波器设计
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC16%E8%AE%B2-%E5%BF%AB%E9%80%9Fdft%E7%AE%97%E6%B3%95-fft/">
+          § 16:
+          DSP-16 快速DFT算法 (FFT)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/dsp%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">
+          § 17:
+          DSP复习指南
+        </a>
+      </div>
+    
+  
+
+
+  </details>
+
+
+        <div class="article-content max-w-prose mb-20">
+          
+<h2 class="relative group">PPT例题很重要
+    <div id="ppt例题很重要" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#ppt%e4%be%8b%e9%a2%98%e5%be%88%e9%87%8d%e8%a6%81" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+
+<h2 class="relative group">🌟 欢迎来到第四讲！
+    <div id="-欢迎来到第四讲" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#-%e6%ac%a2%e8%bf%8e%e6%9d%a5%e5%88%b0%e7%ac%ac%e5%9b%9b%e8%ae%b2" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<p>本讲主要介绍傅里叶变换的家族史，从连续到离散，从理论到计算的伟大旅程。</p>
+<hr>
+
+<h2 class="relative group">📝 本讲主要内容
+    <div id="-本讲主要内容" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#-%e6%9c%ac%e8%ae%b2%e4%b8%bb%e8%a6%81%e5%86%85%e5%ae%b9" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<ul>
+<li><strong>回顾祖辈</strong> (CTFS and CTFT) 👴</li>
+<li><strong>认识父辈</strong> (DTFT) 👨‍🦱</li>
+<li><strong>迎接王者</strong> (DFT/FFT) 👑</li>
+<li><strong>前沿实战</strong> (Applications) 🚀</li>
+<li><strong>傅里叶变换及性质</strong> ✨</li>
+<li><strong>离散时间 LTI 系统的频率响应</strong> 🎶</li>
+</ul>
+<hr>
+
+<h2 class="relative group">🔍 变换缩写
+    <div id="-变换缩写" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#-%e5%8f%98%e6%8d%a2%e7%bc%a9%e5%86%99" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<ul>
+<li><strong>CTFS</strong>: 连续时间傅里叶级数 (Continuous-Time Fourier Series)</li>
+<li><strong>CTFT</strong>: 连续时间傅里叶变换 (Continuous-Time Fourier Transform)</li>
+<li><strong>DTFT</strong>: 离散时间傅里叶变换 (Discrete-Time Fourier Transform)</li>
+<li><strong>DFT</strong>: 离散傅里叶变换 (Discrete Fourier Transform)</li>
+<li><strong>FFT</strong>: 快速傅里叶变换 (Fast Fourier Transform)</li>
+</ul>
+<hr>
+
+<h2 class="relative group">一、傅里叶变换的&quot;四世同堂&quot;：从理论到计算的演进 🔄
+    <div id="一傅里叶变换的四世同堂从理论到计算的演进-" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e4%b8%80%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2%e7%9a%84%e5%9b%9b%e4%b8%96%e5%90%8c%e5%a0%82%e4%bb%8e%e7%90%86%e8%ae%ba%e5%88%b0%e8%ae%a1%e7%ae%97%e7%9a%84%e6%bc%94%e8%bf%9b-" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<p>傅里叶变换家族的发展，本质是<strong>从连续模拟世界走向离散数字世界</strong>，解决&quot;信号可分析&quot;到&quot;信号可计算&quot;的核心问题。四者的时域/频域特性、核心作用及局限如下：</p>
+
+<h3 class="relative group">1.1 祖辈1：连续时间傅里叶级数（CTFS）&mdash;&mdash;周期信号的基石
+    <div id="11-祖辈1连续时间傅里叶级数ctfs周期信号的基石" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#11-%e7%a5%96%e8%be%881%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e5%82%85%e9%87%8c%e5%8f%b6%e7%ba%a7%e6%95%b0ctfs%e5%91%a8%e6%9c%9f%e4%bf%a1%e5%8f%b7%e7%9a%84%e5%9f%ba%e7%9f%b3" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心定位</strong>：分析<strong>连续、周期</strong>模拟信号的频率成分，是傅里叶家族的起源。</li>
+<li><strong>时域/频域特性</strong>：
+<ul>
+<li>时域：连续、周期（周期$T$，角频率$\omega\_0 = 2\pi/T$）；</li>
+<li>频域：离散、非周期（仅含$\omega = k\omega\_0$的谐波分量，$k$为整数）。</li>
+</ul>
+</li>
+<li><strong>变换对</strong>：<br>
+正变换（时域→频域，求谐波系数$a\_k$）：<br>
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'none'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+  $$a_k = \frac{1}{T} \int_{T} x(t) e^{-jk\omega_0 t} dt$$
+  <br>
+逆变换（频域→时域，重构周期信号）：<br>
+
+  $$x(t) = \sum_{k=-\infty}^{\infty} a_k e^{jk\omega_0 t}$$
+  </li>
+<li><strong>优势</strong>：首次将周期信号分解为正弦/复指数分量，奠定频率分析基础。</li>
+<li><strong>局限</strong>：仅适用于周期信号，无法处理单个、孤立的非周期事件（如单次语音、单个图像）。</li>
+</ul>
+<p>【CTFS时域频域对比图（上：连续周期时域波形$x(t)$；下：离散非周期频域谱线$a\_k$）】<br>
+<img src="file-20251013014027895.png" class="wikilink"
+alt="file-20251013014027895.png" /></p>
+
+<h3 class="relative group">1.2 祖辈2：连续时间傅里叶变换（CTFT）&mdash;&mdash;非周期信号的突破
+    <div id="12-祖辈2连续时间傅里叶变换ctft非周期信号的突破" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#12-%e7%a5%96%e8%be%882%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2ctft%e9%9d%9e%e5%91%a8%e6%9c%9f%e4%bf%a1%e5%8f%b7%e7%9a%84%e7%aa%81%e7%a0%b4" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心定位</strong>：突破周期限制，分析<strong>连续、非周期</strong>模拟信号的频率成分。</li>
+<li><strong>思想飞跃</strong>：将非周期信号视为&quot;周期$T \to \infty$的周期信号&quot;，此时$\omega\_0 = 2\pi/T \to 0$，离散谱线连成连续频谱。</li>
+<li><strong>时域/频域特性</strong>：
+<ul>
+<li>时域：连续、非周期；</li>
+<li>频域：连续、非周期（覆盖$\Omega \in (-\infty,+\infty)$，$\Omega$为模拟角频率，单位：rad/s）。</li>
+</ul>
+</li>
+<li><strong>变换对</strong>：<br>
+正变换（时域→频域）：<br>
+
+  $$X_a(j\Omega) = \int_{-\infty}^{\infty} x_a(t) e^{-j\Omega t} dt$$
+  <br>
+逆变换（频域→时域）：<br>
+
+  $$x_a(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X_a(j\Omega) e^{j\Omega t} d\Omega$$
+  </li>
+<li><strong>优势</strong>：可分析非周期信号（如单次脉冲、语音片段），扩展了频率分析的适用范围。</li>
+<li><strong>局限</strong>：时域和频域均为连续形式，无法用数字计算机处理（计算机仅能处理离散、有限长数据）。</li>
+</ul>
+<p>【CTFT时域频域对比图（上：连续非周期时域波形$x\_a(t)$；下：连续非周期频域频谱$X\_a(j\Omega)$）】<br>
+<img src="file-20251013014027965.png" class="wikilink"
+alt="file-20251013014027965.png" /></p>
+
+<h3 class="relative group">1.3 父辈：离散时间傅里叶变换（DTFT）&mdash;&mdash;数字世界的初探
+    <div id="13-父辈离散时间傅里叶变换dtft数字世界的初探" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#13-%e7%88%b6%e8%be%88%e7%a6%bb%e6%95%a3%e6%97%b6%e9%97%b4%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2dtft%e6%95%b0%e5%ad%97%e4%b8%96%e7%95%8c%e7%9a%84%e5%88%9d%e6%8e%a2" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心定位</strong>：进入数字领域，分析<strong>离散、非周期</strong>数字序列的频率成分。</li>
+<li><strong>时域/频域特性</strong>：
+<ul>
+<li>时域：离散、非周期（序列$x[n]$，$n$为整数）；</li>
+<li>频域：连续、周期（周期$2\pi$，$\omega$为数字角频率，单位：rad/sample）。</li>
+<li>周期性来源：时域采样导致频域周期延拓（采样定理的延伸）。</li>
+</ul>
+</li>
+<li><strong>变换对</strong>：<br>
+正变换（时域→频域）：<br>
+
+  $$X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n}$$
+  <br>
+逆变换（频域→时域）：<br>
+
+  $$x[n] = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{j\omega}) e^{j\omega n} d\omega$$
+  </li>
+<li><strong>优势</strong>：适配数字序列输入，为数字信号的频域分析提供理论工具。</li>
+<li><strong>局限</strong>：频域仍为连续形式（$\omega$覆盖$[-\pi,\pi]$），计算机无法直接存储和计算（需无穷多采样点描述频谱）。</li>
+</ul>
+<p>【DTFT时域频域对比图（上：离散非周期时域序列$x[n]$；下：连续周期频域频谱$X(e^{j\omega})$，标注周期$2\pi$）】<br>
+<img src="file-20251013014028024.png" class="wikilink"
+alt="file-20251013014028024.png" /></p>
+
+<h3 class="relative group">1.4 王者：离散傅里叶变换（DFT/FFT）&mdash;&mdash;工程计算的终极武器
+    <div id="14-王者离散傅里叶变换dftfft工程计算的终极武器" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#14-%e7%8e%8b%e8%80%85%e7%a6%bb%e6%95%a3%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2dftfft%e5%b7%a5%e7%a8%8b%e8%ae%a1%e7%ae%97%e7%9a%84%e7%bb%88%e6%9e%81%e6%ad%a6%e5%99%a8" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心定位</strong>：解决&quot;频域离散化&quot;问题，实现<strong>双离散、有限长</strong>信号的频率计算，是工程应用的核心工具。</li>
+<li><strong>关键突破</strong>：对DTFT的连续频谱进行&quot;等间隔采样&quot;（采样点$k=0,1,\dots,N-1$，$N$为序列长度），得到离散频谱$X[k]$。</li>
+<li><strong>时域/频域特性</strong>：
+<ul>
+<li>时域：离散、有限长（$x[n]$，$0 \leq n \leq N-1$）；</li>
+<li>频域：离散、有限长（$X[k]$，$0 \leq k \leq N-1$），隐含周期$N$。</li>
+</ul>
+</li>
+<li><strong>核心价值</strong>：
+<ul>
+<li>DFT：理论基础，将频域从连续变为离散，使计算机可处理；</li>
+<li>FFT：DFT的快速算法（如基2FFT），将计算复杂度从$O(N^2)$降至$O(N\log N)$，实现实时频谱分析（如手机、雷达的实时信号处理）。</li>
+</ul>
+</li>
+</ul>
+<p>【DFT与DTFT关系图（上：DTFT连续周期频谱$X(e^{j\omega})$；下：DFT离散频谱$X[k]$，标注采样点$\omega\_k = 2\pi k/N$）】<br>
+<img src="file-20251013014028073.png" class="wikilink"
+alt="file-20251013014028073.png" /></p>
+
+<h3 class="relative group">1.5 前沿实战：FFT的典型应用&mdash;&mdash;Shazam&quot;听歌识曲&quot; 🎵
+    <div id="15-前沿实战fft的典型应用shazam听歌识曲-" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#15-%e5%89%8d%e6%b2%bf%e5%ae%9e%e6%88%98fft%e7%9a%84%e5%85%b8%e5%9e%8b%e5%ba%94%e7%94%a8shazam%e5%90%ac%e6%ad%8c%e8%af%86%e6%9b%b2-" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心挑战</strong>：用户录制的音频含噪声、仅为歌曲片段，需精准匹配数据库中的歌曲。</li>
+<li><strong>FFT的作用（&ldquo;声音指纹&quot;生成）</strong>：
+<ol>
+<li><strong>时域→频域</strong>：对录制音频做短时傅里叶变换（STFT，基于FFT），生成<strong>频谱图（Spectrogram）</strong>（时间-频率-幅度的三维图）；</li>
+<li><strong>特征提取</strong>：从频谱图中提取&quot;频谱峰值&rdquo;（突出高频能量点），形成独特的&quot;声音指纹&quot;；</li>
+<li><strong>匹配检索</strong>：将&quot;声音指纹&quot;与数据库中的歌曲指纹对比，找到最相似的匹配结果。</li>
+</ol>
+</li>
+</ul>
+<p>【Shazam技术流程图（左：时域音频波形；中：STFT生成的频谱图；右：提取的声音指纹（频谱峰值标记））】<br>
+<img src="file-20251013014028129.png" class="wikilink"
+alt="file-20251013014028129.png" /></p>
+
+<h2 class="relative group">二、傅里叶变换基础：核心概念与定理 📖
+    <div id="二傅里叶变换基础核心概念与定理-" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e4%ba%8c%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2%e5%9f%ba%e7%a1%80%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5%e4%b8%8e%e5%ae%9a%e7%90%86-" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+
+<h3 class="relative group">2.1 为什么需要傅里叶变换？&mdash;&mdash;历史与核心价值
+    <div id="21-为什么需要傅里叶变换历史与核心价值" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#21-%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2%e5%8e%86%e5%8f%b2%e4%b8%8e%e6%a0%b8%e5%bf%83%e4%bb%b7%e5%80%bc" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>历史起源</strong>：1807年，法国数学家傅里叶（Fourier）在《热的传播》中提出&quot;任一函数可展为三角函数级数&quot;，奠定傅里叶分析基础。</li>
+<li><strong>核心价值（现代视角）</strong>：
+<ol>
+<li><strong>频率成分分析</strong>：将时域信号分解为不同频率的正弦/复指数分量，直观看到信号的&quot;频率构成&quot;（如语音中的基频、图像中的低频轮廓/高频细节）；</li>
+<li><strong>LTI系统适配</strong>：正弦/复指数信号是LTI系统的<strong>本征函数</strong>&mdash;&mdash;输入为$e^{j\omega n}$时，输出仅为$H(e^{j\omega})e^{j\omega n}$（$H(e^{j\omega})$为系统频率响应），简化系统响应计算；</li>
+<li><strong>卷积定理</strong>：时域卷积→频域乘积（$x[n]*h[n] \leftrightarrow X(e^{j\omega})H(e^{j\omega})$），将复杂的卷积运算转化为简单的乘法；</li>
+<li><strong>高效计算</strong>：DFT的快速算法（FFT）使频域分析可实时实现，推动工程应用（如通信、雷达、音频处理）。</li>
+</ol>
+</li>
+</ul>
+
+<h3 class="relative group">2.2 傅里叶变换的复数表示（CTFT/DTFT）
+    <div id="22-傅里叶变换的复数表示ctftdtft" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#22-%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2%e7%9a%84%e5%a4%8d%e6%95%b0%e8%a1%a8%e7%a4%bactftdtft" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>傅里叶变换的结果为复数，需通过<strong>实部、虚部</strong>或<strong>幅度、相位</strong>描述：</p>
+
+<h4 class="relative group">（1）CTFT的复数表示
+    <div id="1ctft的复数表示" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1ctft%e7%9a%84%e5%a4%8d%e6%95%b0%e8%a1%a8%e7%a4%ba" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+
+$$X_a(j\Omega) = X_{re}(j\Omega) + jX_{im}(j\Omega) = |X_a(j\Omega)| e^{j\theta_a(\Omega)}$$
+
+<ul>
+<li>$X\_{re}(j\Omega)$：频谱实部；$X\_{im}(j\Omega)$：频谱虚部；</li>
+<li>$|X\_a(j\Omega)|$：幅度谱（反映各频率成分的强度）；</li>
+<li>$\theta\_a(\Omega) = \arg\\{X\_a(j\Omega)\\}$：相位谱（反映各频率成分的时延）。</li>
+</ul>
+
+<h4 class="relative group">（2）DTFT的复数表示
+    <div id="2dtft的复数表示" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2dtft%e7%9a%84%e5%a4%8d%e6%95%b0%e8%a1%a8%e7%a4%ba" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+
+$$X(e^{j\omega}) = X_{re}(e^{j\omega}) + jX_{im}(e^{j\omega}) = |X(e^{j\omega})| e^{j\theta(\omega)}$$
+
+<ul>
+<li>符号含义与CTFT一致，仅需将$\Omega$替换为$\omega$（数字角频率）。</li>
+</ul>
+
+<h3 class="relative group">2.3 傅里叶变换的收敛条件
+    <div id="23-傅里叶变换的收敛条件" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#23-%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2%e7%9a%84%e6%94%b6%e6%95%9b%e6%9d%a1%e4%bb%b6" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>只有满足收敛条件，傅里叶变换才存在。CTFT与DTFT的收敛条件不同：</p>
+
+<h4 class="relative group">（1）CTFT收敛条件：Dirichlet条件
+    <div id="1ctft收敛条件dirichlet条件" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1ctft%e6%94%b6%e6%95%9b%e6%9d%a1%e4%bb%b6dirichlet%e6%9d%a1%e4%bb%b6" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<ol>
+<li><strong>绝对可积</strong>：$\int\_{-\infty}^{\infty} |x\_a(t)| dt < \infty$（核心条件）；</li>
+<li>有限区间内，信号有<strong>有限个不连续点</strong>和<strong>有限个极值点</strong>；</li>
+<li>有限区间内，不连续点为<strong>第一类间断点</strong>（左右极限存在且有限）。</li>
+</ol>
+
+<h4 class="relative group">（2）DTFT收敛条件：一致收敛与均方收敛
+    <div id="2dtft收敛条件一致收敛与均方收敛" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2dtft%e6%94%b6%e6%95%9b%e6%9d%a1%e4%bb%b6%e4%b8%80%e8%87%b4%e6%94%b6%e6%95%9b%e4%b8%8e%e5%9d%87%e6%96%b9%e6%94%b6%e6%95%9b" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th>收敛类型</th>
+          <th>定义</th>
+          <th>适用场景</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>一致收敛</td>
+          <td>$\lim\_{K \to \infty} \max\_{\omega}X(e^{j\omega}) - X\_K(e^{j\omega})= 0$（$X\_K(e^{j\omega}) = \sum\_{n=-K}^K x[n]e^{-j\omega n}$）</td>
+          <td>序列<strong>绝对可和</strong><br>（$\sum\_{n=-\infty}^{\infty}x[n]< \infty$），如$x[n] = \alpha^n u[n]$（$\alpha< 1$）</td>
+      </tr>
+      <tr>
+          <td>均方收敛</td>
+          <td>$\lim\_{K \to \infty} \int\_{-\pi}^{\pi}X(e^{j\omega}) - X\_K(e^{j\omega})^2 d\omega = 0$</td>
+          <td>序列<strong>能量有限但不绝对可和</strong>，如理想低通滤波器的单位脉冲响应$h\_{LP}[n] = \frac{\sin\omega\_c n}{\pi n}$</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>关键结论</strong>：绝对可和是DTFT一致收敛的<strong>充分条件</strong>，能量有限是DTFT均方收敛的<strong>充分条件</strong>。</li>
+</ul>
+
+<h3 class="relative group">2.4 能量密度谱：Parseval定理与维纳-辛欣定理
+    <div id="24-能量密度谱parseval定理与维纳-辛欣定理" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#24-%e8%83%bd%e9%87%8f%e5%af%86%e5%ba%a6%e8%b0%b1parseval%e5%ae%9a%e7%90%86%e4%b8%8e%e7%bb%b4%e7%ba%b3-%e8%be%9b%e6%ac%a3%e5%ae%9a%e7%90%86" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>能量密度谱（Spectral Density）描述信号能量在频域的分布，是连接时域能量与频域能量的核心工具。</p>
+
+<h4 class="relative group">（1）Parseval定理（能量守恒）
+    <div id="1parseval定理能量守恒" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1parseval%e5%ae%9a%e7%90%86%e8%83%bd%e9%87%8f%e5%ae%88%e6%81%92" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<ul>
+<li>
+<p><strong>连续时间信号（CTFT）</strong>：<br>
+时域总能量 = 频域总能量（需除以$2\pi$，因$\Omega$为连续频率）：<br>
+
+  $$\varepsilon_x = \int_{-\infty}^{\infty} |x_a(t)|^2 dt = \frac{1}{2\pi} \int_{-\infty}^{\infty} |X_a(j\Omega)|^2 d\Omega$$
+  </p>
+</li>
+<li>
+<p><strong>离散时间序列（DTFT）</strong>：<br>
+时域总能量 = 频域总能量（需除以$2\pi$，因$\omega$周期为$2\pi$）：<br>
+
+  $$\varepsilon_g = \sum_{n=-\infty}^{\infty} |g[n]|^2 = \frac{1}{2\pi} \int_{-\pi}^{\pi} |G(e^{j\omega})|^2 d\omega$$
+  </p>
+</li>
+<li>
+<p><strong>物理意义</strong>：信号的能量在时域和频域中守恒，仅分布形式不同。</p>
+</li>
+</ul>
+
+<h4 class="relative group">（2）维纳-辛欣定理（自相关与能量谱的关系）
+    <div id="2维纳-辛欣定理自相关与能量谱的关系" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2%e7%bb%b4%e7%ba%b3-%e8%be%9b%e6%ac%a3%e5%ae%9a%e7%90%86%e8%87%aa%e7%9b%b8%e5%85%b3%e4%b8%8e%e8%83%bd%e9%87%8f%e8%b0%b1%e7%9a%84%e5%85%b3%e7%b3%bb" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<ul>
+<li><strong>核心结论</strong>：信号的<strong>自相关函数</strong>的傅里叶变换，等于其<strong>能量密度谱</strong>。
+<ul>
+<li>离散时间序列：$S\_{gg}(e^{j\omega}) = \text{DTFT}\\{r\_{gg}[l]\\} = \sum\_{l=-\infty}^{\infty} r\_{gg}[l] e^{-j\omega l}$；</li>
+<li>扩展（互能量谱）：$S\_{gh}(e^{j\omega}) = \text{DTFT}\\{r\_{gh}[l]\\} = G(e^{j\omega}) H^*(e^{j\omega})$（$H^*$为$H$的共轭）。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：无法直接计算信号频谱时，可通过自相关函数间接求能量谱（如随机信号的谱估计）。</li>
+</ul>
+
+<h3 class="relative group">2.5 带限信号分类（连续/离散时间）
+    <div id="25-带限信号分类连续离散时间" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#25-%e5%b8%a6%e9%99%90%e4%bf%a1%e5%8f%b7%e5%88%86%e7%b1%bb%e8%bf%9e%e7%bb%ad%e7%a6%bb%e6%95%a3%e6%97%b6%e9%97%b4" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>带限信号指&quot;频谱仅在有限频率范围内非零&quot;的信号，按能量集中的频段可分为低通、高通、带通三类：</p>
+
+<h4 class="relative group">（1）连续时间带限信号（$\Omega$：模拟角频率，单位rad/s）
+    <div id="1连续时间带限信号模拟角频率单位rads" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e5%b8%a6%e9%99%90%e4%bf%a1%e5%8f%b7%e6%a8%a1%e6%8b%9f%e8%a7%92%e9%a2%91%e7%8e%87%e5%8d%95%e4%bd%8drads" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th>类型</th>
+          <th>频谱范围</th>
+          <th>带宽定义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>低通信号</td>
+          <td>$0 \leq\Omega\leq \Omega\_p$</td>
+          <td>$\Omega\_p$（最高频率）</td>
+      </tr>
+      <tr>
+          <td>高通信号</td>
+          <td>$\Omega\_p \leq\Omega< \infty$</td>
+          <td>$\infty - \Omega\_p$</td>
+      </tr>
+      <tr>
+          <td>带通信号</td>
+          <td>$\Omega\_L \leq\Omega\leq \Omega\_H$</td>
+          <td>$\Omega\_H - \Omega\_L$（带宽）</td>
+      </tr>
+  </tbody>
+</table>
+
+<h4 class="relative group">（2）离散时间带限信号（$\omega$：数字角频率，单位rad/sample，范围$[-\pi,\pi]$）
+    <div id="2离散时间带限信号数字角频率单位radsample范围" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2%e7%a6%bb%e6%95%a3%e6%97%b6%e9%97%b4%e5%b8%a6%e9%99%90%e4%bf%a1%e5%8f%b7%e6%95%b0%e5%ad%97%e8%a7%92%e9%a2%91%e7%8e%87%e5%8d%95%e4%bd%8dradsample%e8%8c%83%e5%9b%b4" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th>类型</th>
+          <th>频谱范围</th>
+          <th>带宽定义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>低通信号</td>
+          <td>$0 \leq\omega\leq \omega\_p$</td>
+          <td>$\omega\_p$</td>
+      </tr>
+      <tr>
+          <td>高通信号</td>
+          <td>$\omega\_p \leq\omega< \pi$</td>
+          <td>$\pi - \omega\_p$</td>
+      </tr>
+      <tr>
+          <td>带通信号</td>
+          <td>$\omega\_L \leq\omega\leq \omega\_H$</td>
+          <td>$\omega\_H - \omega\_L$</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>关键提醒</strong>：离散时间信号的频域天然周期为$2\pi$，故带宽最大为$\pi$（对应采样率的一半，即Nyquist频率）。</li>
+</ul>
+
+<h2 class="relative group">三、DTFT的核心性质：从数学到应用 📊
+    <div id="三dtft的核心性质从数学到应用-" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e4%b8%89dtft%e7%9a%84%e6%a0%b8%e5%bf%83%e6%80%a7%e8%b4%a8%e4%bb%8e%e6%95%b0%e5%ad%a6%e5%88%b0%e5%ba%94%e7%94%a8-" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<p>DTFT的性质是频域分析的&quot;工具箱&quot;，尤其卷积定理、时移/频移性质是LTI系统分析的核心。</p>
+
+<h3 class="relative group">3.1 DTFT逆变换的证明
+    <div id="31-dtft逆变换的证明" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#31-dtft%e9%80%86%e5%8f%98%e6%8d%a2%e7%9a%84%e8%af%81%e6%98%8e" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>需验证逆变换公式能否从$X(e^{j\omega})$重构$x[n]$：<br>
+
+$$x[n] = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{j\omega}) e^{j\omega n} d\omega$$
+</p>
+<p><strong>证明步骤</strong>：</p>
+<ol>
+<li>代入DTFT正变换公式：<br>
+
+$$x[n] = \frac{1}{2\pi} \int_{-\pi}^{\pi} \left( \sum_{l=-\infty}^{\infty} x[l] e^{-j\omega l} \right) e^{j\omega n} d\omega$$
+</li>
+<li>交换求和与积分顺序（满足收敛条件时可交换）：<br>
+
+$$x[n] = \sum_{l=-\infty}^{\infty} x[l] \cdot \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{j\omega(n-l)} d\omega$$
+</li>
+<li>计算积分项（利用$\int\_{-\pi}^{\pi} e^{j\omega k} d\omega = 2\pi \delta[k]$，$\delta[k]$为单位采样序列）：<br>
+
+$$\frac{1}{2\pi} \int_{-\pi}^{\pi} e^{j\omega(n-l)} d\omega = \delta[n-l]$$
+</li>
+<li>利用$\sum\_{l=-\infty}^{\infty} x[l] \delta[n-l] = x[n]$，得证。</li>
+</ol>
+
+<h3 class="relative group">3.2 常用DTFT变换对（表格整理）
+    <div id="32-常用dtft变换对表格整理" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#32-%e5%b8%b8%e7%94%a8dtft%e5%8f%98%e6%8d%a2%e5%af%b9%e8%a1%a8%e6%a0%bc%e6%95%b4%e7%90%86" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>离散序列 $x[n]$</th>
+          <th>DTFT $X(e^{j\omega})$</th>
+          <th>备注</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>单位采样序列 $\delta[n]$</td>
+          <td>$1$</td>
+          <td>含所有频率成分，幅度相位均相同</td>
+      </tr>
+      <tr>
+          <td>单位阶跃序列 $u[n]$</td>
+          <td>$\frac{1}{1-e^{-j\omega}} + \sum\_{k=-\infty}^{\infty} \pi \delta(\omega + 2\pi k)$</td>
+          <td>含直流分量（冲激项）</td>
+      </tr>
+      <tr>
+          <td>指数序列 $\alpha^n u[n]$（$\alpha< 1$）</td>
+          <td>$\frac{1}{1 - \alpha e^{-j\omega}}$</td>
+          <td>绝对可和，一致收敛</td>
+      </tr>
+      <tr>
+          <td>复指数序列 $e^{j\omega\_0 n}$</td>
+          <td>$\sum\_{k=-\infty}^{\infty} 2\pi \delta(\omega - \omega\_0 + 2\pi k)$</td>
+          <td>仅含$\omega = \omega\_0 + 2\pi k$频率</td>
+      </tr>
+      <tr>
+          <td>理想低通脉冲响应 $h\_{LP}[n] = \frac{\sin\omega\_c n}{\pi n}$</td>
+          <td>$H\_{LP}(e^{j\omega}) = \begin{cases} 1 &\omega\leq \omega\_c \\\ 0 & \omega\_c <\omega\leq \pi \end{cases}$</td>
+          <td>能量有限，均方收敛</td>
+      </tr>
+  </tbody>
+</table>
+
+<h3 class="relative group">3.3 DTFT的基本性质（表格整理）
+    <div id="33-dtft的基本性质表格整理" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#33-dtft%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%80%a7%e8%b4%a8%e8%a1%a8%e6%a0%bc%e6%95%b4%e7%90%86" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>设$\text{DTFT}\\{g[n]\\} = G(e^{j\omega})$，$\text{DTFT}\\{h[n]\\} = H(e^{j\omega})$，则：</p>
+<table>
+  <thead>
+      <tr>
+          <th>性质</th>
+          <th>离散序列</th>
+          <th>DTFT</th>
+          <th>核心应用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>线性</td>
+          <td>$\alpha g[n] + \beta h[n]$</td>
+          <td>$\alpha G(e^{j\omega}) + \beta H(e^{j\omega})$</td>
+          <td>叠加信号的频域分析</td>
+      </tr>
+      <tr>
+          <td>时移</td>
+          <td>$g[n - n\_0]$</td>
+          <td>$e^{-j\omega n\_0} G(e^{j\omega})$</td>
+          <td>信号时延的频域影响（相位线性变化）</td>
+      </tr>
+      <tr>
+          <td>频移</td>
+          <td>$e^{j\omega\_0 n} g[n]$</td>
+          <td>$G(e^{j(\omega - \omega\_0)})$</td>
+          <td>信号调制（如将低频信号移至高频）</td>
+      </tr>
+      <tr>
+          <td>频域微分</td>
+          <td>$n g[n]$</td>
+          <td>$j \frac{dG(e^{j\omega})}{d\omega}$</td>
+          <td>分析信号的频率变化率</td>
+      </tr>
+      <tr>
+          <td><strong>卷积定理</strong></td>
+          <td>$g[n] * h[n]$（时域卷积）</td>
+          <td>$G(e^{j\omega}) H(e^{j\omega})$（频域乘积）</td>
+          <td>LTI系统响应计算（$Y = XH$）</td>
+      </tr>
+      <tr>
+          <td>相乘定理</td>
+          <td>$g[n] \cdot h[n]$（时域相乘）</td>
+          <td>$\frac{1}{2\pi} \int\_{-\pi}^{\pi} G(e^{j\theta}) H(e^{j(\omega - \theta)}) d\theta$（频域卷积）</td>
+          <td>信号加窗（时域乘窗→频域卷积）</td>
+      </tr>
+      <tr>
+          <td>Parseval公式</td>
+          <td>$\sum\_{n=-\infty}^{\infty} g[n] h^*[n]$</td>
+          <td>$\frac{1}{2\pi} \int\_{-\pi}^{\pi} G(e^{j\omega}) H^*(e^{j\omega}) d\omega$</td>
+          <td>时域能量/相关性→频域计算</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>重点强调</strong>：卷积定理是LTI系统频域分析的&quot;灵魂&quot;&mdash;&mdash;无需时域卷积，只需频域乘积即可求系统输出。</li>
+</ul>
+
+<h3 class="relative group">3.4 复序列与实序列的DTFT对称关系
+    <div id="34-复序列与实序列的dtft对称关系" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#34-%e5%a4%8d%e5%ba%8f%e5%88%97%e4%b8%8e%e5%ae%9e%e5%ba%8f%e5%88%97%e7%9a%84dtft%e5%af%b9%e7%a7%b0%e5%85%b3%e7%b3%bb" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>对称关系可简化频谱计算（如实序列的频谱只需计算正频率部分）：</p>
+
+<h4 class="relative group">（1）复序列的对称关系
+    <div id="1复序列的对称关系" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#1%e5%a4%8d%e5%ba%8f%e5%88%97%e7%9a%84%e5%af%b9%e7%a7%b0%e5%85%b3%e7%b3%bb" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th>离散序列 $x[n]$</th>
+          <th>DTFT $X(e^{j\omega})$</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>$x[n]$</td>
+          <td>$X(e^{j\omega})$</td>
+      </tr>
+      <tr>
+          <td>$x[-n]$</td>
+          <td>$X(e^{-j\omega})$</td>
+      </tr>
+      <tr>
+          <td>$\text{Re}\\{x[n]\\}$（实部）</td>
+          <td>$X\_{cs}(e^{j\omega}) = \frac{1}{2}(X(e^{j\omega}) + X^*(e^{-j\omega}))$（共轭对称部分）</td>
+      </tr>
+      <tr>
+          <td>$j\text{Im}\\{x[n]\\}$（虚部×j）</td>
+          <td>$X\_{ca}(e^{j\omega}) = \frac{1}{2}(X(e^{j\omega}) - X^*(e^{-j\omega}))$（共轭反对称部分）</td>
+      </tr>
+      <tr>
+          <td>$x\_{cs}[n]$（共轭对称序列）</td>
+          <td>$\text{Re}\\{X(e^{j\omega})\\}$（实部）</td>
+      </tr>
+      <tr>
+          <td>$x\_{ca}[n]$（共轭反对称序列）</td>
+          <td>$j\text{Im}\\{X(e^{j\omega})\\}$（虚部×j）</td>
+      </tr>
+  </tbody>
+</table>
+
+<h4 class="relative group">（2）实序列的对称关系（复序列的特例，$x^*[n] = x[n]$）
+    <div id="2实序列的对称关系复序列的特例" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#2%e5%ae%9e%e5%ba%8f%e5%88%97%e7%9a%84%e5%af%b9%e7%a7%b0%e5%85%b3%e7%b3%bb%e5%a4%8d%e5%ba%8f%e5%88%97%e7%9a%84%e7%89%b9%e4%be%8b" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<table>
+  <thead>
+      <tr>
+          <th>离散序列 $x[n]$</th>
+          <th>DTFT $X(e^{j\omega})$</th>
+          <th>关键结论</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>$x[n]$（实序列）</td>
+          <td>$X(e^{j\omega}) = X\_{re}(e^{j\omega}) + jX\_{im}(e^{j\omega})$</td>
+          <td>-</td>
+      </tr>
+      <tr>
+          <td>$x\_{ev}[n]$（偶序列）</td>
+          <td>$X\_{re}(e^{j\omega})$（实部）</td>
+          <td>偶序列对应实频谱</td>
+      </tr>
+      <tr>
+          <td>$x\_{od}[n]$（奇序列）</td>
+          <td>$jX\_{im}(e^{j\omega})$（虚部×j）</td>
+          <td>奇序列对应虚频谱</td>
+      </tr>
+      <tr>
+          <td>-</td>
+          <td>$X(e^{j\omega}) = X^*(e^{-j\omega})$</td>
+          <td>幅度谱偶对称，相位谱奇对称</td>
+      </tr>
+      <tr>
+          <td>-</td>
+          <td>$X(e^{j\omega})=X(e^{-j\omega})$</td>
+          <td>幅度谱：$\omega$与$-\omega$相等</td>
+      </tr>
+      <tr>
+          <td>-</td>
+          <td>$\arg\\{X(e^{j\omega})\\} = -\arg\\{X(e^{-j\omega})\\}$</td>
+          <td>相位谱：$\omega$与$-\omega$相反</td>
+      </tr>
+  </tbody>
+</table>
+
+<h3 class="relative group">3.5 DTFT的周期性（证明与意义）
+    <div id="35-dtft的周期性证明与意义" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#35-dtft%e7%9a%84%e5%91%a8%e6%9c%9f%e6%80%a7%e8%af%81%e6%98%8e%e4%b8%8e%e6%84%8f%e4%b9%89" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>核心结论</strong>：任意序列的DTFT是<strong>周期为$2\pi$的连续函数</strong>，即$X(e^{j(\omega + 2\pi k)}) = X(e^{j\omega})$（$k$为整数）。</li>
+</ul>
+<p><strong>证明</strong>：<br>
+代入DTFT正变换公式：<br>
+
+$$X(e^{j(\omega + 2\pi k)}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j(\omega + 2\pi k)n} = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n} \cdot e^{-j2\pi k n}$$
+<br>
+因$e^{-j2\pi k n} = \cos(2\pi k n) - j\sin(2\pi k n) = 1$（$k,n$为整数），故：<br>
+
+$$X(e^{j(\omega + 2\pi k)}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n} = X(e^{j\omega})$$
+</p>
+<ul>
+<li><strong>物理意义</strong>：离散时间信号的频域具有&quot;周期性重复&quot;特性，只需分析一个周期（如$[-\pi,\pi]$或$[0,2\pi]$）即可掌握全部频域信息。</li>
+</ul>
+
+<h3 class="relative group">3.6 例题：DTFT逆变换求解与性质应用
+    <div id="36-例题dtft逆变换求解与性质应用" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#36-%e4%be%8b%e9%a2%98dtft%e9%80%86%e5%8f%98%e6%8d%a2%e6%b1%82%e8%a7%a3%e4%b8%8e%e6%80%a7%e8%b4%a8%e5%ba%94%e7%94%a8" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p><strong>例题</strong>：求$X(e^{j\omega}) = \sum\_{k=-\infty}^{\infty} \delta(\omega + 2k\pi) + \frac{-\alpha e^{-j\omega}}{(1 - \alpha e^{-j\omega})^2}$（$|\alpha| < 1$）的逆DTFT。</p>
+<p><strong>解题步骤</strong>：</p>
+<ol>
+<li>拆分$X(e^{j\omega})$为两部分：$X(e^{j\omega}) = X\_1(e^{j\omega}) + X\_2(e^{j\omega})$，其中：</li>
+</ol>
+<ul>
+<li>$X\_1(e^{j\omega}) = \sum\_{k=-\infty}^{\infty} \delta(\omega + 2k\pi)$（冲激序列）；</li>
+<li>$X\_2(e^{j\omega}) = \frac{-\alpha e^{-j\omega}}{(1 - \alpha e^{-j\omega})^2}$（有理函数）。</li>
+</ul>
+<ol start="2">
+<li>求$X\_1(e^{j\omega})$的逆DTFT：<br>
+由常用变换对，$\text{DTFT}^{-1}\\{\sum\_{k=-\infty}^{\infty} \delta(\omega + 2k\pi)\\} = \delta[n]$（单位采样序列）。</li>
+<li>求$X\_2(e^{j\omega})$的逆DTFT：<br>
+利用&quot;频域微分性质&quot;&mdash;&mdash;已知$\text{DTFT}\\{\alpha^n u[n]\\} = \frac{1}{1 - \alpha e^{-j\omega}}$，对其两边关于$\omega$求导：<br>
+
+$$\frac{d}{d\omega} \left( \frac{1}{1 - \alpha e^{-j\omega}} \right) = \frac{-j\alpha e^{-j\omega}}{(1 - \alpha e^{-j\omega})^2}$$
+<br>
+对比$X\_2(e^{j\omega})$：<br>
+
+$$X_2(e^{j\omega}) = \frac{-\alpha e^{-j\omega}}{(1 - \alpha e^{-j\omega})^2} = j \cdot \frac{d}{d\omega} \left( \frac{1}{1 - \alpha e^{-j\omega}} \right)$$
+<br>
+由频域微分性质（$\text{DTFT}\\{n g[n]\\} = j \frac{dG(e^{j\omega})}{d\omega}$），得：<br>
+
+$$\text{DTFT}^{-1}\{X_2(e^{j\omega})\} = n \cdot \alpha^n u[n]$$
+</li>
+<li>叠加两部分结果：<br>
+
+$$x[n] = \delta[n] + n \alpha^n u[n]$$
+</li>
+</ol>
+
+<h2 class="relative group">四、离散时间LTI系统的频率响应 🚀
+    <div id="四离散时间lti系统的频率响应-" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e5%9b%9b%e7%a6%bb%e6%95%a3%e6%97%b6%e9%97%b4lti%e7%b3%bb%e7%bb%9f%e7%9a%84%e9%a2%91%e7%8e%87%e5%93%8d%e5%ba%94-" aria-label="锚点">#</a>
+    </span>
+    
+</h2>
+<p>LTI系统的频率响应是&quot;频域分析系统特性&quot;的核心工具，描述系统对不同频率信号的&quot;放大/衰减&quot;和&quot;时延&quot;作用。</p>
+
+<h3 class="relative group">4.1 频率响应的定义与物理意义
+    <div id="41-频率响应的定义与物理意义" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#41-%e9%a2%91%e7%8e%87%e5%93%8d%e5%ba%94%e7%9a%84%e5%ae%9a%e4%b9%89%e4%b8%8e%e7%89%a9%e7%90%86%e6%84%8f%e4%b9%89" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<ul>
+<li><strong>定义</strong>：LTI系统的<strong>单位脉冲响应$h[n]$的DTFT</strong>，记为$H(e^{j\omega})$：<br>
+
+  $$H(e^{j\omega}) = \text{DTFT}\{h[n]\} = \sum_{n=-\infty}^{\infty} h[n] e^{-j\omega n}$$
+  </li>
+<li><strong>物理意义</strong>：当输入为<strong>复指数序列$x[n] = e^{j\omega n}$</strong> 时，系统输出为：<br>
+
+  $$y[n] = x[n] * h[n] = \sum_{k=-\infty}^{\infty} h[k] e^{j\omega(n - k)} = H(e^{j\omega}) e^{j\omega n}$$
+  <br>
+即输出为&quot;相同频率的复指数序列 × 复常数$H(e^{j\omega})$&quot;&mdash;&mdash;$H(e^{j\omega})$的幅度表示&quot;频率$\omega$的放大倍数&quot;，相位表示&quot;频率$\omega$的时延&quot;。</li>
+<li><strong>核心公式（频域输入输出关系）</strong>：<br>
+由卷积定理，$Y(e^{j\omega}) = X(e^{j\omega}) H(e^{j\omega})$（$Y$为输出频谱，$X$为输入频谱）。</li>
+</ul>
+
+<h3 class="relative group">4.2 幅频特性、相频特性与增益/衰减函数
+    <div id="42-幅频特性相频特性与增益衰减函数" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#42-%e5%b9%85%e9%a2%91%e7%89%b9%e6%80%a7%e7%9b%b8%e9%a2%91%e7%89%b9%e6%80%a7%e4%b8%8e%e5%a2%9e%e7%9b%8a%e8%a1%b0%e5%87%8f%e5%87%bd%e6%95%b0" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>$H(e^{j\omega})$为复数，可分解为<strong>幅度响应</strong>和<strong>相位响应</strong>：<br>
+
+$$H(e^{j\omega}) = |H(e^{j\omega})| e^{j\theta(\omega)}$$
+</p>
+<table>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>定义</th>
+          <th>物理意义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>幅度响应 $H(e^{j\omega})$</td>
+          <td>$H(e^{j\omega})$的模</td>
+          <td>系统对频率$\omega$信号的&quot;放大/衰减倍数&quot;</td>
+      </tr>
+      <tr>
+          <td>相位响应 $\theta(\omega)$</td>
+          <td>$H(e^{j\omega})$的辐角（$\arg\\{H(e^{j\omega})\\}$）</td>
+          <td>系统对频率$\omega$信号的&quot;额外时延&quot;（单位：rad）</td>
+      </tr>
+      <tr>
+          <td>增益函数 $G(\omega)$</td>
+          <td>$G(\omega) = 20\log\_{10}H(e^{j\omega})$（单位：dB）</td>
+          <td>对数域的放大倍数（便于观察大幅值范围）</td>
+      </tr>
+      <tr>
+          <td>衰减函数 $A(\omega)$</td>
+          <td>$A(\omega) = -G(\omega) = -20\log\_{10}H(e^{j\omega})$（单位：dB）</td>
+          <td>对数域的衰减倍数</td>
+      </tr>
+  </tbody>
+</table>
+
+<h3 class="relative group">4.3 FIR与IIR系统的频率响应对比
+    <div id="43-fir与iir系统的频率响应对比" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#43-fir%e4%b8%8eiir%e7%b3%bb%e7%bb%9f%e7%9a%84%e9%a2%91%e7%8e%87%e5%93%8d%e5%ba%94%e5%af%b9%e6%af%94" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>系统类型</th>
+          <th>频率响应公式</th>
+          <th>稳定性（BIBO）</th>
+          <th>因果性（默认）</th>
+          <th>实现特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>FIR系统</td>
+          <td>$H(e^{j\omega}) = \sum\_{n=N\_1}^{N\_2} h[n] e^{-j\omega n}$（有限项求和）</td>
+          <td>稳定（$h[n]$有限长，绝对可和）</td>
+          <td>因果（$h[n] = 0$，$n < 0$）</td>
+          <td>无反馈，易实现线性相位</td>
+      </tr>
+      <tr>
+          <td>IIR系统</td>
+          <td>$H(e^{j\omega}) = \frac{\sum\_{n=0}^M a\_n e^{-j\omega n}}{\sum\_{n=0}^N b\_n e^{-j\omega n}}$（有理函数）</td>
+          <td>需满足极点在单位圆内</td>
+          <td>因果（分母系数决定）</td>
+          <td>有反馈，计算量小，但难实现线性相位</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>MATLAB实现函数</strong>：
+<ul>
+<li>计算频率响应：<code>[H, w] = freqz(b, a, N)</code>（$b$为分子系数，$a$为分母系数，$N$为采样点数）；</li>
+<li>计算单位脉冲响应：<code>h = impz(b, a, N)</code>；</li>
+<li>FIR系统特例：$a = [1]$，故<code>freqz(h, 1, N)</code>等价于<code>freqz(b, 1, N)</code>。</li>
+</ul>
+</li>
+</ul>
+
+<h3 class="relative group">4.4 MATLAB实战：滑动平均滤波器的频率响应
+    <div id="44-matlab实战滑动平均滤波器的频率响应" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#44-matlab%e5%ae%9e%e6%88%98%e6%bb%91%e5%8a%a8%e5%b9%b3%e5%9d%87%e6%bb%a4%e6%b3%a2%e5%99%a8%e7%9a%84%e9%a2%91%e7%8e%87%e5%93%8d%e5%ba%94" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p><strong>示例</strong>：分析$M=5$和$M=14$的滑动平均滤波器（FIR系统）的幅频和相频特性。</p>
+
+<h4 class="relative group">MATLAB代码：
+    <div id="matlab代码" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#matlab%e4%bb%a3%e7%a0%81" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<div class="highlight-wrapper"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-matlab" data-lang="matlab"><span class="line"><span class="cl"><span class="c">% 1. 生成滤波器系数（滑动平均：每个系数为1/M）</span>
+</span></span><span class="line"><span class="cl"><span class="n">h1</span> <span class="p">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span><span class="p">;</span>  <span class="c">% M=5的滑动平均滤波器</span>
+</span></span><span class="line"><span class="cl"><span class="n">h2</span> <span class="p">=</span> <span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span> <span class="o">/</span> <span class="mi">14</span><span class="p">;</span> <span class="c">% M=14的滑动平均滤波器</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">% 2. 计算频率响应（256个采样点，覆盖[0, pi]）</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">N_points</span><span class="p">,</span> <span class="n">w</span><span class="p">]</span> <span class="p">=</span> <span class="n">freqz</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">);</span>  <span class="c">% h1的频率响应</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">H2</span><span class="p">,</span> <span class="n">w</span><span class="p">]</span> <span class="p">=</span> <span class="n">freqz</span><span class="p">(</span><span class="n">h2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">);</span>        <span class="c">% h2的频率响应</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">% 3. 计算幅频特性（幅度）和相频特性（角度转度数）</span>
+</span></span><span class="line"><span class="cl"><span class="n">mag1</span> <span class="p">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">H1</span><span class="p">);</span>  <span class="c">% M=5的幅度响应</span>
+</span></span><span class="line"><span class="cl"><span class="n">mag2</span> <span class="p">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">H2</span><span class="p">);</span>  <span class="c">% M=14的幅度响应</span>
+</span></span><span class="line"><span class="cl"><span class="n">phase1</span> <span class="p">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">H1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="nb">pi</span><span class="p">;</span>  <span class="c">% M=5的相位响应（度）</span>
+</span></span><span class="line"><span class="cl"><span class="n">phase2</span> <span class="p">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">H2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="nb">pi</span><span class="p">;</span>  <span class="c">% M=14的相位响应（度）</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">% 4. 绘图</span>
+</span></span><span class="line"><span class="cl"><span class="n">figure</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c">% 幅频特性图</span>
+</span></span><span class="line"><span class="cl"><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">plot</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="nb">pi</span><span class="p">,</span> <span class="n">mag1</span><span class="p">,</span> <span class="s">&#39;r-&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">/</span><span class="nb">pi</span><span class="p">,</span> <span class="n">mag2</span><span class="p">,</span> <span class="s">&#39;b--&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;\omega/\pi&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Magnitude&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">legend</span><span class="p">(</span><span class="s">&#39;M=5&#39;</span><span class="p">,</span> <span class="s">&#39;M=14&#39;</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">&#39;滑动平均滤波器幅频特性&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c">% 相频特性图</span>
+</span></span><span class="line"><span class="cl"><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">plot</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="nb">pi</span><span class="p">,</span> <span class="n">phase1</span><span class="p">,</span> <span class="s">&#39;r-&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">/</span><span class="nb">pi</span><span class="p">,</span> <span class="n">phase2</span><span class="p">,</span> <span class="s">&#39;b--&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;\omega/\pi&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Phase (degrees)&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">legend</span><span class="p">(</span><span class="s">&#39;M=5&#39;</span><span class="p">,</span> <span class="s">&#39;M=14&#39;</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">&#39;滑动平均滤波器相频特性&#39;</span><span class="p">);</span></span></span></code></pre></div></div>
+
+<h4 class="relative group">结果分析：
+    <div id="结果分析" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e7%bb%93%e6%9e%9c%e5%88%86%e6%9e%90" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<ul>
+<li><strong>幅频特性</strong>：$M$越大，低通滤波效果越好（主瓣越窄，衰减越快），但过渡带越宽；</li>
+<li><strong>相频特性</strong>：均为线性相位（因$h[n]$对称），时延随$\omega$线性增加。</li>
+</ul>
+<p>【滑动平均滤波器幅频/相频特性图（上：幅频特性，$M=14$的主瓣更窄；下：相频特性，均为线性下降）】<br>
+<img src="file-20251013014028160.png" class="wikilink"
+alt="file-20251013014028160.png" /></p>
+
+<h3 class="relative group">4.5 实战：简单FIR滤波器设计（通带/阻带控制）
+    <div id="45-实战简单fir滤波器设计通带阻带控制" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#45-%e5%ae%9e%e6%88%98%e7%ae%80%e5%8d%95fir%e6%bb%a4%e6%b3%a2%e5%99%a8%e8%ae%be%e8%ae%a1%e9%80%9a%e5%b8%a6%e9%98%bb%e5%b8%a6%e6%8e%a7%e5%88%b6" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p><strong>需求</strong>：设计长度为3的实对称FIR滤波器，允许$\omega=0.4$ rad/sample的信号通过（通带），抑制$\omega=0.1$ rad/sample的信号（阻带）。</p>
+
+<h4 class="relative group">设计步骤：
+    <div id="设计步骤" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#%e8%ae%be%e8%ae%a1%e6%ad%a5%e9%aa%a4" aria-label="锚点">#</a>
+    </span>
+    
+</h4>
+<ol>
+<li>设FIR滤波器的频率响应（长度3，系数对称$h[0]=h[2]=a$，$h[1]=b$）：<br>
+
+    $$H(e^{j\omega}) = a + b e^{-j\omega} + a e^{-j2\omega}$$
+    </li>
+<li>化简频率响应（利用欧拉公式）：<br>
+
+    $$H(e^{j\omega}) = e^{-j\omega} (2a \cos\omega + b)$$
+    <br>
+幅度响应：$|H(e^{j\omega})| = |2a \cos\omega + b|$（相位响应为$-\omega$，线性相位）。</li>
+<li>建立约束方程（通带$\omega=0.4$时$|H|=1$，阻带$\omega=0.1$时$|H|=0$）：<br>
+
+    $$\begin{cases} 2a \cos(0.4) + b = 1 \\ 2a \cos(0.1) + b = 0 \end{cases}$$
+    </li>
+<li>求解系数$a$和$b$：<br>
+两式相减得：$2a (\cos0.4 - \cos0.1) = 1 \implies a \approx -1.73$；<br>
+代入得：$b \approx 2a \cos0.1 \approx 3.41$。</li>
+<li>最终滤波器系数：$h[0] = h[2] \approx -1.73$，$h[1] \approx 3.41$。</li>
+</ol>
+<p>【滤波器输入输出对比图（上：含$\omega=0.1$和$\omega=0.4$的输入信号；下：滤波后仅$\omega=0.4$的信号保留）】<br>
+<img src="file-20251013014028216.png" class="wikilink"
+alt="file-20251013014028216.png" /></p>
+
+<h3 class="relative group">4.6 相位延迟与群延迟：信号时延分析
+    <div id="46-相位延迟与群延迟信号时延分析" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        <a class="text-primary-300 dark:text-neutral-700 !no-underline" href="#46-%e7%9b%b8%e4%bd%8d%e5%bb%b6%e8%bf%9f%e4%b8%8e%e7%be%a4%e5%bb%b6%e8%bf%9f%e4%bf%a1%e5%8f%b7%e6%97%b6%e5%bb%b6%e5%88%86%e6%9e%90" aria-label="锚点">#</a>
+    </span>
+    
+</h3>
+<p>当输入为正弦信号$x[n] = \cos(\omega\_0 n)$时，输出为：<br>
+
+$$y[n] = |H(e^{j\omega_0})| \cos(\omega_0 n + \theta(\omega_0))$$
+</p>
+<p>时延分为<strong>相位延迟</strong>（单频率信号的时延）和<strong>群延迟</strong>（多频率信号的时延）：</p>
+<table>
+  <thead>
+      <tr>
+          <th>时延类型</th>
+          <th>定义</th>
+          <th>物理意义</th>
+          <th>理想特性</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>相位延迟 $\tau\_p(\omega\_0)$</td>
+          <td>$\tau\_p(\omega\_0) = -\frac{\theta(\omega\_0)}{\omega\_0}$（单位：sample）</td>
+          <td>单频率$\omega\_0$信号的&quot;绝对时延&quot;</td>
+          <td>常数（无失真）</td>
+      </tr>
+      <tr>
+          <td>群延迟 $\tau\_g(\omega)$</td>
+          <td>$\tau\_g(\omega) = -\frac{d\theta(\omega)}{d\omega}$（单位：sample）</td>
+          <td>多频率信号的&quot;平均时延&quot;（信号包络的时延）</td>
+          <td>常数（避免信号失真，如线性相位FIR）</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li><strong>MATLAB计算函数</strong>：
+<ul>
+<li>相位延迟：<code>[phi, w] = phasedelay(b, a, N)</code>；</li>
+<li>群延迟：<code>[gd, w] = grpdelay(b, a, N)</code>。</li>
+</ul>
+</li>
+<li><strong>例题</strong>：理想低通滤波器的群延迟为？<br>
+答案：A（非零常数）。因理想低通的相位响应$\theta(\omega) = -\omega \tau\_0$（线性相位），故$\tau\_g(\omega) = -\frac{d\theta}{d\omega} = \tau\_0$（常数）。</li>
+</ul>
+
+          
+          
+          
+        </div>
+        
+        
+  <details class="mt-2 mb-5 overflow-hidden rounded-lg ms-0 ps-5">
+    
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 -ms-5 ps-5 dark:bg-primary-800 dark:text-neutral-100">
+    DSP -
+    这篇文章属于一个选集。
+  </summary>
+  
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC1%E8%AE%B2-%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A6%82%E8%BF%B0/">
+          § 1:
+          DSP-1 数字信号处理概述
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC2%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/">
+          § 2:
+          DSP-2 离散时间信号的时域分析
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC3%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/">
+          § 3:
+          DSP-3 离散时间系统的时域分析
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        § 4:
+        本文
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC5%E8%AE%B2-%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96/">
+          § 5:
+          DSP-5 连续时间信号的采样与量化
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC6%E8%AE%B2-z%E5%8F%98%E6%8D%A2-part-i/">
+          § 6:
+          DSP-6 Z变换 (Part I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC7%E8%AE%B2-z%E5%8F%98%E6%8D%A2-part-ii/">
+          § 7:
+          DSP-7 Z变换 (Part II)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC8%E8%AE%B2-%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2part&#43;i/">
+          § 8:
+          DSP-8 有限长离散变换(Part&#43;I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC9%E8%AE%B2-%E6%9C%89%E9%99%90%E9%95%BF%E7%A6%BB%E6%95%A3%E5%8F%98%E6%8D%A2-part-ii/">
+          § 9:
+          DSP-9 有限长离散变换(Part2)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC10%E8%AE%B2-lti%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%98%E6%8D%A2%E5%9F%9F%E5%88%86%E6%9E%90-part-i/">
+          § 10:
+          DSP-10 LTI系统的变换域分析 (Part I)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC11%E8%AE%B2-lti%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%98%E6%8D%A2%E5%9F%9F%E5%88%86%E6%9E%90-part-ii/">
+          § 11:
+          DSP-11 LTI系统的变换域分析 (Part II)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC12%E8%AE%B2-%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84/">
+          § 12:
+          DSP-12 数字滤波器的结构
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC13%E8%AE%B2-iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1/">
+          § 13:
+          DSP-13 IIR数字滤波器设计（Part1)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC14%E8%AE%B2--iir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1part2/">
+          § 14:
+          DSP-14 IIR数字滤波器设计（Part2)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC15%E8%AE%B2-fir%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1/">
+          § 15:
+          DSP-15 FIR数字滤波器设计
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC16%E8%AE%B2-%E5%BF%AB%E9%80%9Fdft%E7%AE%97%E6%B3%95-fft/">
+          § 16:
+          DSP-16 快速DFT算法 (FFT)
+        </a>
+      </div>
+    
+  
+    
+      <div
+        class="py-1 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
+        <a href="/posts/%E5%AD%A6%E4%B9%A0/dsp/dsp%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">
+          § 17:
+          DSP复习指南
+        </a>
+      </div>
+    
+  
+
+
+  </details>
+
+
+        
+  
+  <section class="flex flex-row flex-wrap justify-center pt-4 text-xl">
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;title=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="分享到 LinkedIn"
+          aria-label="分享到 LinkedIn">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://twitter.com/intent/tweet/?url=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;text=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="分享到 Twitter"
+          aria-label="分享到 Twitter">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://bsky.app/intent/compose?text=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96&#43;https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/"
+          title="发布到 Bluesky"
+          aria-label="发布到 Bluesky">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256,232.562c-21.183,-41.196 -78.868,-117.97 -132.503,-155.834c-51.378,-36.272 -70.978,-29.987 -83.828,-24.181c-14.872,6.72 -17.577,29.554 -17.577,42.988c0,13.433 7.365,110.138 12.169,126.281c15.873,53.336 72.376,71.358 124.413,65.574c2.66,-0.395 5.357,-0.759 8.089,-1.097c-2.68,0.429 -5.379,0.796 -8.089,1.097c-76.259,11.294 -143.984,39.085 -55.158,137.972c97.708,101.165 133.908,-21.692 152.484,-83.983c18.576,62.291 39.972,180.718 150.734,83.983c83.174,-83.983 22.851,-126.674 -53.408,-137.969c-2.71,-0.302 -5.409,-0.667 -8.089,-1.096c2.732,0.337 5.429,0.702 8.089,1.096c52.037,5.785 108.54,-12.239 124.413,-65.574c4.804,-16.142 12.169,-112.847 12.169,-126.281c-0,-13.434 -2.705,-36.267 -17.577,-42.988c-12.85,-5.806 -32.45,-12.09 -83.829,24.181c-53.634,37.864 -111.319,114.635 -132.502,155.831Z"/></svg></span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://s2f.kytta.dev/?text=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96%20https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/"
+          title=""
+          aria-label="">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://reddit.com/submit/?url=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;resubmit=true&amp;title=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="提交到 Reddit"
+          aria-label="提交到 Reddit">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M201.5 305.5c-13.8 0-24.9-11.1-24.9-24.6 0-13.8 11.1-24.9 24.9-24.9 13.6 0 24.6 11.1 24.6 24.9 0 13.6-11.1 24.6-24.6 24.6zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-132.3-41.2c-9.4 0-17.7 3.9-23.8 10-22.4-15.5-52.6-25.5-86.1-26.6l17.4-78.3 55.4 12.5c0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.3 24.9-24.9s-11.1-24.9-24.9-24.9c-9.7 0-18 5.8-22.1 13.8l-61.2-13.6c-3-.8-6.1 1.4-6.9 4.4l-19.1 86.4c-33.2 1.4-63.1 11.3-85.5 26.8-6.1-6.4-14.7-10.2-24.1-10.2-34.9 0-46.3 46.9-14.4 62.8-1.1 5-1.7 10.2-1.7 15.5 0 52.6 59.2 95.2 132 95.2 73.1 0 132.3-42.6 132.3-95.2 0-5.3-.6-10.8-1.9-15.8 31.3-16 19.8-62.5-14.9-62.5zM302.8 331c-18.2 18.2-76.1 17.9-93.6 0-2.2-2.2-6.1-2.2-8.3 0-2.5 2.5-2.5 6.4 0 8.6 22.8 22.8 87.3 22.8 110.2 0 2.5-2.2 2.5-6.1 0-8.6-2.2-2.2-6.1-2.2-8.3 0zm7.7-75c-13.6 0-24.6 11.1-24.6 24.9 0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.1 24.9-24.6 0-13.8-11-24.9-24.9-24.9z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;description=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="钉到 Pinterest"
+          aria-label="钉到 Pinterest">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://www.facebook.com/sharer/sharer.php?u=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;quote=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="分享到 Facebook"
+          aria-label="分享到 Facebook">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="mailto:?body=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;subject=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="通过电子邮件发送"
+          aria-label="通过电子邮件发送">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://api.whatsapp.com/send?text=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;resubmit=true&amp;title=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="通过 WhatsApp 分享"
+          aria-label="通过 WhatsApp 分享">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://t.me/share/url?url=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/&amp;resubmit=true&amp;title=DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="通过 Telegram 分享"
+          aria-label="通过 Telegram 分享">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248,8C111.033,8,0,119.033,0,256S111.033,504,248,504,496,392.967,496,256,384.967,8,248,8ZM362.952,176.66c-3.732,39.215-19.881,134.378-28.1,178.3-3.476,18.584-10.322,24.816-16.948,25.425-14.4,1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25,5.342-39.5,3.652-3.793,67.107-61.51,68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608,69.142-14.845,10.194-26.894,9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7,18.45-13.7,108.446-47.248,144.628-62.3c68.872-28.647,83.183-33.623,92.511-33.789,2.052-.034,6.639.474,9.61,2.885a10.452,10.452,0,0,1,3.53,6.716A43.765,43.765,0,0,1,362.952,176.66Z"/></svg>
+</span>
+        </a>
+      
+    
+      
+        <a
+          target="_blank"
+          class="m-1 rounded bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+          href="https://line.me/R/share?text=https://www.asanilo.top/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC4%E8%AE%B2-%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/%20DSP-4%20%e8%bf%9e%e7%bb%ad%e6%97%b6%e9%97%b4%e4%bf%a1%e5%8f%b7%e7%9a%84%e9%87%87%e6%a0%b7%e4%b8%8e%e9%87%8f%e5%8c%96"
+          title="分享到 LINE"
+          aria-label="分享到 LINE">
+          <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License -https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M311 196.8v81.3c0 2.1-1.6 3.7-3.7 3.7h-13c-1.3 0-2.4-.7-3-1.5l-37.3-50.3v48.2c0 2.1-1.6 3.7-3.7 3.7h-13c-2.1 0-3.7-1.6-3.7-3.7V196.9c0-2.1 1.6-3.7 3.7-3.7h12.9c1.1 0 2.4 .6 3 1.6l37.3 50.3V196.9c0-2.1 1.6-3.7 3.7-3.7h13c2.1-.1 3.8 1.6 3.8 3.5zm-93.7-3.7h-13c-2.1 0-3.7 1.6-3.7 3.7v81.3c0 2.1 1.6 3.7 3.7 3.7h13c2.1 0 3.7-1.6 3.7-3.7V196.8c0-1.9-1.6-3.7-3.7-3.7zm-31.4 68.1H150.3V196.8c0-2.1-1.6-3.7-3.7-3.7h-13c-2.1 0-3.7 1.6-3.7 3.7v81.3c0 1 .3 1.8 1 2.5c.7 .6 1.5 1 2.5 1h52.2c2.1 0 3.7-1.6 3.7-3.7v-13c0-1.9-1.6-3.7-3.5-3.7zm193.7-68.1H327.3c-1.9 0-3.7 1.6-3.7 3.7v81.3c0 1.9 1.6 3.7 3.7 3.7h52.2c2.1 0 3.7-1.6 3.7-3.7V265c0-2.1-1.6-3.7-3.7-3.7H344V247.7h35.5c2.1 0 3.7-1.6 3.7-3.7V230.9c0-2.1-1.6-3.7-3.7-3.7H344V213.5h35.5c2.1 0 3.7-1.6 3.7-3.7v-13c-.1-1.9-1.7-3.7-3.7-3.7zM512 93.4V419.4c-.1 51.2-42.1 92.7-93.4 92.6H92.6C41.4 511.9-.1 469.8 0 418.6V92.6C.1 41.4 42.2-.1 93.4 0H419.4c51.2 .1 92.7 42.1 92.6 93.4zM441.6 233.5c0-83.4-83.7-151.3-186.4-151.3s-186.4 67.9-186.4 151.3c0 74.7 66.3 137.4 155.9 149.3c21.8 4.7 19.3 12.7 14.4 42.1c-.8 4.7-3.8 18.4 16.1 10.1s107.3-63.2 146.5-108.2c27-29.7 39.9-59.8 39.9-93.1z" /></svg></span>
+        </a>
+      
+    
+  </section>
+
+
+        
+  
+  
+    <h2 class="mt-8 text-2xl font-extrabold mb-10">相关文章</h2>
+    <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      
+        
+
+
+
+
+
+
+
+  
+
+  
+  
+    
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+      
+      
+        
+      
+    
+  
+
+
+
+<article
+  class="article-link--related relative min-h-full min-w-full overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-600">
+  
+    <div class="flex-none relative overflow-hidden thumbnail_card_related">
+      <img
+        src="/img/BG1_hu_e4b469fda292288b.png"
+        role="presentation"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        class="not-prose absolute inset-0 w-full h-full object-cover">
+    </div>
+  
+  
+  <div class="p-4">
+    <header>
+      <a
+        
+          href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC5%E8%AE%B2-%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96/"
+        
+        class="not-prose before:absolute before:inset-0 decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 hover:underline hover:underline-offset-2">
+        <h2>
+          DSP-5 连续时间信号的采样与量化
+          
+        </h2>
+      </a>
+    </header>
+    <div class="text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>551 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">3 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/dsp/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    DSP
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="article-link__summary prose dark:prose-invert mt-1 line-clamp-5">
+        
+      </div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</article>
+
+      
+        
+
+
+
+
+
+
+
+  
+
+  
+  
+    
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+      
+      
+        
+      
+    
+  
+
+
+
+<article
+  class="article-link--related relative min-h-full min-w-full overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-600">
+  
+    <div class="flex-none relative overflow-hidden thumbnail_card_related">
+      <img
+        src="/img/BG1_hu_e4b469fda292288b.png"
+        role="presentation"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        class="not-prose absolute inset-0 w-full h-full object-cover">
+    </div>
+  
+  
+  <div class="p-4">
+    <header>
+      <a
+        
+          href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC1%E8%AE%B2-%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%A6%82%E8%BF%B0/"
+        
+        class="not-prose before:absolute before:inset-0 decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 hover:underline hover:underline-offset-2">
+        <h2>
+          DSP-1 数字信号处理概述
+          
+        </h2>
+      </a>
+    </header>
+    <div class="text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>517 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">3 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/dsp/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    DSP
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="article-link__summary prose dark:prose-invert mt-1 line-clamp-5">
+        
+      </div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</article>
+
+      
+        
+
+
+
+
+
+
+
+  
+
+  
+  
+    
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+  
+  
+    
+      
+      
+        
+      
+    
+  
+
+
+
+<article
+  class="article-link--related relative min-h-full min-w-full overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-600">
+  
+    <div class="flex-none relative overflow-hidden thumbnail_card_related">
+      <img
+        src="/img/BG1_hu_e4b469fda292288b.png"
+        role="presentation"
+        loading="lazy"
+        decoding="async"
+        fetchpriority="low"
+        class="not-prose absolute inset-0 w-full h-full object-cover">
+    </div>
+  
+  
+  <div class="p-4">
+    <header>
+      <a
+        
+          href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC2%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/"
+        
+        class="not-prose before:absolute before:inset-0 decoration-primary-500 dark:text-neutral text-xl font-bold text-neutral-800 hover:underline hover:underline-offset-2">
+        <h2>
+          DSP-2 离散时间信号的时域分析
+          
+        </h2>
+      </a>
+    </header>
+    <div class="text-sm text-neutral-500 dark:text-neutral-400">
+      
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time><span class="px-2 text-primary-500">&middot;</span><span>121 字</span><span class="px-2 text-primary-500">&middot;</span><span title="预计阅读">1 分钟</span>
+    
+
+    
+    
+  </div>
+
+  
+
+  
+  
+    <div class="flex flex-row flex-wrap items-center">
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/dsp/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    DSP
+  </span>
+</span>
+
+              </a>
+            
+              <a class="relative mt-[0.5rem] me-2" href="/tags/learning/">
+                <span class="flex cursor-pointer">
+  <span
+    class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    学习笔记
+  </span>
+</span>
+
+              </a>
+            
+          
+        
+      
+    </div>
+  
+
+  
+  
+
+
+
+    </div>
+    
+      <div class="article-link__summary prose dark:prose-invert mt-1 line-clamp-5">
+        
+      </div>
+    
+  </div>
+  <div class="px-6 pt-4 pb-2"></div>
+</article>
+
+      
+    </section>
+  
+
+
+      </div>
+
+      
+      
+        
+        
+          
+          
+        
+        
+        
+        <script
+          type="text/javascript"
+          src="/js/page.min.54b6f4371722649edbe871e431d8670d670878c22be8f36e229fe53cc9b786fe25a834def5e6de621f7a3e37b72bc8cd73839aa5ed907ed6cbd45cd3e1b0fa20.js"
+          integrity="sha512-VLb0NxciZJ7b6HHkMdhnDWcIeMIr6PNuIp/lPMm3hv4lqDTe9ebeYh96Pje3K8jNc4Oape2QftbL1FzT4bD6IA=="
+          data-oid="views_posts/学习/DSP/第4讲 傅里叶变换/index.md"
+          data-oid-likes="likes_posts/学习/DSP/第4讲 傅里叶变换/index.md"></script>
+      
+    </section>
+
+    
+    <footer class="pt-8 max-w-prose print:hidden">
+      
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+      <div class="flex justify-between pt-3">
+        <span class="flex flex-col">
+          
+            <a
+              class="flex text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC5%E8%AE%B2-%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8F%E5%8C%96/">
+              <span class="leading-6">
+                <span class="inline-block rtl:rotate-180">&larr;</span>&ensp;DSP-5 连续时间信号的采样与量化
+              </span>
+            </a>
+            
+              <span class="ms-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time>
+              </span>
+            
+          
+        </span>
+        <span class="flex flex-col items-end">
+          
+            <a
+              class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+              href="/posts/%E5%AD%A6%E4%B9%A0/dsp/%E7%AC%AC3%E8%AE%B2-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E5%9F%9F%E5%88%86%E6%9E%90/">
+              <span class="leading-6">
+                DSP-3 离散时间系统的时域分析&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+              </span>
+            </a>
+            
+              <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <time datetime="2025-10-19T00:33:21&#43;08:00">2025-10-19</time>
+              </span>
+            
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+      
+        
+          <div class="pt-3">
+            <hr class="border-dotted border-neutral-300 dark:border-neutral-600">
+            <div class="pt-3">
+              <script src="https://giscus.app/client.js"
+        data-repo="Asanilo/BlogComnments"
+        data-repo-id="R_kgDOQCKujw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQCKuj84CwoCm"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+            </div>
+          </div>
+        
+      
+    </footer>
+  </article>
+
+        
+
+
+  
+
+
+
+
+
+
+<div
+  id="scroll-to-top"
+  class="fixed bottom-6 end-6 z-50 transform translate-y-4 opacity-0 duration-200">
+  <a
+    href="#the-top"
+    class="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="返回顶部"
+    title="返回顶部">
+    &uarr;
+  </a>
+</div>
+
+      </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+      
+      
+        
+          
+          
+      
+      
+      
+      <nav class="flex flex-row pb-4 text-base font-medium text-neutral-500 dark:text-neutral-400 ">
+        <ul class="flex list-none flex-col sm:flex-row">
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 ">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href="/tags/"
+                title="标签">
+                
+                标签
+              </a>
+            </li>
+          
+            <li class=" flex mb-1 text-end sm:mb-0 sm:me-7 sm:last:me-0 ">
+              <a
+                class="decoration-primary-500 hover:underline hover:decoration-2 hover:underline-offset-2 flex items-center"
+                href="/authors/"
+                title="作者列">
+                
+                作者
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+  <div class="flex items-center justify-between">
+    
+    
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy;
+          2026
+          Asanilo
+      </p>
+    
+
+    
+    
+      <p class="text-xs text-neutral-500 dark:text-neutral-400">
+        
+        
+        由 <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+          href="https://blowfish.page/" target="_blank" rel="noopener noreferrer">Blowfish</a> 强力驱动
+      </p>
+    
+  </div>
+  
+    <script>
+      mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+        margin: 24,
+        background: "rgba(0,0,0,0.5)",
+        scrollOffset: 0,
+      });
+    </script>
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js"
+    integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+    <a rel="me" href="https://masto.ai/@blowfish"></a><script>
+			window.MathJax = {
+				tex: {
+					inlineMath: [['$', '$'], ['\\(', '\\)']],
+					displayMath: [['$$', '$$'], ['\\[', '\\]']],
+					processEscapes: true,
+					tags: 'none'
+				},
+				options: {
+					skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+				}
+			};
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh] z-500"
+  data-url="https://www.asanilo.top/">
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800">
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+</span>
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="搜索"
+          tabindex="0">
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="关闭 (Esc)">
+        <span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span>
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+    </div>
+  </body>
+  
+</html>
