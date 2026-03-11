@@ -1,128 +1,535 @@
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="zh-CN">
+<head>
 	<meta name="generator" content="Hugo 0.151.0">
-    <title>Asanilo</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="renderer" content="webkit" />
-    <meta name="theme-color" content="#222325" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#222325" />
-    <meta name="msapplication-navbutton-color" content="#222325" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SimonAKing/font/font.min.css" />
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="prefetch" href="https://cdn.jsdelivr.net/" />
-    <meta name="description" content="Author:Asanilo,Category:Personal Blog" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Asanilo's Blog</title>
     
-  </head>
-  <body>
-    <main>
-      <div class="content content-intro">
-        <div class="content-inner">
-          <canvas id="background"></canvas>
-          <div class="wrap fade">
-            <h2 class="content-title">Asanilo</h2>
-            <h3 class="content-subtitle" original-content="Front back left right end engineer">&nbsp;</h3>
-            <a class="enter">enter</a>
-            <div class="arrow arrow-1"></div>
-            <div class="arrow arrow-2"></div>
-          </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Noto+Serif+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+ 
+:root {
+    --bg: #030304; 
+    --fg: #e2e2e2;
+    --fg-bright: #ffffff;
+    --fg-dim: #888;
+    --fg-muted: #555;
+    --line: rgba(255, 255, 255, 0.1);
+    
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif-en: 'Playfair Display', serif;
+    --font-serif-zh: 'Noto Serif SC', serif;
+    --font-sans: 'Inter', sans-serif;
+
+    cursor: none;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+ 
+#glcanvas {
+    position: absolute; inset: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0; pointer-events: none;
+}
+
+ 
+.noise {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.blueprint-grid {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background-size: 60px 60px;
+    background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    mask-image: radial-gradient(circle at 40% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%);
+    -webkit-mask-image: radial-gradient(circle at 40% 50%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%);
+}
+
+ 
+#cursor {
+    position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+    background: var(--fg-bright); border-radius: 50%;
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
+    mix-blend-mode: difference;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+    will-change: transform;
+}
+#cursor.active {
+    width: 70px; height: 70px; background: transparent;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+#hover-image {
+    position: fixed; top: 0; left: 0;
+    width: 300px; height: 420px; object-fit: cover;
+    pointer-events: none; z-index: 90; opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: grayscale(100%) contrast(1.2) brightness(0.7);
+    will-change: transform;
+}
+#hover-image.visible {
+    opacity: 1; transform: translate(-50%, -50%) scale(1);
+}
+
+ 
+.topbar {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--line); flex-shrink: 0;
+    position: relative; z-index: 10;
+}
+.top-col {
+    padding: 0.6rem 1.5rem; font-family: var(--font-mono); font-size: 0.55rem;
+    line-height: 1.4; color: var(--fg-dim); text-transform: uppercase;
+    letter-spacing: 0.05em; border-right: 1px solid var(--line);
+}
+.top-col:last-child { border-right: none; }
+.top-col .label { color: var(--fg-muted); margin-bottom: 0.2rem; display: block;}
+
+.main-wrapper {
+    display: grid; grid-template-columns: 4.5rem 1fr 420px;
+    flex: 1; overflow: hidden; position: relative; z-index: 10;
+}
+
+.left-nav {
+    border-right: 1px solid var(--line); display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between; padding: 1.5rem 0;
+}
+
+.circle-btn {
+    width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg); text-decoration: none; transition: all 0.3s;
+}
+.circle-btn:hover { background: var(--fg-bright); color: #000; cursor: none;}
+.circle-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+.vertical-brand {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-family: var(--font-mono); font-size: 0.6rem;
+    letter-spacing: 0.25em; text-transform: uppercase; color: var(--fg); opacity: 0.7;
+}
+
+ 
+.center-stage {
+    position: relative; padding: 4rem; display: flex;
+    flex-direction: column; justify-content: center;
+}
+
+.text-hierarchy {
+    position: relative; z-index: 20; max-width: 800px;
+     
+    mix-blend-mode: difference;
+    color: var(--fg-bright); 
+}
+
+.huge-title {
+    font-family: var(--font-serif-en); font-size: clamp(4rem, 8vw, 8.5rem);
+    font-weight: 400; line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 2.5rem; 
+}
+.huge-title i { font-style: italic; }
+
+.medium-subtitle {
+    font-family: var(--font-serif-zh); font-size: 1.15rem; font-weight: 300;
+    letter-spacing: 0.15em; margin-bottom: 2.5rem; color: #ccc;
+}
+
+.small-desc {
+    font-family: var(--font-mono); font-size: 0.65rem; color: #93bae0;
+    letter-spacing: 0.08em; line-height: 1.6; text-transform: uppercase; 
+    max-width: 300px; border-left: 1px solid var(--line); padding-left: 1rem;
+}
+
+.stage-bottom {
+    position: absolute; bottom: 2rem; left: 4rem; z-index: 20;
+    font-family: var(--font-mono); font-size: 0.55rem; color: #666; 
+    letter-spacing: 0.1em; mix-blend-mode: difference; 
+}
+
+ 
+.right-sidebar {
+    border-left: 1px solid var(--line); display: flex; flex-direction: column;
+     
+    background: rgba(3, 3, 4, 0.4); backdrop-filter: blur(12px);
+}
+
+.sidebar-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--line);
+    font-family: var(--font-mono); font-size: 0.6rem; color: var(--fg-dim); text-transform: uppercase;
+}
+
+.btn-filter {
+    background: transparent; border: 1px solid var(--line); color: var(--fg);
+    padding: 0.35rem 0.8rem; border-radius: 99px; font-family: var(--font-mono);
+    font-size: 0.55rem; transition: all 0.3s;
+}
+.btn-filter:hover { background: var(--fg-bright); color: #000; cursor: none;}
+
+.list-meta-header {
+    display: flex; justify-content: space-between; padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--line); font-family: var(--font-mono); 
+    font-size: 0.55rem; color: var(--fg-muted); text-transform: uppercase;
+}
+
+.article-list {
+    flex: 1; overflow-y: auto; overflow-x: hidden; -ms-overflow-style: none; scrollbar-width: none;
+}
+.article-list::-webkit-scrollbar { display: none; }
+
+.entry {
+    padding: 2rem 1.5rem; border-bottom: 1px solid var(--line);
+    border-left: 2px solid transparent; display: flex; flex-direction: column; gap: 0.8rem;
+    position: relative; cursor: none; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.entry:hover {
+    padding-left: 2.5rem; background: rgba(255,255,255,0.04); border-left: 2px solid var(--fg-bright);
+}
+.entry-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.55rem; color: var(--fg-dim); transition: color 0.4s; }
+.entry:hover .entry-top { color: var(--fg-bright); }
+.entry-title { font-family: var(--font-serif-zh); font-size: 1.25rem; font-weight: 400; line-height: 1.4; color: var(--fg); transition: opacity 0.4s, color 0.4s; }
+.entry-title.en { font-family: var(--font-serif-en); }
+.entry:hover .entry-title { color: var(--fg-bright); opacity: 1; }
+.entry-tags { font-family: var(--font-mono); font-size: 0.5rem; color: var(--fg-muted); text-transform: uppercase; display: flex; gap: 0.5rem; transition: color 0.4s; }
+.entry:hover .entry-tags { color: var(--fg-dim); }
+.entry-tags span::before { content: "[ "; }
+.entry-tags span::after { content: " ]"; }
+
+</style>
+</head>
+<body>
+
+    
+    <div id="glcanvas"></div>
+    <div class="noise"></div>
+    <div class="blueprint-grid"></div>
+
+    
+    <div id="cursor"></div>
+    <img id="hover-image" src="" alt="" />
+
+    <header class="topbar">
+        <div class="top-col"><span class="label">AUTHOR // ENTITY</span>Asanilo</div>
+        <div class="top-col"><span class="label">SYSTEM STATUS</span>Online / Functional</div>
+        <div class="top-col"><span class="label">COORDINATES</span>LAT: 23.1, LNG: 113.2</div>
+        <div class="top-col" style="border: none;"><span class="label">FRAMEWORK</span>Hugo / Variant.1</div>
+    </header>
+
+    <div class="main-wrapper">
+        <aside class="left-nav">
+            <a href="/posts/" class="circle-btn hover-trigger"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+            <div class="vertical-brand">Asanilo&#39;s Blog</div>
+            
+        </aside>
+
+        <main class="center-stage">
+            <div class="text-hierarchy">
+                <h1 class="huge-title">Structural<br><i>Integrity</i></h1>
+                <h2 class="medium-subtitle">观察、记录与解构。在秩序与混沌之间。</h2>
+                <p class="small-desc">
+                    A SPACE FUNCTIONING AS AN INTERPRETATION<br>
+                    STRUCTURE. BETWEEN THE KNOWN AND THE OBSCURED.
+                </p>
+            </div>
+            <div class="stage-bottom">SCROLL / EXPLORE VOL. 01 -></div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="sidebar-header">
+                <span>DATABASE SEARCH</span>
+                <a href="/tags/" class="btn-filter hover-trigger" style="text-decoration: none;">FILTERS</a>
+            </div>
+            <div class="list-meta-header">
+                <span>INDEX</span><span>LATEST_ENTRIES</span>
+            </div>
+            <div class="article-list">
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/%E9%9C%80%E8%A6%81%E5%85%A5%E6%89%8Bopenclaw%E5%90%97/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">01_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">需要入手 Openclaw 吗？</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/ai-agent%E4%B8%8Emcp/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">02_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">AI Agent / MCP / Skills</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/ai%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">03_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">AI 本地部署</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/ai%E6%B1%87%E6%80%BB/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">04_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">AI 工具与应用地图</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/ai%E9%A1%B9%E7%9B%AE%E6%B2%9F%E9%80%9A%E6%8C%87%E5%8D%97/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">05_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">AI 项目沟通指南</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/api/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">06_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">API</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">07_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">大模型</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
+            <a href="/posts/ai%E7%9B%B8%E5%85%B3/%E5%A6%82%E4%BD%95%E8%AE%A9ai%E6%8C%89%E7%85%A7%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%BA%E8%AE%BE/" class="entry hover-trigger" style="text-decoration: none;">
+                <div class="entry-top">
+                    <span class="entry-id">08_</span>
+                    <span>2026.03.11</span>
+                </div>
+                <h2 class="entry-title">如何让AI按照自定义人设</h2>
+                <div class="entry-tags">
+                    <span>project</span><span>AI</span>
+                </div>
+            </a>
+            
         </div>
-        <div class="shape-wrap">
-          <svg
-            class="shape"
-            width="100%"
-            height="100vh"
-            preserveAspectRatio="none"
-            viewBox="0 0 1440 800"
-            xmlns:pathdata="http://www.codrops.com/"
-            >
-            <path
-              d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
-              pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z"
-            ></path>
-          </svg>
-        </div>
-      </div>
-      <div class="content content-main">
-        <div id="card">
-          <div class="card-inner fade">
-            <header>
-              <img src="/assets/img/asanilo.png" width="100" height="100" alt="avatar" />
-              <h1 data-translate="name">Asanilo</h1>
-              <h2 id="signature" data-translate="signature">Code &amp; Input &amp; Output</h2>
-            </header>
-            <ul>
-              <li>
-                <a href="/home" aria-label="Blog"
-                  ><i class="icon icon-bokeyuan"></i><span data-translate="Blog">Blog</span></a
-                >
-              </li>
-              <li>
-                <a href="/about" aria-label="About"
-                  ><i class="icon icon-xiaolian"></i><span data-translate="About">About</span></a
-                >
-              </li>
-              <li>
-                <a href="mailto:ktszxk@qq.com" aria-label="Email" target="_blank"
-                  ><i class="icon icon-email"></i><span data-translate="Email">Email</span></a
-                >
-              </li>
-              <li>
-                <a href="https://github.com/Asanilo" aria-label="Github" target="_blank"
-                  ><i class="icon icon-github"></i><span data-translate="Github">Github</span></a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-        <canvas class="grid-background" id="gridCanvas"></canvas>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-      <script>
+    </aside>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
         
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
+        `;
+
+        const fragmentShader = `
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+            varying vec2 vUv;
+
+            // Simplex noise (缩减版，优化性能)
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+            float snoise(vec2 v) {
+                const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                vec2 i  = floor(v + dot(v, C.yy) );
+                vec2 x0 = v -   i + dot(i, C.xx);
+                vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                vec4 x12 = x0.xyxy + C.xxzz;
+                x12.xy -= i1;
+                i = mod289(i); 
+                vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+                vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                m = m*m; m = m*m;
+                vec3 x = 2.0 * fract(p * C.www) - 1.0;
+                vec3 h = abs(x) - 0.5;
+                vec3 ox = floor(x + 0.5);
+                vec3 a0 = x - ox;
+                m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+                vec3 g;
+                g.x  = a0.x  * x0.x  + h.x  * x0.y;
+                g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                return 130.0 * dot(m, g);
+            }
+
+            // FBM for fluid (完全还原那个霸气的原始形态，恢复5次迭代的丰满度)
+            float fbm(vec2 x) {
+                float v = 0.0; float a = 0.5;
+                mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+                for (int i = 0; i < 5; ++i) { 
+                    v += a * snoise(x);
+                    x = rot * x * 2.0 + vec2(100.0);
+                    a *= 0.5;
+                }
+                return v;
+            }
+
+            void main() {
+                vec2 uv = (vUv - 0.5) * 2.0;
+                uv.x *= u_resolution.x / u_resolution.y;
+                
+                vec2 mouseOffset = (u_mouse - 0.5) * 0.5;
+                
+                // 完全还原之前的经典饱满形态（微调中心点靠左，以便衬托文字反色）
+                float dist = length(vec2(uv.x + 0.1 - mouseOffset.x * 0.2, (uv.y - mouseOffset.y * 0.2) * 0.6));
+                
+                // 完全还原原始速度与质感
+                vec2 q = vec2(0.);
+                q.x = fbm(uv + 0.00 * u_time);
+                q.y = fbm(uv + vec2(1.0));
+
+                vec2 r = vec2(0.);
+                r.x = fbm( uv + 1.0 * q + vec2(1.7, 9.2) + 0.15 * u_time );
+                r.y = fbm( uv + 1.0 * q + vec2(8.3, 2.8) + 0.126 * u_time);
+
+                float f = fbm(uv + r);
+
+                float core = smoothstep(0.8, 0.0, dist + f * 0.3);
+                
+                // 色彩改版：偏灰的青色（能看出青色，但饱和度低、克制）
+                vec3 voidBlack = vec3(0.02, 0.02, 0.04);
+                vec3 haloBlue = vec3(0.20, 0.35, 0.65);
+                vec3 coreCyan = vec3(0.65, 0.85, 0.95);
+                vec3 coreWhite = vec3(0.95, 0.98, 1.00);
+                vec3 color = mix(voidBlack, haloBlue, smoothstep(0.0, 0.4, core));
+                color = mix(color, coreCyan, smoothstep(0.3, 0.7, core));
+                color = mix(color, coreWhite, smoothstep(0.7, 1.0, core));
+                
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        if(document.getElementById('glcanvas')) {
+            const container = document.getElementById('glcanvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: false });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); 
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            
+            const uniforms = {
+                u_time: { value: 0.0 },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                u_mouse: { value: new THREE.Vector2(0.5, 0.5) }
+            };
+
+            const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            });
+            
+            window.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = 1.0 - (e.clientY / window.innerHeight); 
+                uniforms.u_mouse.value.x += (x - uniforms.u_mouse.value.x) * 0.05;
+                uniforms.u_mouse.value.y += (y - uniforms.u_mouse.value.y) * 0.05;
+            });
+            
+            const clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                uniforms.u_time.value = clock.getElapsedTime();
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
         
+        const cursor = document.getElementById('cursor');
         
-        
-        window.$ = (selector) => document.querySelector(selector);
-        const getOriginalContent = (selector) => $(selector).getAttribute("original-content");
-        window.subtitle = getOriginalContent(".content-subtitle");
-        window.signature = getOriginalContent("#signature");
-        window.config = {
-          SIM_RESOLUTION: 128,
-          DYE_RESOLUTION: 1024,
-          CAPTURE_RESOLUTION: 512,
-          DENSITY_DISSIPATION: 1,
-          VELOCITY_DISSIPATION: 0.2,
-          PRESSURE: 0.8,
-          PRESSURE_ITERATIONS: 20,
-          CURL: 30,
-          SPLAT_RADIUS: 0.25,
-          SPLAT_FORCE: 6000,
-          SHADING: true,
-          COLORFUL: true,
-          COLOR_UPDATE_SPEED: 10,
-          PAUSED: false,
-          BACK_COLOR: { r: 30, g: 31, b: 33 },
-          TRANSPARENT: false,
-          BLOOM: true,
-          BLOOM_ITERATIONS: 8,
-          BLOOM_RESOLUTION: 256,
-          BLOOM_INTENSITY: 0.4,
-          BLOOM_THRESHOLD: 0.8,
-          BLOOM_SOFT_KNEE: 0.7,
-          SUNRAYS: true,
-          SUNRAYS_RESOLUTION: 196,
-          SUNRAYS_WEIGHT: 1.0,
-        };
-      </script>
-      <script src="/assets/js/main.js"></script>
-      <script src="/assets/js/background.js"></script>
-    </main>
-  </body>
-  </html>
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let imgX = mouseX, imgY = mouseY;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        });
+
+        document.querySelectorAll('.hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        const entries = document.querySelectorAll('.entry.hover-trigger');
+        entries.forEach(item => {
+            item.addEventListener('mouseenter', (e) => {
+                const imgSrc = item.getAttribute('data-img');
+                if(imgSrc) {
+                    hoverImage.src = imgSrc;
+                    hoverImage.classList.add('visible');
+                }
+            });
+            item.addEventListener('mouseleave', () => {
+                hoverImage.classList.remove('visible');
+            });
+        });
+
+        (function renderCursor() {
+            imgX += (mouseX - imgX) * 0.08;
+            imgY += (mouseY - imgY) * 0.08;
+            if(hoverImage.classList.contains('visible')){
+                const rotate = (mouseX - imgX) * 0.03; 
+                hoverImage.style.transform = `translate3d(${imgX + 60}px, ${imgY + 40}px, 0) rotate(${rotate}deg)`;
+            }
+            requestAnimationFrame(renderCursor);
+        })();
+    </script>
+</body>
+</html>
