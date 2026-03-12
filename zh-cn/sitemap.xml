@@ -3,8 +3,14 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
+    <loc>https://www.asanilo.top/posts/blogbuild/blowfish-customization-log/</loc>
+    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.asanilo.top/</loc>
-    <lastmod>2026-03-11T18:34:54+08:00</lastmod>
+    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -20,7 +26,7 @@
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/</loc>
-    <lastmod>2026-03-11T18:34:54+08:00</lastmod>
+    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
