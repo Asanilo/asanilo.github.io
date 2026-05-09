@@ -3,14 +3,14 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://www.asanilo.top/posts/blogbuild/blowfish-customization-log/</loc>
-    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
+    <loc>https://www.asanilo.top/posts/linux/%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E8%BF%9E%E8%BF%9E%E7%9C%8B/</loc>
+    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.asanilo.top/</loc>
-    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
+    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/</loc>
-    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
+    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -39,6 +39,12 @@
       hreflang="zh-cn"
       href="https://www.asanilo.top/posts/"
     />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/blogbuild/blowfish-customization-log/</loc>
+    <lastmod>2026-03-11T21:05:00+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/ai%E7%9B%B8%E5%85%B3/%E9%9C%80%E8%A6%81%E5%85%A5%E6%89%8Bopenclaw%E5%90%97/</loc>
@@ -125,7 +131,7 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.asanilo.top/posts/linux%E5%BA%94%E7%94%A8/</loc>
+    <loc>https://www.asanilo.top/posts/linux/linux%E5%BA%94%E7%94%A8/</loc>
     <lastmod>2026-01-30T06:23:31+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

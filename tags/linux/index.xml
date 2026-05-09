@@ -7,16 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© 2026 Asanilo</copyright>
-    <lastBuildDate>Fri, 30 Jan 2026 06:23:31 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 May 2026 21:00:00 +0800</lastBuildDate><atom:link href="https://www.asanilo.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>还有第2关?!内核漏洞连爆——Copy Fail 与 Dirty Frag</title>
+      <link>https://www.asanilo.top/posts/linux/%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E8%BF%9E%E8%BF%9E%E7%9C%8B/</link>
+      <pubDate>Sat, 09 May 2026 21:00:00 +0800</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/linux/%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E8%BF%9E%E8%BF%9E%E7%9C%8B/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>linux应用</title>
-      <link>https://www.asanilo.top/posts/linux%E5%BA%94%E7%94%A8/</link>
+      <link>https://www.asanilo.top/posts/linux/linux%E5%BA%94%E7%94%A8/</link>
       <pubDate>Sun, 25 Jan 2026 20:54:23 +0800</pubDate>
       
-      <guid>https://www.asanilo.top/posts/linux%E5%BA%94%E7%94%A8/</guid>
+      <guid>https://www.asanilo.top/posts/linux/linux%E5%BA%94%E7%94%A8/</guid>
       <description></description>
-      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/linux%E5%BA%94%E7%94%A8/feature.jpg" />
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/linux/linux%E5%BA%94%E7%94%A8/feature.jpg" />
     </item>
     
   </channel>
