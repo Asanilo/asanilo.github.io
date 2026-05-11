@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chrome on Asanilo&#39;s Blog</title>
+    <link>https://www.asanilo.top/tags/chrome/</link>
+    <description>Recent content in Chrome on Asanilo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2026 Asanilo</copyright>
+    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/tags/chrome/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>悄悄塞进你硬盘的4GB：Chrome静默下载Gemini Nano始末</title>
+      <link>https://www.asanilo.top/posts/chrome-gemini-nano-silent-download/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/chrome-gemini-nano-silent-download/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/chrome-gemini-nano-silent-download/feature.png" />
+    </item>
+    
+  </channel>
+</rss>

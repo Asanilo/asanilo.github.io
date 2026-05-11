@@ -3,14 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://www.asanilo.top/posts/linux/%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E8%BF%9E%E8%BF%9E%E7%9C%8B/</loc>
-    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.asanilo.top/</loc>
-    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
+    <lastmod>2026-05-11T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -25,8 +19,14 @@
     />
   </url>
   <url>
+    <loc>https://www.asanilo.top/posts/chrome-gemini-nano-silent-download/</loc>
+    <lastmod>2026-05-11T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.asanilo.top/posts/</loc>
-    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
+    <lastmod>2026-05-11T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -39,6 +39,18 @@
       hreflang="zh-cn"
       href="https://www.asanilo.top/posts/"
     />
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/linux/%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E8%BF%9E%E8%BF%9E%E7%9C%8B/</loc>
+    <lastmod>2026-05-09T21:00:00+08:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.asanilo.top/posts/linux/gnome-wayland-xorg-fallback-debug/</loc>
+    <lastmod>2026-04-13T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.asanilo.top/posts/blogbuild/blowfish-customization-log/</loc>
