@@ -7,7 +7,287 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© 2026 Asanilo</copyright>
-    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PipeWire</title>
+      <link>https://www.asanilo.top/tags/pipewire/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/pipewire/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>PulseAudio</title>
+      <link>https://www.asanilo.top/tags/pulseaudio/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/pulseaudio/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Systemd</title>
+      <link>https://www.asanilo.top/tags/systemd/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/systemd/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Xdroid</title>
+      <link>https://www.asanilo.top/tags/xdroid/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/xdroid/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>蓝牙</title>
+      <link>https://www.asanilo.top/tags/%E8%93%9D%E7%89%99/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E8%93%9D%E7%89%99/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>音频</title>
+      <link>https://www.asanilo.top/tags/%E9%9F%B3%E9%A2%91/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E9%9F%B3%E9%A2%91/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>AppImage</title>
+      <link>https://www.asanilo.top/tags/appimage/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/appimage/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>FUSE</title>
+      <link>https://www.asanilo.top/tags/fuse/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/fuse/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Ghostty</title>
+      <link>https://www.asanilo.top/tags/ghostty/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/ghostty/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>GNOME</title>
+      <link>https://www.asanilo.top/tags/gnome/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/gnome/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://www.asanilo.top/tags/linux/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/linux/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Nautilus</title>
+      <link>https://www.asanilo.top/tags/nautilus/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/nautilus/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>终端</title>
+      <link>https://www.asanilo.top/tags/%E7%BB%88%E7%AB%AF/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E7%BB%88%E7%AB%AF/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>API</title>
+      <link>https://www.asanilo.top/tags/api/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/api/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Gemma-4</title>
+      <link>https://www.asanilo.top/tags/gemma-4/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/gemma-4/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>GGUF</title>
+      <link>https://www.asanilo.top/tags/gguf/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/gguf/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Llama.cpp</title>
+      <link>https://www.asanilo.top/tags/llama.cpp/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/llama.cpp/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>LLM</title>
+      <link>https://www.asanilo.top/tags/llm/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/llm/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>MoE</title>
+      <link>https://www.asanilo.top/tags/moe/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/moe/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>MTP</title>
+      <link>https://www.asanilo.top/tags/mtp/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/mtp/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>OpenAI</title>
+      <link>https://www.asanilo.top/tags/openai/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/openai/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Q4_K_M</title>
+      <link>https://www.asanilo.top/tags/q4_k_m/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/q4_k_m/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>RTX-4060</title>
+      <link>https://www.asanilo.top/tags/rtx-4060/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/rtx-4060/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>本地推理</title>
+      <link>https://www.asanilo.top/tags/%E6%9C%AC%E5%9C%B0%E6%8E%A8%E7%90%86/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E6%9C%AC%E5%9C%B0%E6%8E%A8%E7%90%86/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>部署</title>
+      <link>https://www.asanilo.top/tags/%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E9%83%A8%E7%BD%B2/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>服务器</title>
+      <link>https://www.asanilo.top/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>量化</title>
+      <link>https://www.asanilo.top/tags/%E9%87%8F%E5%8C%96/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E9%87%8F%E5%8C%96/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>性能优化</title>
+      <link>https://www.asanilo.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>AI模型</title>
@@ -55,16 +335,6 @@
       <pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate>
       
       <guid>https://www.asanilo.top/tags/%E9%9A%90%E7%A7%81/</guid>
-      <description></description>
-      
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://www.asanilo.top/tags/linux/</link>
-      <pubDate>Sat, 09 May 2026 21:00:00 +0800</pubDate>
-      
-      <guid>https://www.asanilo.top/tags/linux/</guid>
       <description></description>
       
     </item>
@@ -145,6 +415,56 @@
       <pubDate>Mon, 13 Apr 2026 00:00:00 +0000</pubDate>
       
       <guid>https://www.asanilo.top/tags/%E6%95%B0%E4%BD%8D%E5%B1%8F/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Ratatui</title>
+      <link>https://www.asanilo.top/tags/ratatui/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/ratatui/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Rust</title>
+      <link>https://www.asanilo.top/tags/rust/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/rust/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>TUI，projects</title>
+      <link>https://www.asanilo.top/tags/tuiprojects/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/tuiprojects/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>音游</title>
+      <link>https://www.asanilo.top/tags/%E9%9F%B3%E6%B8%B8/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E9%9F%B3%E6%B8%B8/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>游戏开发</title>
+      <link>https://www.asanilo.top/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</guid>
       <description></description>
       
     </item>

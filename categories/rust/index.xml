@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rust on Asanilo&#39;s Blog</title>
+    <link>https://www.asanilo.top/categories/rust/</link>
+    <description>Recent content in Rust on Asanilo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2026 Asanilo</copyright>
+    <lastBuildDate>Mon, 30 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/categories/rust/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Seythm：用 Rust 写一个终端原生音游</title>
+      <link>https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/feature.png" />
+    </item>
+    
+  </channel>
+</rss>

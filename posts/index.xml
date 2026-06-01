@@ -7,7 +7,97 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© 2026 Asanilo</copyright>
-    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Xdroid 搞崩桌面音频：从 PulseAudio 到 PipeWire 的完整排障记录</title>
+      <link>https://www.asanilo.top/posts/linux/xdroid-pipewire-audio-troubleshooting/</link>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/linux/xdroid-pipewire-audio-troubleshooting/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Ghostty 提示音不响：audio bell vs system bell 排查</title>
+      <link>https://www.asanilo.top/posts/linux/ghostty-bell-sound/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/linux/ghostty-bell-sound/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Ghostty 与 Xdroid 同时运行崩溃：AppImage FUSE 挂载点损坏排查</title>
+      <link>https://www.asanilo.top/posts/linux/ghostty-appimage-fuse-conflict/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/linux/ghostty-appimage-fuse-conflict/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Nautilus 右键打开 Ghostty 不进目录：一个等号引发的排查</title>
+      <link>https://www.asanilo.top/posts/linux/ghostty-nautilus-working-directory/</link>
+      <pubDate>Thu, 21 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/linux/ghostty-nautilus-working-directory/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/linux/ghostty-nautilus-working-directory/feature.png" />
+    </item>
+    
+    <item>
+      <title>GGUF 模型文件到底是什么：从使用者视角理解本地 LLM</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/gguf-model-format-explained/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/gguf-model-format-explained/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/gguf-model-format-explained/feature.png" />
+    </item>
+    
+    <item>
+      <title>MTP神力！RTX 4060 8GB 也能跑 26B 模型？</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/rtx4060-gemma4-mtp-local-llm/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/rtx4060-gemma4-mtp-local-llm/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Q4_K_M 这类量化格式是什么意思：怎么影响速度和质量</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/feature.png" />
+    </item>
+    
+    <item>
+      <title>本地大模型部署工程清单：模型、推理框架、显存、上下文、速度</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/local-llm-deployment-checklist/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/local-llm-deployment-checklist/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>用 llama.cpp server 搭一个本地 OpenAI-compatible API</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/llama-cpp-server-openai-api/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/llama-cpp-server-openai-api/</guid>
+      <description></description>
+      
+    </item>
     
     <item>
       <title>悄悄塞进你硬盘的4GB：Chrome静默下载Gemini Nano始末</title>
@@ -37,6 +127,16 @@
       <guid>https://www.asanilo.top/posts/linux/gnome-wayland-xorg-fallback-debug/</guid>
       <description></description>
       
+    </item>
+    
+    <item>
+      <title>Seythm：用 Rust 写一个终端原生音游</title>
+      <link>https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/</link>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/seythm-rust-terminal-rhythm-game/feature.png" />
     </item>
     
     <item>

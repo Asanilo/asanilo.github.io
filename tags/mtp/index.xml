@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MTP on Asanilo&#39;s Blog</title>
+    <link>https://www.asanilo.top/tags/mtp/</link>
+    <description>Recent content in MTP on Asanilo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2026 Asanilo</copyright>
+    <lastBuildDate>Fri, 15 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/tags/mtp/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>MTP神力！RTX 4060 8GB 也能跑 26B 模型？</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/rtx4060-gemma4-mtp-local-llm/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/rtx4060-gemma4-mtp-local-llm/</guid>
+      <description></description>
+      
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Q4_K_M on Asanilo&#39;s Blog</title>
+    <link>https://www.asanilo.top/tags/q4_k_m/</link>
+    <description>Recent content in Q4_K_M on Asanilo&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© 2026 Asanilo</copyright>
+    <lastBuildDate>Fri, 15 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.asanilo.top/tags/q4_k_m/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Q4_K_M 这类量化格式是什么意思：怎么影响速度和质量</title>
+      <link>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/</link>
+      <pubDate>Fri, 15 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/</guid>
+      <description></description>
+      <media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://www.asanilo.top/posts/%E6%9C%AC%E5%9C%B0%E5%A4%A7%E6%A8%A1%E5%9E%8B/quantization-q4km-explained/feature.png" />
+    </item>
+    
+  </channel>
+</rss>
